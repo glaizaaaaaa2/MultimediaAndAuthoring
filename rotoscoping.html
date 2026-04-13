@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rotoscoping | Multimedia & Authoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --c1: #34495E; --c2: #5D6D7E; --c3: #85929E;
+      --c4: #AAB7B8; --c5: #D5DBDB; --bg: #f8f9fa;
+      --white: #ffffff; --text: #1a2433; --text-light: #4a5568;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+    nav {
+      background: var(--c1); padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(52,73,94,0.18);
+    }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; text-decoration: none; }
+    .nav-links { display: flex; gap: 0.5rem; }
+    .nav-links a {
+      color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
+      padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(213,219,219,0.18); color: #fff; }
+
+    .hero {
+      background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
+      padding: 4.5rem 2.5rem 3.5rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .breadcrumb { font-size: 0.78rem; color: var(--c5); opacity: 0.7; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .breadcrumb a { color: inherit; text-decoration: none; }
+    .breadcrumb a:hover { opacity: 1; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem,4vw,3rem); color: #fff; margin-bottom: 0.6rem; }
+    .hero p { max-width: 660px; color: rgba(213,219,219,0.88); font-size: 0.98rem; line-height: 1.78; font-weight: 300; }
+
+    .content { max-width: 1060px; margin: 0 auto; padding: 3.5rem 2.5rem; }
+
+    .block-title {
+      font-family: 'Playfair Display', serif; font-size: 1.55rem; color: var(--c1);
+      margin-bottom: 0.35rem; margin-top: 3rem;
+    }
+    .block-title:first-child { margin-top: 0; }
+    .divider { width: 42px; height: 3px; background: var(--c3); border-radius: 2px; margin-bottom: 1.8rem; }
+    .body-text { font-size: 0.95rem; line-height: 1.82; color: var(--text-light); margin-bottom: 1.5rem; }
+
+    /* VIDEO */
+    .video-embed {
+      background: #000; border-radius: 14px; overflow: hidden;
+      aspect-ratio: 16/9; margin-bottom: 1.5rem;
+      box-shadow: 0 8px 30px rgba(52,73,94,0.15);
+    }
+    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      color: rgba(255,255,255,0.7); font-size: 0.88rem;
+    }
+    .video-placeholder svg { opacity: 0.6; }
+    .video-label { font-size: 0.82rem; color: var(--text-light); margin-top: 0.4rem; margin-bottom: 2rem; font-style: italic; }
+
+    /* MODULE GRID */
+    .module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 1rem; }
+    .module-card {
+      background: var(--white); border-radius: 12px; border: 1px solid var(--c5);
+      overflow: hidden;
+    }
+    .module-thumb {
+      aspect-ratio: 16/9; background: linear-gradient(135deg, var(--c2), var(--c3));
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .module-thumb .play-icon {
+      width: 44px; height: 44px; background: rgba(255,255,255,0.2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      border: 1.5px solid rgba(255,255,255,0.5);
+    }
+    .module-thumb .play-icon svg { margin-left: 3px; }
+    .module-week-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(52,73,94,0.65); color: #fff;
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 20px;
+    }
+    .module-body { padding: 1rem 1.1rem 1.2rem; }
+    .module-body h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--c1); margin-bottom: 0.35rem; }
+    .module-body p { font-size: 0.83rem; color: var(--text-light); line-height: 1.65; }
+    .module-locked {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.72rem; color: var(--c3); margin-top: 0.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    footer {
+      background: var(--c1); color: var(--c5); text-align: center;
+      padding: 2rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.03em; line-height: 1.9; margin-top: 3rem;
+    }
+    footer span { color: var(--c4); }
+
+    @media(max-width:600px){
+      .hero, .content { padding-left: 1.2rem; padding-right: 1.2rem; }
+      nav { padding: 0 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Rotoscoping</div>
+    <h1>Rotoscoping</h1>
+    <p>
+      Rotoscoping is the technique of animating by tracing over live-action video footage frame by frame. Originally patented in 1917, it has evolved from a Hollywood production shortcut into a fine art form — used in everything from early Disney classics to modern music videos. This project documents the full creative process from reference footage to finished animated output.
+    </p>
+  </div>
+
+  <div class="content">
+
+    <!-- FINAL OUTPUT -->
+    <h2 class="block-title">Final Output</h2>
+    <div class="divider"></div>
+    <p class="body-text">
+      The completed rotoscoping animation — the culmination of 12 weeks of frame-by-frame tracing, color work, and compositing. Watch the full video below.
+    </p>
+    <div class="video-embed">
+      <div class="video-placeholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="white" stroke-width="2"/>
+          <path d="M20 16L34 24L20 32V16Z" fill="white"/>
+        </svg>
+        <span>Rotoscoping Final Output</span>
+        <span style="font-size:0.75rem; opacity:0.6;">Replace src with your YouTube embed URL</span>
+      </div>
+      <!-- REPLACE WITH: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+    </div>
+    <p class="video-label">Rotoscoping — Final Animated Output &nbsp;·&nbsp; Replace the placeholder above with your YouTube embed URL.</p>
+
+    <!-- TUTORIAL -->
+    <h2 class="block-title">Step-by-Step Tutorial</h2>
+    <div class="divider"></div>
+    <p class="body-text">
+      A guided walkthrough of the rotoscoping process — from importing reference footage to exporting the final animation. Each module below pairs a concise explanation with a supporting video demonstration.
+    </p>
+
+    <div class="module-grid">
+      <!-- Step 1 -->
+      <div class="module-card">
+        <div class="module-thumb">
+          <div class="module-week-badge">Step 1</div>
+          <div class="play-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 3L13 8L5 13V3Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="module-body">
+          <h4>Setting Up Your Workspace</h4>
+          <p>Importing reference footage, configuring canvas size, and organizing your timeline layers in your chosen software.</p>
+          <div class="module-locked">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+            Video tutorial — see description
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="module-card">
+        <div class="module-thumb">
+          <div class="module-week-badge">Step 2</div>
+          <div class="play-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
+          </div>
+        </div>
+        <div class="module-body">
+          <h4>Selecting Your Reference Frame</h4>
+          <p>Choosing the right live-action clip, scrubbing for key poses, and marking the range of frames to animate.</p>
+          <div class="module-locked">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+            Video tutorial — see description
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="module-card">
+        <div class="module-thumb">
+          <div class="module-week-badge">Step 3</div>
+          <div class="play-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
+          </div>
+        </div>
+        <div class="module-body">
+          <h4>Frame-by-Frame Tracing</h4>
+          <p>Using the brush or pen tool to trace outlines over each frame, maintaining consistent line weight and style throughout.</p>
+          <div class="module-locked">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+            Video tutorial — see description
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="module-card">
+        <div class="module-thumb">
+          <div class="module-week-badge">Step 4</div>
+          <div class="play-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
+          </div>
+        </div>
+        <div class="module-body">
+          <h4>Coloring &amp; Fill</h4>
+          <p>Applying flat fills, gradients, or stylized shading to traced frames — maintaining color consistency for fluid animation.</p>
+          <div class="module-locked">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+            Video tutorial — see description
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="module-card">
+        <div class="module-thumb">
+          <div class="module-week-badge">Step 5</div>
+          <div class="play-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
+          </div>
+        </div>
+        <div class="module-body">
+          <h4>Compositing &amp; Background</h4>
+          <p>Layering animated frames over a designed background and adjusting timing for a polished, cinematic feel.</p>
+          <div class="module-locked">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+            Video tutorial — see description
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="module-card">
+        <div class="module-thumb">
+          <div class="module-week-badge">Step 6</div>
+          <div class="play-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
+          </div>
+        </div>
+        <div class="module-body">
+          <h4>Exporting the Final Animation</h4>
+          <p>Rendering frame sequences to video format, choosing codecs, and uploading the final animation for review.</p>
+          <div class="module-locked">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+            Video tutorial — see description
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEKLY PROGRESS -->
+    <h2 class="block-title" style="margin-top:3.5rem;">Weekly Progress</h2>
+    <div class="divider"></div>
+    <p class="body-text">
+      Documentation of each week's milestones — showing the evolution from rough sketches to refined animated frames across the 12-week project timeline.
+    </p>
+
+    <div class="module-grid">
+      <!-- Weeks 1–12 -->
+      <script>
+        const weeks = [
+          { n:1, title:"Introduction & Planning", desc:"Research on rotoscoping history, technique selection, and initial concept planning." },
+          { n:2, title:"Reference Footage Recording", desc:"Recording or sourcing the live-action reference video to be used as the animation base." },
+          { n:3, title:"Software Setup & Calibration", desc:"Setting up the animation software, configuring canvas dimensions, and importing footage." },
+          { n:4, title:"First Frame Traces", desc:"Tracing the first 20–30 frames to establish style, line weight, and movement feel." },
+          { n:5, title:"Body &amp; Limb Animation", desc:"Animating the major body movements — torso, arms, and legs — across the full frame range." },
+          { n:6, title:"Facial Detail Work", desc:"Adding facial expressions and finer detail to the character's head and features." },
+          { n:7, title:"Mid-Project Review", desc:"Reviewing completed frames, adjusting inconsistencies, and refining the overall animation flow." },
+          { n:8, title:"Color Application Begins", desc:"Applying the first round of color fills to all traced frames and establishing the color palette." },
+          { n:9, title:"Background &amp; Environment", desc:"Designing and compositing the background art with the animated figure." },
+          { n:10, title:"Sound &amp; Timing Adjustments", desc:"Syncing the animation to audio cues and adjusting frame timing for natural motion." },
+          { n:11, title:"Final Refinements", desc:"Cleaning up lines, correcting color inconsistencies, and adding finishing details." },
+          { n:12, title:"Export &amp; Submission", desc:"Final render, quality check, upload to YouTube, and submission of the completed project." },
+        ];
+        document.write(weeks.map(w => `
+          <div class="module-card">
+            <div class="module-thumb">
+              <div class="module-week-badge">Week ${w.n}</div>
+              <div class="play-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
+              </div>
+            </div>
+            <div class="module-body">
+              <h4>${w.title}</h4>
+              <p>${w.desc}</p>
+              <div class="module-locked">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+                Weekly video — see description
+              </div>
+            </div>
+          </div>
+        `).join(''));
+      </script>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
+    <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
+  </footer>
+
+</body>
+</html>
