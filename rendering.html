@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Rendering | Multimedia & Authoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --c1: #34495E; --c2: #5D6D7E; --c3: #85929E;
+      --c4: #AAB7B8; --c5: #D5DBDB; --bg: #f8f9fa;
+      --white: #ffffff; --text: #1a2433; --text-light: #4a5568;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+    nav {
+      background: var(--c1); padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(52,73,94,0.18);
+    }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; text-decoration: none; }
+    .nav-links { display: flex; gap: 0.5rem; }
+    .nav-links a {
+      color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
+      padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s;
+    }
+    .nav-links a:hover { background: rgba(213,219,219,0.18); color: #fff; }
+
+    .hero {
+      background: linear-gradient(135deg, #1a2433 0%, var(--c1) 50%, var(--c2) 100%);
+      padding: 4.5rem 2.5rem 3.5rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(170,183,184,0.08) 0%, transparent 60%);
+    }
+    .breadcrumb { font-size: 0.78rem; color: var(--c5); opacity: 0.7; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .breadcrumb a { color: inherit; text-decoration: none; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem,4vw,3rem); color: #fff; margin-bottom: 0.6rem; }
+    .hero p { max-width: 660px; color: rgba(213,219,219,0.85); font-size: 0.98rem; line-height: 1.78; font-weight: 300; }
+
+    .content { max-width: 1060px; margin: 0 auto; padding: 3.5rem 2.5rem; }
+    .block-title { font-family: 'Playfair Display', serif; font-size: 1.55rem; color: var(--c1); margin-bottom: 0.35rem; margin-top: 3rem; }
+    .block-title:first-child { margin-top: 0; }
+    .divider { width: 42px; height: 3px; background: var(--c3); border-radius: 2px; margin-bottom: 1.8rem; }
+    .body-text { font-size: 0.95rem; line-height: 1.82; color: var(--text-light); margin-bottom: 1.5rem; }
+
+    /* VIDEO */
+    .video-embed {
+      background: #000; border-radius: 14px; overflow: hidden;
+      aspect-ratio: 16/9; margin-bottom: 0.8rem;
+      box-shadow: 0 8px 30px rgba(52,73,94,0.15);
+    }
+    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      background: linear-gradient(135deg, #1a2433, var(--c1));
+      color: rgba(255,255,255,0.7); font-size: 0.88rem;
+    }
+    .video-label { font-size: 0.82rem; color: var(--text-light); margin-top: 0.4rem; margin-bottom: 2rem; font-style: italic; }
+
+    /* TOOLS GRID */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 1rem; }
+    .tool-card {
+      background: var(--white); border-radius: 12px; border: 1px solid var(--c5);
+      padding: 1.2rem 1.3rem;
+    }
+    .tool-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .tool-name { font-weight: 500; font-size: 0.95rem; color: var(--c1); margin-bottom: 0.3rem; }
+    .tool-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
+
+    /* AGE CALCULATOR */
+    .calc-box {
+      background: var(--white); border-radius: 16px; border: 1px solid var(--c5);
+      padding: 2rem 2rem 2.2rem; margin-bottom: 0.5rem;
+    }
+    .calc-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .calc-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+    .calc-field label { font-size: 0.82rem; color: var(--text-light); font-weight: 500; letter-spacing: 0.04em; }
+    .calc-field input {
+      padding: 0.6rem 0.85rem; border: 1.5px solid var(--c5); border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--text);
+      background: var(--bg); transition: border 0.2s; outline: none;
+    }
+    .calc-field input:focus { border-color: var(--c3); }
+    .calc-btn {
+      padding: 0.65rem 1.6rem; background: var(--c1); color: #fff;
+      border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .calc-btn:hover { background: var(--c2); }
+    .calc-hint { font-size: 0.8rem; color: var(--c3); }
+
+    /* PLANET CARDS */
+    .planets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 1.5rem; }
+    .planet-card {
+      background: var(--white); border-radius: 14px; border: 1px solid var(--c5);
+      overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .planet-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(52,73,94,0.12); }
+    .planet-header {
+      padding: 1.2rem 1.3rem 0.9rem;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--c5);
+    }
+    .planet-emoji { font-size: 2.2rem; line-height: 1; }
+    .planet-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--c1); }
+    .planet-type { font-size: 0.75rem; color: var(--c3); margin-top: 1px; }
+    .planet-stats { padding: 0.9rem 1.3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem 0.6rem; }
+    .planet-stat-label { font-size: 0.7rem; color: var(--c3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1px; }
+    .planet-stat-val { font-size: 0.88rem; color: var(--c1); font-weight: 500; }
+    .planet-age-row {
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      padding: 0.8rem 1.3rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .planet-age-label { font-size: 0.78rem; color: rgba(213,219,219,0.85); }
+    .planet-age-val { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; font-weight: 600; }
+    .planet-age-val.empty { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: rgba(213,219,219,0.6); font-weight: 400; }
+
+    footer {
+      background: var(--c1); color: var(--c5); text-align: center;
+      padding: 2rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.03em; line-height: 1.9; margin-top: 3rem;
+    }
+    footer span { color: var(--c4); }
+
+    @media(max-width:600px){
+      .hero, .content { padding-left: 1.2rem; padding-right: 1.2rem; }
+      nav { padding: 0 1.2rem; }
+      .calc-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; 3D Rendering</div>
+    <h1>3D Rendering — Solar System</h1>
+    <p>
+      3D rendering is the process of converting three-dimensional digital models into two-dimensional images using simulated light, materials, and camera perspectives. This project brings the solar system to life through accurate modeling, planetary textures, and orbital mechanics — rendered with dedicated 3D software tools.
+    </p>
+  </div>
+
+  <div class="content">
+
+    <!-- FINAL OUTPUT -->
+    <h2 class="block-title">Final Output</h2>
+    <div class="divider"></div>
+    <p class="body-text">
+      The completed 3D rendered solar system animation — featuring all eight planets in orbit around the Sun, with accurate relative sizing, texturing, and lighting simulation.
+    </p>
+    <div class="video-embed">
+      <div class="video-placeholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="white" stroke-width="2"/>
+          <path d="M20 16L34 24L20 32V16Z" fill="white"/>
+        </svg>
+        <span>3D Solar System — Final Render</span>
+        <span style="font-size:0.75rem; opacity:0.6;">Replace src with your YouTube embed URL</span>
+      </div>
+      <!-- REPLACE WITH: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+    </div>
+    <p class="video-label">Solar System 3D Render — Final Output &nbsp;·&nbsp; Replace the placeholder above with your YouTube embed URL.</p>
+
+    <!-- TOOLS USED -->
+    <h2 class="block-title">Tools &amp; Technologies</h2>
+    <div class="divider"></div>
+    <p class="body-text">
+      The following tools and concepts were used in the production of the 3D solar system rendering project.
+    </p>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">🎛️</div>
+        <div class="tool-name">3D Modeling Software</div>
+        <div class="tool-desc">Used to create spherical meshes for each celestial body, set orbital paths, and animate planetary rotations.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">💡</div>
+        <div class="tool-name">Lighting &amp; Shading</div>
+        <div class="tool-desc">Point lights simulate the Sun's radiance. Ambient and directional lights create depth and realistic shadow casting.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🖼️</div>
+        <div class="tool-name">Texture Mapping</div>
+        <div class="tool-desc">High-resolution planetary surface maps (NASA textures) were UV-mapped onto spherical geometry for photorealism.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📷</div>
+        <div class="tool-name">Camera &amp; Composition</div>
+        <div class="tool-desc">Animated camera paths orbit the scene to showcase each planet, using depth-of-field to focus attention.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">⚙️</div>
+        <div class="tool-name">Rendering Engine</div>
+        <div class="tool-desc">A ray-tracing or rasterization engine computes the final image, converting 3D geometry to 2D pixels with realistic light bounce.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🎬</div>
+        <div class="tool-name">Video Compositing</div>
+        <div class="tool-desc">Rendered frames were composited into a final video, with color grading applied for a cinematic space atmosphere.</div>
+      </div>
+    </div>
+
+    <!-- AGE CALCULATOR -->
+    <h2 class="block-title">Planetary Age Calculator</h2>
+    <div class="divider"></div>
+    <p class="body-text">
+      Every planet takes a different amount of time to orbit the Sun — meaning your age is different on each one! Enter your birthdate to discover how old you are across the solar system.
+    </p>
+
+    <div class="calc-box">
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>YOUR DATE OF BIRTH</label>
+          <input type="date" id="dob-input" max="" />
+        </div>
+        <button class="calc-btn" onclick="calculateAges()">Calculate My Ages ›</button>
+      </div>
+      <p class="calc-hint">* Age is calculated based on each planet's orbital period around the Sun relative to Earth days.</p>
+    </div>
+
+    <!-- PLANET CARDS -->
+    <div class="planets-grid" id="planets-grid"></div>
+
+  </div>
+
+  <footer>
+    © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
+    <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
+  </footer>
+
+  <script>
+    // Set max date to today
+    document.getElementById('dob-input').max = new Date().toISOString().split('T')[0];
+
+    const planets = [
+      {
+        name: 'Sun',
+        emoji: '☀️',
+        type: 'Star',
+        orbitalPeriod: 365.25,     // days (reference: Earth)
+        revolutions: '—',
+        distance: '0 AU (center)',
+        color: ['#d4a017', '#7a5c00'],
+        note: 'Rotational period ~25.4 Earth days at equator',
+        sunAge: true
+      },
+      {
+        name: 'Mercury',
+        emoji: '🪨',
+        type: 'Terrestrial Planet',
+        orbitalPeriod: 87.97,
+        revolutions: '4.15 per Earth year',
+        distance: '0.387 AU (57.9M km)',
+        color: ['var(--c4)', 'var(--c1)']
+      },
+      {
+        name: 'Venus',
+        emoji: '🌕',
+        type: 'Terrestrial Planet',
+        orbitalPeriod: 224.70,
+        revolutions: '1.63 per Earth year',
+        distance: '0.723 AU (108.2M km)',
+        color: ['#d4a017','#6b4c00']
+      },
+      {
+        name: 'Earth',
+        emoji: '🌍',
+        type: 'Terrestrial Planet',
+        orbitalPeriod: 365.25,
+        revolutions: '1.00 per Earth year',
+        distance: '1.000 AU (149.6M km)',
+        color: ['#3a7bd5','#0d2b5e']
+      },
+      {
+        name: 'Mars',
+        emoji: '🔴',
+        type: 'Terrestrial Planet',
+        orbitalPeriod: 686.97,
+        revolutions: '0.53 per Earth year',
+        distance: '1.524 AU (227.9M km)',
+        color: ['#c0392b','#5d1a14']
+      },
+      {
+        name: 'Jupiter',
+        emoji: '🟠',
+        type: 'Gas Giant',
+        orbitalPeriod: 4332.59,
+        revolutions: '0.084 per Earth year',
+        distance: '5.203 AU (778.6M km)',
+        color: ['#c8824a','#5c3210']
+      },
+      {
+        name: 'Saturn',
+        emoji: '🪐',
+        type: 'Gas Giant',
+        orbitalPeriod: 10759.22,
+        revolutions: '0.034 per Earth year',
+        distance: '9.537 AU (1.43B km)',
+        color: ['#c8aa4a','#5c4a10']
+      },
+      {
+        name: 'Uranus',
+        emoji: '🔵',
+        type: 'Ice Giant',
+        orbitalPeriod: 30688.50,
+        revolutions: '0.012 per Earth year',
+        distance: '19.19 AU (2.87B km)',
+        color: ['#85c8c8','#1a4f5e']
+      },
+      {
+        name: 'Neptune',
+        emoji: '🫧',
+        type: 'Ice Giant',
+        orbitalPeriod: 60195.00,
+        revolutions: '0.006 per Earth year',
+        distance: '30.07 AU (4.50B km)',
+        color: ['#2e5ee6','#0d1f5c']
+      }
+    ];
+
+    function renderCards(ages) {
+      const grid = document.getElementById('planets-grid');
+      grid.innerHTML = planets.map(p => {
+        const ageVal = ages ? ages[p.name] : null;
+        const ageDisplay = ageVal !== null
+          ? `<span class="planet-age-val">${ageVal} yrs</span>`
+          : `<span class="planet-age-val empty">Enter birthdate above</span>`;
+        const periodfmt = p.orbitalPeriod >= 1000
+          ? (p.orbitalPeriod / 365.25).toFixed(2) + ' Earth yrs'
+          : p.orbitalPeriod.toFixed(2) + ' Earth days';
+        return `
+          <div class="planet-card">
+            <div class="planet-header">
+              <div class="planet-emoji">${p.emoji}</div>
+              <div>
+                <div class="planet-name">${p.name}</div>
+                <div class="planet-type">${p.type}</div>
+              </div>
+            </div>
+            <div class="planet-stats">
+              <div>
+                <div class="planet-stat-label">Orbital Period</div>
+                <div class="planet-stat-val">${periodfmt}</div>
+              </div>
+              <div>
+                <div class="planet-stat-label">Revolutions / yr</div>
+                <div class="planet-stat-val">${p.revolutions}</div>
+              </div>
+              <div style="grid-column:1/-1">
+                <div class="planet-stat-label">Distance from Sun</div>
+                <div class="planet-stat-val">${p.distance}</div>
+              </div>
+            </div>
+            <div class="planet-age-row">
+              <span class="planet-age-label">Your age on ${p.name}</span>
+              ${ageDisplay}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function calculateAges() {
+      const dob = document.getElementById('dob-input').value;
+      if (!dob) { alert('Please enter your date of birth first.'); return; }
+      const birth = new Date(dob);
+      const now = new Date();
+      const earthDays = (now - birth) / (1000 * 60 * 60 * 24);
+      if (earthDays < 0) { alert('Birthdate cannot be in the future!'); return; }
+      const ages = {};
+      planets.forEach(p => {
+        const planetYears = earthDays / p.orbitalPeriod;
+        ages[p.name] = planetYears.toFixed(2);
+      });
+      renderCards(ages);
+    }
+
+    // Initial render with empty ages
+    renderCards(null);
+  </script>
+
+</body>
+</html>
