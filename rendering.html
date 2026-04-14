@@ -224,12 +224,12 @@
     <div class="calc-box">
       <div class="calc-row">
         <div class="calc-field">
-          <label>YOUR DATE OF BIRTH</label>
-          <input type="date" id="dob-input" max="" />
+          <label>YOUR AGE (in Earth years)</label>
+          <input type="number" id="age-input" min="0" max="150" step="0.1" placeholder="e.g. 20" />
         </div>
         <button class="calc-btn" onclick="calculateAges()">Calculate My Ages ›</button>
       </div>
-      <p class="calc-hint">* Age is calculated based on each planet's orbital period around the Sun relative to Earth days.</p>
+      <p class="calc-hint">* Age, revolutions completed, and orbital period are all calculated from your Earth age using each planet's orbital data.</p>
     </div>
 
     <!-- PLANET CARDS -->
@@ -247,101 +247,51 @@
     document.getElementById('dob-input').max = new Date().toISOString().split('T')[0];
 
     const planets = [
-      {
-        name: 'Sun',
-        emoji: '☀️',
-        type: 'Star',
-        orbitalPeriod: 365.25,     // days (reference: Earth)
-        revolutions: '—',
-        distance: '0 AU (center)',
-        color: ['#d4a017', '#7a5c00'],
-        note: 'Rotational period ~25.4 Earth days at equator',
-        sunAge: true
-      },
-      {
-        name: 'Mercury',
-        emoji: '🪨',
-        type: 'Terrestrial Planet',
-        orbitalPeriod: 87.97,
-        revolutions: '4.15 per Earth year',
-        distance: '0.387 AU (57.9M km)',
-        color: ['var(--c4)', 'var(--c1)']
-      },
-      {
-        name: 'Venus',
-        emoji: '🌕',
-        type: 'Terrestrial Planet',
-        orbitalPeriod: 224.70,
-        revolutions: '1.63 per Earth year',
-        distance: '0.723 AU (108.2M km)',
-        color: ['#d4a017','#6b4c00']
-      },
-      {
-        name: 'Earth',
-        emoji: '🌍',
-        type: 'Terrestrial Planet',
-        orbitalPeriod: 365.25,
-        revolutions: '1.00 per Earth year',
-        distance: '1.000 AU (149.6M km)',
-        color: ['#3a7bd5','#0d2b5e']
-      },
-      {
-        name: 'Mars',
-        emoji: '🔴',
-        type: 'Terrestrial Planet',
-        orbitalPeriod: 686.97,
-        revolutions: '0.53 per Earth year',
-        distance: '1.524 AU (227.9M km)',
-        color: ['#c0392b','#5d1a14']
-      },
-      {
-        name: 'Jupiter',
-        emoji: '🟠',
-        type: 'Gas Giant',
-        orbitalPeriod: 4332.59,
-        revolutions: '0.084 per Earth year',
-        distance: '5.203 AU (778.6M km)',
-        color: ['#c8824a','#5c3210']
-      },
-      {
-        name: 'Saturn',
-        emoji: '🪐',
-        type: 'Gas Giant',
-        orbitalPeriod: 10759.22,
-        revolutions: '0.034 per Earth year',
-        distance: '9.537 AU (1.43B km)',
-        color: ['#c8aa4a','#5c4a10']
-      },
-      {
-        name: 'Uranus',
-        emoji: '🔵',
-        type: 'Ice Giant',
-        orbitalPeriod: 30688.50,
-        revolutions: '0.012 per Earth year',
-        distance: '19.19 AU (2.87B km)',
-        color: ['#85c8c8','#1a4f5e']
-      },
-      {
-        name: 'Neptune',
-        emoji: '🫧',
-        type: 'Ice Giant',
-        orbitalPeriod: 60195.00,
-        revolutions: '0.006 per Earth year',
-        distance: '30.07 AU (4.50B km)',
-        color: ['#2e5ee6','#0d1f5c']
-      }
+      { name:'Sun',     emoji:'☀️',  type:'Star',               orbitalPeriodDays:365.25,   distance:'0 AU — center of solar system' },
+      { name:'Mercury', emoji:'🪨',  type:'Terrestrial Planet', orbitalPeriodDays:87.97,    distance:'0.387 AU (57.9M km)' },
+      { name:'Venus',   emoji:'🌕',  type:'Terrestrial Planet', orbitalPeriodDays:224.70,   distance:'0.723 AU (108.2M km)' },
+      { name:'Earth',   emoji:'🌍',  type:'Terrestrial Planet', orbitalPeriodDays:365.25,   distance:'1.000 AU (149.6M km)' },
+      { name:'Mars',    emoji:'🔴',  type:'Terrestrial Planet', orbitalPeriodDays:686.97,   distance:'1.524 AU (227.9M km)' },
+      { name:'Jupiter', emoji:'🟠',  type:'Gas Giant',          orbitalPeriodDays:4332.59,  distance:'5.203 AU (778.6M km)' },
+      { name:'Saturn',  emoji:'🪐',  type:'Gas Giant',          orbitalPeriodDays:10759.22, distance:'9.537 AU (1.43B km)' },
+      { name:'Uranus',  emoji:'🔵',  type:'Ice Giant',          orbitalPeriodDays:30688.50, distance:'19.19 AU (2.87B km)' },
+      { name:'Neptune', emoji:'🫧',  type:'Ice Giant',          orbitalPeriodDays:60195.00, distance:'30.07 AU (4.50B km)' },
     ];
 
-    function renderCards(ages) {
+    function renderCards(earthAge) {
       const grid = document.getElementById('planets-grid');
+      const hasAge = earthAge !== null && !isNaN(earthAge);
+      const earthDays = hasAge ? earthAge * 365.25 : null;
+
       grid.innerHTML = planets.map(p => {
-        const ageVal = ages ? ages[p.name] : null;
-        const ageDisplay = ageVal !== null
-          ? `<span class="planet-age-val">${ageVal} yrs</span>`
-          : `<span class="planet-age-val empty">Enter birthdate above</span>`;
-        const periodfmt = p.orbitalPeriod >= 1000
-          ? (p.orbitalPeriod / 365.25).toFixed(2) + ' Earth yrs'
-          : p.orbitalPeriod.toFixed(2) + ' Earth days';
+        // Orbital period in Earth years
+        const periodYears = p.orbitalPeriodDays / 365.25;
+        const periodFmt = periodYears >= 1
+          ? periodYears.toFixed(2) + ' Earth yrs'
+          : p.orbitalPeriodDays.toFixed(2) + ' Earth days';
+
+        // Revolutions per Earth year
+        const revsPerYear = 365.25 / p.orbitalPeriodDays;
+        const revsFmt = revsPerYear >= 1
+          ? revsPerYear.toFixed(2) + ' / Earth yr'
+          : (1 / revsPerYear).toFixed(2) + ' Earth yrs / orbit';
+
+        // Calculated values from age input
+        let ageDisplay, totalRevsDisplay, totalOrbitalDisplay;
+        if (hasAge) {
+          const planetAge = earthDays / p.orbitalPeriodDays;
+          const totalRevs = planetAge; // same as planet age in orbits
+          const totalOrbitalYrs = earthAge * (365.25 / p.orbitalPeriodDays) * periodYears;
+
+          ageDisplay = `<span class="planet-age-val">${planetAge.toFixed(2)} yrs</span>`;
+          totalRevsDisplay = `${totalRevs.toFixed(2)} orbits completed`;
+          totalOrbitalDisplay = periodFmt;
+        } else {
+          ageDisplay = `<span class="planet-age-val empty">Enter age above</span>`;
+          totalRevsDisplay = '—';
+          totalOrbitalDisplay = periodFmt;
+        }
+
         return `
           <div class="planet-card">
             <div class="planet-header">
@@ -354,15 +304,19 @@
             <div class="planet-stats">
               <div>
                 <div class="planet-stat-label">Orbital Period</div>
-                <div class="planet-stat-val">${periodfmt}</div>
+                <div class="planet-stat-val">${totalOrbitalDisplay}</div>
               </div>
               <div>
                 <div class="planet-stat-label">Revolutions / yr</div>
-                <div class="planet-stat-val">${p.revolutions}</div>
+                <div class="planet-stat-val">${revsFmt}</div>
               </div>
               <div style="grid-column:1/-1">
                 <div class="planet-stat-label">Distance from Sun</div>
                 <div class="planet-stat-val">${p.distance}</div>
+              </div>
+              <div style="grid-column:1/-1">
+                <div class="planet-stat-label">Total Orbits Completed</div>
+                <div class="planet-stat-val">${totalRevsDisplay}</div>
               </div>
             </div>
             <div class="planet-age-row">
@@ -374,21 +328,18 @@
     }
 
     function calculateAges() {
-      const dob = document.getElementById('dob-input').value;
-      if (!dob) { alert('Please enter your date of birth first.'); return; }
-      const birth = new Date(dob);
-      const now = new Date();
-      const earthDays = (now - birth) / (1000 * 60 * 60 * 24);
-      if (earthDays < 0) { alert('Birthdate cannot be in the future!'); return; }
-      const ages = {};
-      planets.forEach(p => {
-        const planetYears = earthDays / p.orbitalPeriod;
-        ages[p.name] = planetYears.toFixed(2);
-      });
-      renderCards(ages);
+      const val = parseFloat(document.getElementById('age-input').value);
+      if (isNaN(val) || val < 0) { alert('Please enter a valid age (0 or above).'); return; }
+      if (val > 150) { alert('Please enter a realistic age (0–150).'); return; }
+      renderCards(val);
     }
 
-    // Initial render with empty ages
+    // Allow pressing Enter
+    document.getElementById('age-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') calculateAges();
+    });
+
+    // Initial render
     renderCards(null);
   </script>
 
