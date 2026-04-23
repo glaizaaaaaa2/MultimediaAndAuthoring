@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Multimedia & Authoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --c1: #34495E;
-      --c2: #5D6D7E;
-      --c3: #85929E;
-      --c4: #AAB7B8;
-      --c5: #D5DBDB;
-      --bg: #f8f9fa;
+      --c1: #831843;
+      --c2: #9d174d;
+      --c3: #be185d;
+      --c4: #f9a8d4;
+      --c5: #fce7f3;
+      --bg: #fff5f9;
       --white: #ffffff;
-      --text: #1a2433;
-      --text-light: #4a5568;
+      --text: #1a0a10;
+      --text-light: #6b2d4a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -37,10 +37,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 16px rgba(52,73,94,0.18);
+      box-shadow: 0 2px 16px rgba(131,24,67,0.18);
     }
     .nav-brand {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Fraunces', serif;
       font-size: 1.15rem;
       color: var(--c5);
       letter-spacing: 0.04em;
@@ -57,7 +57,7 @@
       letter-spacing: 0.03em;
     }
     .nav-links a:hover, .nav-links a.active {
-      background: rgba(213,219,219,0.18);
+      background: rgba(252,231,243,0.18);
       color: #fff;
     }
 
@@ -84,7 +84,7 @@
       margin-bottom: 1rem;
     }
     .hero h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Fraunces', serif;
       font-size: clamp(2.2rem, 5vw, 3.6rem);
       color: #fff;
       font-weight: 700;
@@ -92,7 +92,7 @@
       margin-bottom: 0.6rem;
     }
     .hero h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Fraunces', serif;
       font-size: clamp(1.1rem, 2.5vw, 1.6rem);
       color: var(--c5);
       font-weight: 400;
@@ -102,7 +102,7 @@
     .hero p {
       max-width: 640px;
       margin: 0 auto;
-      color: rgba(213,219,219,0.88);
+      color: rgba(252,231,243,0.88);
       font-size: 1rem;
       line-height: 1.75;
       font-weight: 300;
@@ -115,7 +115,7 @@
       margin: 0 auto;
     }
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Fraunces', serif;
       font-size: 1.9rem;
       color: var(--c1);
       margin-bottom: 0.4rem;
@@ -147,7 +147,7 @@
     }
     .project-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(52,73,94,0.14);
+      box-shadow: 0 16px 40px rgba(131,24,67,0.14);
     }
     .card-thumb {
       height: 180px;
@@ -158,8 +158,8 @@
       position: relative;
       overflow: hidden;
     }
-    .card-thumb-roto { background: linear-gradient(135deg, var(--c1), var(--c2)); }
-    .card-thumb-3d   { background: linear-gradient(135deg, var(--c2), var(--c3)); }
+    .card-thumb-roto { background: linear-gradient(135deg, var(--c1), var(--c3)); }
+    .card-thumb-3d   { background: linear-gradient(135deg, var(--c2), var(--c4)); }
     .card-thumb-label {
       position: absolute;
       bottom: 12px;
@@ -175,7 +175,7 @@
     }
     .card-body { padding: 1.4rem 1.5rem 1.6rem; }
     .card-body h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Fraunces', serif;
       font-size: 1.25rem;
       color: var(--c1);
       margin-bottom: 0.5rem;
