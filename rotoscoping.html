@@ -164,14 +164,12 @@
         <div class="module-thumb">
           <div class="module-week-badge">Step 1</div>
           <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M5 3L13 8L5 13V3Z" fill="white"/>
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
           </div>
         </div>
         <div class="module-body">
-          <h4>Setting Up Your Workspace</h4>
-          <p>Importing reference footage, configuring canvas size, and organizing your timeline layers in your chosen software.</p>
+          <h4>Prepare the Applications</h4>
+          <p>Set up all required software — including Adobe After Effects and Photoshop — and ensure your project files and folders are properly organized before starting.</p>
           <div class="module-locked">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
             Video tutorial — see description
@@ -188,8 +186,8 @@
           </div>
         </div>
         <div class="module-body">
-          <h4>Selecting Your Reference Frame</h4>
-          <p>Choosing the right live-action clip, scrubbing for key poses, and marking the range of frames to animate.</p>
+          <h4>Split the Video into 5-Second Clips</h4>
+          <p>Cut your reference footage into manageable 5-second segments. This makes frame-by-frame tracing more organized and prevents the project from becoming overwhelming.</p>
           <div class="module-locked">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
             Video tutorial — see description
@@ -206,8 +204,8 @@
           </div>
         </div>
         <div class="module-body">
-          <h4>Frame-by-Frame Tracing</h4>
-          <p>Using the brush or pen tool to trace outlines over each frame, maintaining consistent line weight and style throughout.</p>
+          <h4>Open After Effects &amp; Export via Render Queue</h4>
+          <p>Import the video clips into After Effects. Once your composition is ready, go to <em>Composition → Add to Render Queue</em>, configure the output settings, and render the frame sequence.</p>
           <div class="module-locked">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
             Video tutorial — see description
@@ -224,8 +222,8 @@
           </div>
         </div>
         <div class="module-body">
-          <h4>Coloring &amp; Fill</h4>
-          <p>Applying flat fills, gradients, or stylized shading to traced frames — maintaining color consistency for fluid animation.</p>
+          <h4>Import Rendered Frames into Photoshop</h4>
+          <p>After rendering is complete, open Photoshop and import the exported frames using <em>File → Open</em> or as a frame sequence. Each frame becomes a layer ready for tracing and editing.</p>
           <div class="module-locked">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
             Video tutorial — see description
@@ -242,26 +240,8 @@
           </div>
         </div>
         <div class="module-body">
-          <h4>Compositing &amp; Background</h4>
-          <p>Layering animated frames over a designed background and adjusting timing for a polished, cinematic feel.</p>
-          <div class="module-locked">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-            Video tutorial — see description
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="module-card">
-        <div class="module-thumb">
-          <div class="module-week-badge">Step 6</div>
-          <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-          </div>
-        </div>
-        <div class="module-body">
-          <h4>Exporting the Final Animation</h4>
-          <p>Rendering frame sequences to video format, choosing codecs, and uploading the final animation for review.</p>
+          <h4>Edit the Rendered Frames</h4>
+          <p>Trace over each frame in Photoshop using brushes or the pen tool. Apply colors, clean up edges, and build the rotoscoped animation layer by layer until the sequence is complete.</p>
           <div class="module-locked">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
             Video tutorial — see description
@@ -281,18 +261,18 @@
       <!-- Weeks 1–12 -->
       <script>
         const weeks = [
-          { n:1, title:"Introduction & Planning", desc:"Research on rotoscoping history, technique selection, and initial concept planning." },
-          { n:2, title:"Reference Footage Recording", desc:"Recording or sourcing the live-action reference video to be used as the animation base." },
-          { n:3, title:"Software Setup & Calibration", desc:"Setting up the animation software, configuring canvas dimensions, and importing footage." },
-          { n:4, title:"First Frame Traces", desc:"Tracing the first 20–30 frames to establish style, line weight, and movement feel." },
-          { n:5, title:"Body &amp; Limb Animation", desc:"Animating the major body movements — torso, arms, and legs — across the full frame range." },
-          { n:6, title:"Facial Detail Work", desc:"Adding facial expressions and finer detail to the character's head and features." },
-          { n:7, title:"Mid-Project Review", desc:"Reviewing completed frames, adjusting inconsistencies, and refining the overall animation flow." },
-          { n:8, title:"Color Application Begins", desc:"Applying the first round of color fills to all traced frames and establishing the color palette." },
-          { n:9, title:"Background &amp; Environment", desc:"Designing and compositing the background art with the animated figure." },
-          { n:10, title:"Sound &amp; Timing Adjustments", desc:"Syncing the animation to audio cues and adjusting frame timing for natural motion." },
-          { n:11, title:"Final Refinements", desc:"Cleaning up lines, correcting color inconsistencies, and adding finishing details." },
-          { n:12, title:"Export &amp; Submission", desc:"Final render, quality check, upload to YouTube, and submission of the completed project." },
+          { n:1,  title:"Clip 1 — Seconds 0:00–0:05",  desc:"First 5-second segment rendered from After Effects and edited frame by frame in Photoshop." },
+          { n:2,  title:"Clip 2 — Seconds 0:05–0:10",  desc:"Second 5-second clip imported as a frame sequence and traced over in Photoshop." },
+          { n:3,  title:"Clip 3 — Seconds 0:10–0:15",  desc:"Third clip edited — maintaining consistent line style and color from previous segments." },
+          { n:4,  title:"Clip 4 — Seconds 0:15–0:20",  desc:"Fourth 5-second segment with continued frame-by-frame rotoscoping and color fills applied." },
+          { n:5,  title:"Clip 5 — Seconds 0:20–0:25",  desc:"Fifth clip processed through the render queue and edited in Photoshop." },
+          { n:6,  title:"Clip 6 — Seconds 0:25–0:30",  desc:"Sixth 5-second segment — refining motion flow and smoothing transitions between frames." },
+          { n:7,  title:"Clip 7 — Seconds 0:30–0:35",  desc:"Seventh clip with mid-project style review — adjustments made for visual consistency." },
+          { n:8,  title:"Clip 8 — Seconds 0:35–0:40",  desc:"Eighth segment edited with improved coloring technique based on earlier clip feedback." },
+          { n:9,  title:"Clip 9 — Seconds 0:40–0:45",  desc:"Ninth 5-second clip — detailed frame edits and cleanup of complex motion sequences." },
+          { n:10, title:"Clip 10 — Seconds 0:45–0:50", desc:"Tenth clip processed and edited — focus on smooth animation curves and clean outlines." },
+          { n:11, title:"Clip 11 — Seconds 0:50–0:55", desc:"Eleventh segment — near-final clip with refined shading and finishing detail work." },
+          { n:12, title:"Clip 12 — Seconds 0:55–1:00", desc:"Final 5-second clip completed. All segments combined for the finished rotoscoping output." },
         ];
         document.write(weeks.map(w => `
           <div class="module-card">
