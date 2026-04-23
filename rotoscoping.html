@@ -8,26 +8,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --c1: #34495E; --c2: #5D6D7E; --c3: #85929E;
-      --c4: #AAB7B8; --c5: #D5DBDB; --bg: #f8f9fa;
-      --white: #ffffff; --text: #1a2433; --text-light: #4a5568;
+      --c1: #831843; --c2: #9d174d; --c3: #be185d;
+      --c4: #f9a8d4; --c5: #fce7f3; --bg: #fff5f9;
+      --white: #ffffff; --text: #1a0a10; --text-light: #6b2d4a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); }
 
     nav {
       background: var(--c1); padding: 0 2.5rem;
       display: flex; align-items: center; justify-content: space-between;
       height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(52,73,94,0.18);
+      box-shadow: 0 2px 16px rgba(131,24,67,0.18);
     }
-    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; text-decoration: none; }
+    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; text-decoration: none; }
     .nav-links { display: flex; gap: 0.5rem; }
     .nav-links a {
       color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
       padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { background: rgba(213,219,219,0.18); color: #fff; }
+    .nav-links a:hover, .nav-links a.active { background: rgba(252,231,243,0.18); color: #fff; }
 
     .hero {
       background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
@@ -40,13 +40,13 @@
     .breadcrumb { font-size: 0.78rem; color: var(--c5); opacity: 0.7; margin-bottom: 1rem; letter-spacing: 0.05em; }
     .breadcrumb a { color: inherit; text-decoration: none; }
     .breadcrumb a:hover { opacity: 1; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem,4vw,3rem); color: #fff; margin-bottom: 0.6rem; }
-    .hero p { max-width: 660px; color: rgba(213,219,219,0.88); font-size: 0.98rem; line-height: 1.78; font-weight: 300; }
+    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.9rem,4vw,3rem); color: #fff; margin-bottom: 0.6rem; }
+    .hero p { max-width: 660px; color: rgba(252,231,243,0.88); font-size: 0.98rem; line-height: 1.78; font-weight: 300; }
 
     .content { max-width: 1060px; margin: 0 auto; padding: 3.5rem 2.5rem; }
 
     .block-title {
-      font-family: 'Playfair Display', serif; font-size: 1.55rem; color: var(--c1);
+      font-family: 'Fraunces', serif; font-size: 1.55rem; color: var(--c1);
       margin-bottom: 0.35rem; margin-top: 3rem;
     }
     .block-title:first-child { margin-top: 0; }
@@ -57,13 +57,13 @@
     .video-embed {
       background: #000; border-radius: 14px; overflow: hidden;
       aspect-ratio: 16/9; margin-bottom: 1.5rem;
-      box-shadow: 0 8px 30px rgba(52,73,94,0.15);
+      box-shadow: 0 8px 30px rgba(131,24,67,0.15);
     }
     .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
     .video-placeholder {
       width: 100%; height: 100%; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 12px;
-      background: linear-gradient(135deg, var(--c1), var(--c2));
+      background: linear-gradient(135deg, var(--c1), var(--c3));
       color: rgba(255,255,255,0.7); font-size: 0.88rem;
     }
     .video-placeholder svg { opacity: 0.6; }
@@ -76,7 +76,7 @@
       overflow: hidden;
     }
     .module-thumb {
-      aspect-ratio: 16/9; background: linear-gradient(135deg, var(--c2), var(--c3));
+      aspect-ratio: 16/9; background: linear-gradient(135deg, var(--c2), var(--c4));
       display: flex; align-items: center; justify-content: center; position: relative;
     }
     .module-thumb .play-icon {
@@ -92,7 +92,7 @@
       padding: 3px 9px; border-radius: 20px;
     }
     .module-body { padding: 1rem 1.1rem 1.2rem; }
-    .module-body h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--c1); margin-bottom: 0.35rem; }
+    .module-body h4 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--c1); margin-bottom: 0.35rem; }
     .module-body p { font-size: 0.83rem; color: var(--text-light); line-height: 1.65; }
     .module-locked {
       display: inline-flex; align-items: center; gap: 4px;
