@@ -8,25 +8,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --c1: #34495E; --c2: #5D6D7E; --c3: #85929E;
-      --c4: #AAB7B8; --c5: #D5DBDB; --bg: #f8f9fa;
-      --white: #ffffff; --text: #1a2433; --text-light: #4a5568;
+      --c1: #831843; --c2: #9d174d; --c3: #be185d;
+      --c4: #f9a8d4; --c5: #fce7f3; --bg: #fff5f9;
+      --white: #ffffff; --text: #1a0a10; --text-light: #6b2d4a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); }
     nav {
       background: var(--c1); padding: 0 2.5rem;
       display: flex; align-items: center; justify-content: space-between;
       height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(52,73,94,0.18);
+      box-shadow: 0 2px 16px rgba(131,24,67,0.18);
     }
-    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; }
+    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; }
     .nav-links { display: flex; gap: 0.5rem; }
     .nav-links a {
       color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
       padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s, color 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { background: rgba(213,219,219,0.18); color: #fff; }
+    .nav-links a:hover, .nav-links a.active { background: rgba(252,231,243,0.18); color: #fff; }
 
     .hero {
       background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 60%, var(--c3) 100%);
@@ -37,11 +37,11 @@
       background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
     .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c5); opacity: 0.8; margin-bottom: 1rem; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: #fff; margin-bottom: 0.6rem; }
-    .hero p { max-width: 560px; margin: 0 auto; color: rgba(213,219,219,0.85); font-size: 1rem; line-height: 1.75; font-weight: 300; }
+    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 3rem); color: #fff; margin-bottom: 0.6rem; }
+    .hero p { max-width: 560px; margin: 0 auto; color: rgba(252,231,243,0.85); font-size: 1rem; line-height: 1.75; font-weight: 300; }
 
     .section { padding: 4rem 2.5rem; max-width: 900px; margin: 0 auto; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; color: var(--c1); margin-bottom: 0.4rem; }
+    .section-title { font-family: 'Fraunces', serif; font-size: 1.75rem; color: var(--c1); margin-bottom: 0.4rem; }
     .section-divider { width: 48px; height: 3px; background: var(--c3); border-radius: 2px; margin-bottom: 2rem; }
 
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
@@ -51,9 +51,9 @@
       background: var(--white); border-radius: 14px; border: 1px solid var(--c5);
       padding: 1.5rem; transition: box-shadow 0.2s;
     }
-    .info-card:hover { box-shadow: 0 8px 28px rgba(52,73,94,0.1); }
+    .info-card:hover { box-shadow: 0 8px 28px rgba(131,24,67,0.1); }
     .info-card-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c3); margin-bottom: 0.5rem; }
-    .info-card-value { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--c1); font-weight: 600; }
+    .info-card-value { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c1); font-weight: 600; }
     .info-card-sub { font-size: 0.88rem; color: var(--text-light); margin-top: 0.3rem; line-height: 1.6; }
 
     .about-body { font-size: 0.97rem; line-height: 1.85; color: var(--text-light); }
