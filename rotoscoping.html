@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rotoscoping | Multimedia & Authoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --c1: #831843; --c2: #9d174d; --c3: #be185d;
@@ -21,84 +21,107 @@
       height: 64px; position: sticky; top: 0; z-index: 100;
       box-shadow: 0 2px 16px rgba(131,24,67,0.18);
     }
-    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; text-decoration: none; }
-    .nav-links { display: flex; gap: 0.5rem; }
-    .nav-links a {
-      color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
-      padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s;
-    }
-    .nav-links a:hover, .nav-links a.active { background: rgba(252,231,243,0.18); color: #fff; }
+    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--c5); letter-spacing: 0.03em; text-decoration: none; }
+    .nav-links { display: flex; gap: 0.4rem; }
+    .nav-links a { color: var(--c5); text-decoration: none; font-size: 0.82rem; font-weight: 500; padding: 0.4rem 1rem; border-radius: 30px; transition: background 0.2s; }
+    .nav-links a:hover { background: rgba(252,231,243,0.18); color: #fff; }
 
+    /* HERO — sidebar layout */
     .hero {
       background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
-      padding: 4.5rem 2.5rem 3.5rem; position: relative; overflow: hidden;
+      padding: 4.5rem 2.5rem 4rem; position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem;
     }
     .hero::before {
-      content:''; position:absolute; inset:0;
+      content: ''; position: absolute; inset: 0;
       background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
-    .breadcrumb { font-size: 0.78rem; color: var(--c5); opacity: 0.7; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .breadcrumb { font-size: 0.72rem; color: var(--c4); opacity: 0.8; margin-bottom: 1rem; letter-spacing: 0.06em; position: relative; }
     .breadcrumb a { color: inherit; text-decoration: none; }
-    .breadcrumb a:hover { opacity: 1; }
-    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.9rem,4vw,3rem); color: #fff; margin-bottom: 0.6rem; }
-    .hero p { max-width: 660px; color: rgba(252,231,243,0.88); font-size: 0.98rem; line-height: 1.78; font-weight: 300; }
-
-    .content { max-width: 1060px; margin: 0 auto; padding: 3.5rem 2.5rem; }
-
-    .block-title {
-      font-family: 'Fraunces', serif; font-size: 1.55rem; color: var(--c1);
-      margin-bottom: 0.35rem; margin-top: 3rem;
+    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #fff; margin-bottom: 0.6rem; position: relative; }
+    .hero p { max-width: 600px; color: rgba(252,231,243,0.82); font-size: 0.92rem; line-height: 1.8; font-weight: 300; position: relative; }
+    .hero-stat {
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
+      padding: 1.2rem 1.5rem; text-align: center; white-space: nowrap; position: relative;
     }
+    .hero-stat-num { font-family: 'Fraunces', serif; font-size: 2.5rem; color: #fff; font-weight: 700; line-height: 1; }
+    .hero-stat-label { font-size: 0.72rem; color: var(--c4); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+
+    /* CONTENT */
+    .content { max-width: 1060px; margin: 0 auto; padding: 4rem 2.5rem; }
+
+    .block-title { font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--c1); margin-bottom: 0.3rem; margin-top: 4rem; }
     .block-title:first-child { margin-top: 0; }
-    .divider { width: 42px; height: 3px; background: var(--c3); border-radius: 2px; margin-bottom: 1.8rem; }
-    .body-text { font-size: 0.95rem; line-height: 1.82; color: var(--text-light); margin-bottom: 1.5rem; }
+    .block-sub { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c3); margin-bottom: 1.8rem; display: flex; align-items: center; gap: 8px; }
+    .block-sub::before { content: ''; width: 24px; height: 2px; background: var(--c3); border-radius: 2px; }
+    .body-text { font-size: 0.92rem; line-height: 1.85; color: var(--text-light); margin-bottom: 2rem; max-width: 700px; }
 
     /* VIDEO */
-    .video-embed {
-      background: #000; border-radius: 14px; overflow: hidden;
-      aspect-ratio: 16/9; margin-bottom: 1.5rem;
-      box-shadow: 0 8px 30px rgba(131,24,67,0.15);
-    }
-    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-wrap { border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; margin-bottom: 0.8rem; box-shadow: 0 8px 32px rgba(131,24,67,0.15); }
+    .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
     .video-placeholder {
       width: 100%; height: 100%; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 12px;
+      align-items: center; justify-content: center; gap: 14px;
       background: linear-gradient(135deg, var(--c1), var(--c3));
-      color: rgba(255,255,255,0.7); font-size: 0.88rem;
+      color: rgba(255,255,255,0.75); font-size: 0.88rem;
     }
-    .video-placeholder svg { opacity: 0.6; }
-    .video-label { font-size: 0.82rem; color: var(--text-light); margin-top: 0.4rem; margin-bottom: 2rem; font-style: italic; }
+    .play-ring { width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .video-label { font-size: 0.78rem; color: var(--text-light); margin-bottom: 3rem; font-style: italic; }
 
-    /* MODULE GRID */
-    .module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 1rem; }
-    .module-card {
-      background: var(--white); border-radius: 12px; border: 1px solid var(--c5);
-      overflow: hidden;
+    /* STEP CARDS — photo style */
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .step-card { background: var(--white); border-radius: 14px; border: 1.5px solid var(--c5); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+    .step-card:hover { border-color: var(--c4); box-shadow: 0 8px 28px rgba(131,24,67,0.1); }
+    .step-photo {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+      background: var(--c5);
     }
-    .module-thumb {
-      aspect-ratio: 16/9; background: linear-gradient(135deg, var(--c2), var(--c4));
-      display: flex; align-items: center; justify-content: center; position: relative;
+    .step-photo-placeholder {
+      width: 100%; aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--c5) 0%, var(--c4) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      color: var(--c2); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
     }
-    .module-thumb .play-icon {
-      width: 44px; height: 44px; background: rgba(255,255,255,0.2);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      border: 1.5px solid rgba(255,255,255,0.5);
+    .step-photo-placeholder svg { opacity: 0.5; }
+    .step-photo-placeholder span { opacity: 0.7; }
+    .step-body { padding: 1.2rem 1.3rem 1.4rem; }
+    .step-number {
+      display: inline-block; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--white); background: var(--c2); padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 0.6rem; font-weight: 600;
     }
-    .module-thumb .play-icon svg { margin-left: 3px; }
-    .module-week-badge {
-      position: absolute; top: 10px; left: 10px;
-      background: rgba(52,73,94,0.65); color: #fff;
-      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 3px 9px; border-radius: 20px;
+    .step-body h4 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--c1); margin-bottom: 0.45rem; }
+    .step-body p { font-size: 0.83rem; color: var(--text-light); line-height: 1.7; }
+    .photo-note {
+      display: flex; align-items: center; gap: 5px; margin-top: 0.8rem;
+      font-size: 0.7rem; color: var(--c3); letter-spacing: 0.05em; text-transform: uppercase;
     }
-    .module-body { padding: 1rem 1.1rem 1.2rem; }
-    .module-body h4 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--c1); margin-bottom: 0.35rem; }
-    .module-body p { font-size: 0.83rem; color: var(--text-light); line-height: 1.65; }
-    .module-locked {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.72rem; color: var(--c3); margin-top: 0.6rem;
-      letter-spacing: 0.05em;
+
+    /* WEEKLY PROGRESS GRID */
+    .weeks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+
+    /* WEEK CARD — video for week 1, photo placeholder for rest */
+    .week-card { background: var(--white); border-radius: 14px; border: 1.5px solid var(--c5); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+    .week-card:hover { border-color: var(--c4); box-shadow: 0 8px 28px rgba(131,24,67,0.1); }
+    .week-video { aspect-ratio: 16/9; overflow: hidden; }
+    .week-video iframe { width: 100%; height: 100%; border: none; display: block; }
+    .week-photo-placeholder {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--c5), var(--c4));
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      color: var(--c2);
     }
+    .week-photo-placeholder svg { opacity: 0.45; }
+    .week-photo-placeholder span { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
+    .week-body { padding: 1rem 1.2rem 1.3rem; }
+    .week-badge {
+      display: inline-block; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--c2); border: 1px solid var(--c4); padding: 2px 9px; border-radius: 20px;
+      margin-bottom: 0.5rem;
+    }
+    .week-body h4 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--c1); margin-bottom: 0.35rem; }
+    .week-body p { font-size: 0.8rem; color: var(--text-light); line-height: 1.65; }
 
     footer {
       background: var(--c1); color: var(--c5); text-align: center;
@@ -106,8 +129,10 @@
     }
     footer span { color: var(--c4); }
 
-    @media(max-width:600px){
-      .hero, .content { padding-left: 1.2rem; padding-right: 1.2rem; }
+    @media(max-width:768px){
+      .hero { grid-template-columns: 1fr; padding: 3.5rem 1.2rem 3rem; }
+      .hero-stat { display: none; }
+      .content { padding: 3rem 1.2rem; }
       nav { padding: 0 1.2rem; }
     }
   </style>
@@ -123,177 +148,147 @@
   </nav>
 
   <div class="hero">
-    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Rotoscoping</div>
-    <h1>Rotoscoping</h1>
-    <p>
-      Rotoscoping is the technique of animating by tracing over live-action video footage frame by frame. Originally patented in 1917, it has evolved from a Hollywood production shortcut into a fine art form — used in everything from early Disney classics to modern music videos. This project documents the full creative process from reference footage to finished animated output.
-    </p>
+    <div>
+      <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Rotoscoping</div>
+      <h1>Rotoscoping</h1>
+      <p>Rotoscoping is the technique of animating by tracing over live-action video footage frame by frame. This project documents the full creative process — from raw footage through After Effects and Photoshop to a finished animated output.</p>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">12</div>
+      <div class="hero-stat-label">Weekly Clips</div>
+    </div>
   </div>
 
   <div class="content">
 
     <!-- FINAL OUTPUT -->
     <h2 class="block-title">Final Output</h2>
-    <div class="divider"></div>
-    <p class="body-text">
-      The completed rotoscoping animation — the culmination of 12 weeks of frame-by-frame tracing, color work, and compositing. Watch the full video below.
-    </p>
-    <div class="video-embed">
+    <div class="block-sub">Completed Animation</div>
+    <p class="body-text">The completed rotoscoping animation — the culmination of 12 weeks of frame-by-frame tracing, color work, and compositing.</p>
+    <div class="video-wrap">
       <div class="video-placeholder">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="22" stroke="white" stroke-width="2"/>
-          <path d="M20 16L34 24L20 32V16Z" fill="white"/>
-        </svg>
-        <span>Rotoscoping Final Output</span>
-        <span style="font-size:0.75rem; opacity:0.6;">Replace src with your YouTube embed URL</span>
+        <div class="play-ring"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4L14 9L6 14V4Z" fill="white"/></svg></div>
+        <span>Rotoscoping — Final Output</span>
+        <span style="font-size:0.72rem;opacity:0.6;">Replace with your YouTube embed URL</span>
       </div>
       <!-- REPLACE WITH: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
     </div>
-    <p class="video-label">Rotoscoping — Final Animated Output &nbsp;·&nbsp; Replace the placeholder above with your YouTube embed URL.</p>
+    <p class="video-label">Replace the placeholder above with your YouTube embed URL.</p>
 
-    <!-- TUTORIAL -->
+    <!-- STEP BY STEP — PHOTOS -->
     <h2 class="block-title">Step-by-Step Tutorial</h2>
-    <div class="divider"></div>
-    <p class="body-text">
-      A guided walkthrough of the rotoscoping process — from importing reference footage to exporting the final animation. Each module below pairs a concise explanation with a supporting video demonstration.
-    </p>
+    <div class="block-sub">Process</div>
+    <p class="body-text">A visual walkthrough of the rotoscoping process. Each step below shows a photo of the actual screen/action at that stage.</p>
 
-    <div class="module-grid">
-      <!-- Step 1 -->
-      <div class="module-card">
-        <div class="module-thumb">
-          <div class="module-week-badge">Step 1</div>
-          <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-          </div>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 14h28" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="9" r="2" fill="currentColor"/><circle cx="16" cy="9" r="2" fill="currentColor"/></svg>
+          <span>Insert photo here</span>
         </div>
-        <div class="module-body">
+        <div class="step-body">
+          <span class="step-number">Step 1</span>
           <h4>Prepare the Applications</h4>
-          <p>Set up all required software — including Adobe After Effects and Photoshop — and ensure your project files and folders are properly organized before starting.</p>
-          <div class="module-locked">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-            Video tutorial — see description
+          <p>Set up Adobe After Effects and Photoshop. Organize your project files and folders on your desktop before starting.</p>
+          <div class="photo-note">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8l3-3 2 2 3-4 2 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add screenshot of your setup
           </div>
         </div>
       </div>
 
-      <!-- Step 2 -->
-      <div class="module-card">
-        <div class="module-thumb">
-          <div class="module-week-badge">Step 2</div>
-          <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-          </div>
+      <div class="step-card">
+        <div class="step-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 14h28" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="9" r="2" fill="currentColor"/><circle cx="16" cy="9" r="2" fill="currentColor"/></svg>
+          <span>Insert photo here</span>
         </div>
-        <div class="module-body">
+        <div class="step-body">
+          <span class="step-number">Step 2</span>
           <h4>Split the Video into 5-Second Clips</h4>
-          <p>Cut your reference footage into manageable 5-second segments. This makes frame-by-frame tracing more organized and prevents the project from becoming overwhelming.</p>
-          <div class="module-locked">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-            Video tutorial — see description
+          <p>Cut your reference footage into manageable 5-second segments so each week covers one clip.</p>
+          <div class="photo-note">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8l3-3 2 2 3-4 2 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add screenshot of clip splitting
           </div>
         </div>
       </div>
 
-      <!-- Step 3 -->
-      <div class="module-card">
-        <div class="module-thumb">
-          <div class="module-week-badge">Step 3</div>
-          <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-          </div>
+      <div class="step-card">
+        <div class="step-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 14h28" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="9" r="2" fill="currentColor"/><circle cx="16" cy="9" r="2" fill="currentColor"/></svg>
+          <span>Insert photo here</span>
         </div>
-        <div class="module-body">
-          <h4>Open After Effects &amp; Export via Render Queue</h4>
-          <p>Import the video clips into After Effects. Once your composition is ready, go to <em>Composition → Add to Render Queue</em>, configure the output settings, and render the frame sequence.</p>
-          <div class="module-locked">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-            Video tutorial — see description
+        <div class="step-body">
+          <span class="step-number">Step 3</span>
+          <h4>After Effects — Export via Render Queue</h4>
+          <p>Import clips into After Effects. Go to <em>Composition → Add to Render Queue</em>, set format to PNG Sequence, and render.</p>
+          <div class="photo-note">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8l3-3 2 2 3-4 2 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add screenshot of Render Queue
           </div>
         </div>
       </div>
 
-      <!-- Step 4 -->
-      <div class="module-card">
-        <div class="module-thumb">
-          <div class="module-week-badge">Step 4</div>
-          <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-          </div>
+      <div class="step-card">
+        <div class="step-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 14h28" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="9" r="2" fill="currentColor"/><circle cx="16" cy="9" r="2" fill="currentColor"/></svg>
+          <span>Insert photo here</span>
         </div>
-        <div class="module-body">
+        <div class="step-body">
+          <span class="step-number">Step 4</span>
           <h4>Import Rendered Frames into Photoshop</h4>
-          <p>After rendering is complete, open Photoshop and import the exported frames using <em>File → Open</em> or as a frame sequence. Each frame becomes a layer ready for tracing and editing.</p>
-          <div class="module-locked">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-            Video tutorial — see description
+          <p>Open Photoshop → <em>File → Open</em> → select first frame → check "Image Sequence" → set FPS → open. Each frame is now a layer.</p>
+          <div class="photo-note">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8l3-3 2 2 3-4 2 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add screenshot of Photoshop import
           </div>
         </div>
       </div>
 
-      <!-- Step 5 -->
-      <div class="module-card">
-        <div class="module-thumb">
-          <div class="module-week-badge">Step 5</div>
-          <div class="play-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-          </div>
+      <div class="step-card">
+        <div class="step-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 14h28" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="9" r="2" fill="currentColor"/><circle cx="16" cy="9" r="2" fill="currentColor"/></svg>
+          <span>Insert photo here</span>
         </div>
-        <div class="module-body">
+        <div class="step-body">
+          <span class="step-number">Step 5</span>
           <h4>Edit the Rendered Frames</h4>
-          <p>Trace over each frame in Photoshop using brushes or the pen tool. Apply colors, clean up edges, and build the rotoscoped animation layer by layer until the sequence is complete.</p>
-          <div class="module-locked">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-            Video tutorial — see description
+          <p>Trace and color each frame in Photoshop. Use the brush tool, paint bucket, and layer masks to build up the rotoscoped animation.</p>
+          <div class="photo-note">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8l3-3 2 2 3-4 2 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add screenshot of editing in progress
           </div>
         </div>
       </div>
+
     </div>
 
     <!-- WEEKLY PROGRESS -->
-    <h2 class="block-title" style="margin-top:3.5rem;">Weekly Progress</h2>
-    <div class="divider"></div>
-    <p class="body-text">
-      Documentation of each week's milestones — showing the evolution from rough sketches to refined animated frames across the 12-week project timeline.
-    </p>
+    <h2 class="block-title" style="margin-top:4rem;">Weekly Progress</h2>
+    <div class="block-sub">5-Second Clips</div>
+    <p class="body-text">Each module below represents one 5-second clip of the rotoscoping project. Week 1 includes the progress video — remaining weeks show photo documentation.</p>
 
-    <div class="module-grid">
-      <!-- Weeks 1–12 -->
-      <script>
-        const weeks = [
-          { n:1,  title:"Clip 1 — Seconds 0:00–0:05",  desc:"First 5-second segment rendered from After Effects and edited frame by frame in Photoshop." },
-          { n:2,  title:"Clip 2 — Seconds 0:05–0:10",  desc:"Second 5-second clip imported as a frame sequence and traced over in Photoshop." },
-          { n:3,  title:"Clip 3 — Seconds 0:10–0:15",  desc:"Third clip edited — maintaining consistent line style and color from previous segments." },
-          { n:4,  title:"Clip 4 — Seconds 0:15–0:20",  desc:"Fourth 5-second segment with continued frame-by-frame rotoscoping and color fills applied." },
-          { n:5,  title:"Clip 5 — Seconds 0:20–0:25",  desc:"Fifth clip processed through the render queue and edited in Photoshop." },
-          { n:6,  title:"Clip 6 — Seconds 0:25–0:30",  desc:"Sixth 5-second segment — refining motion flow and smoothing transitions between frames." },
-          { n:7,  title:"Clip 7 — Seconds 0:30–0:35",  desc:"Seventh clip with mid-project style review — adjustments made for visual consistency." },
-          { n:8,  title:"Clip 8 — Seconds 0:35–0:40",  desc:"Eighth segment edited with improved coloring technique based on earlier clip feedback." },
-          { n:9,  title:"Clip 9 — Seconds 0:40–0:45",  desc:"Ninth 5-second clip — detailed frame edits and cleanup of complex motion sequences." },
-          { n:10, title:"Clip 10 — Seconds 0:45–0:50", desc:"Tenth clip processed and edited — focus on smooth animation curves and clean outlines." },
-          { n:11, title:"Clip 11 — Seconds 0:50–0:55", desc:"Eleventh segment — near-final clip with refined shading and finishing detail work." },
-          { n:12, title:"Clip 12 — Seconds 0:55–1:00", desc:"Final 5-second clip completed. All segments combined for the finished rotoscoping output." },
-        ];
-        document.write(weeks.map(w => `
-          <div class="module-card">
-            <div class="module-thumb">
-              <div class="module-week-badge">Week ${w.n}</div>
-              <div class="play-icon">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L13 8L5 13V3Z" fill="white"/></svg>
-              </div>
-            </div>
-            <div class="module-body">
-              <h4>${w.title}</h4>
-              <p>${w.desc}</p>
-              <div class="module-locked">
-                <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-                Weekly video — see description
-              </div>
-            </div>
-          </div>
-        `).join(''));
-      </script>
-    </div>
+    <div class="weeks-grid" id="weeks-grid">
+
+      <!-- WEEK 1 — YouTube embed -->
+      <div class="week-card">
+        <div class="week-video">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_WEEK1_VIDEO_ID"
+            allowfullscreen
+            title="Week 1 Progress">
+          </iframe>
+          <!-- REPLACE YOUR_WEEK1_VIDEO_ID with your actual YouTube video ID -->
+        </div>
+        <div class="week-body">
+          <span class="week-badge">Week 1</span>
+          <h4>Clip 1 — 0:00–0:05</h4>
+          <p>First 5-second segment rendered from After Effects and edited frame by frame in Photoshop.</p>
+        </div>
+      </div>
+
+    </div><!-- end weeks-grid, weeks 2-12 rendered below by JS -->
 
   </div>
 
@@ -301,6 +296,40 @@
     © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
     <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
   </footer>
+
+  <script>
+    const clips = [
+      { n:2,  title:"Clip 2 — 0:05–0:10",  desc:"Second 5-second clip imported as a frame sequence and edited in Photoshop." },
+      { n:3,  title:"Clip 3 — 0:10–0:15",  desc:"Third clip edited — maintaining consistent line style and color from previous segments." },
+      { n:4,  title:"Clip 4 — 0:15–0:20",  desc:"Fourth segment with continued rotoscoping and color fills applied." },
+      { n:5,  title:"Clip 5 — 0:20–0:25",  desc:"Fifth clip processed through the render queue and edited in Photoshop." },
+      { n:6,  title:"Clip 6 — 0:25–0:30",  desc:"Sixth segment — refining motion flow and smoothing transitions between frames." },
+      { n:7,  title:"Clip 7 — 0:30–0:35",  desc:"Seventh clip — mid-project review, adjustments made for visual consistency." },
+      { n:8,  title:"Clip 8 — 0:35–0:40",  desc:"Eighth segment edited with improved coloring technique based on earlier clip feedback." },
+      { n:9,  title:"Clip 9 — 0:40–0:45",  desc:"Ninth clip — detailed frame edits and cleanup of complex motion sequences." },
+      { n:10, title:"Clip 10 — 0:45–0:50", desc:"Tenth clip — focus on smooth animation curves and clean outlines." },
+      { n:11, title:"Clip 11 — 0:50–0:55", desc:"Eleventh segment — near-final clip with refined shading and finishing detail work." },
+      { n:12, title:"Clip 12 — 0:55–1:00", desc:"Final 5-second clip completed. All segments combined for the finished output." },
+    ];
+
+    const grid = document.getElementById('weeks-grid');
+    grid.innerHTML += clips.map(c => `
+      <div class="week-card">
+        <div class="week-photo-placeholder">
+          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+            <rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 22l7-7 5 5 4-5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="13" r="2.5" fill="currentColor" opacity="0.5"/>
+          </svg>
+          <span>Add photo here</span>
+        </div>
+        <div class="week-body">
+          <span class="week-badge">Week ${c.n}</span>
+          <h4>${c.title}</h4>
+          <p>${c.desc}</p>
+        </div>
+      </div>`).join('');
+  </script>
 
 </body>
 </html>
