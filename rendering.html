@@ -134,6 +134,64 @@
       nav { padding: 0 1.2rem; }
       .calc-row { flex-direction: column; }
     }
+
+    /* SCRIPT SECTION */
+    .script-section { margin-top: 3.5rem; }
+    .script-toolbar {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .script-toolbar-title {
+      font-size: 0.82rem; color: var(--text-light); font-weight: 500; letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .script-toolbar-title span { 
+      background: var(--c5); color: var(--c1); font-size: 0.72rem; 
+      padding: 2px 10px; border-radius: 30px; font-weight: 600; letter-spacing: 0.06em;
+    }
+    .script-btn-group { display: flex; gap: 0.6rem; }
+    .script-btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.5rem 1.2rem; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.84rem; font-weight: 500; cursor: pointer; border: none;
+      transition: background 0.18s, transform 0.12s; text-decoration: none;
+    }
+    .script-btn:active { transform: scale(0.97); }
+    .script-btn-copy {
+      background: var(--c5); color: var(--c1); border: 1.5px solid var(--c4);
+    }
+    .script-btn-copy:hover { background: var(--c4); }
+    .script-btn-copy.copied { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+    .script-btn-download {
+      background: var(--c1); color: #fff;
+    }
+    .script-btn-download:hover { background: var(--c2); }
+    .script-box {
+      background: #130a10; border-radius: 14px;
+      border: 1px solid #3d1a2a;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(131,24,67,0.13);
+    }
+    .script-scroll {
+      overflow: auto; max-height: 520px;
+      padding: 1.6rem 1.8rem;
+    }
+    .script-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .script-scroll::-webkit-scrollbar-track { background: #1e0e18; }
+    .script-scroll::-webkit-scrollbar-thumb { background: var(--c2); border-radius: 3px; }
+    .script-scroll pre {
+      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.8rem; line-height: 1.75;
+      color: #e8c8d8; white-space: pre; tab-size: 4;
+      margin: 0;
+    }
+    /* syntax-ish tinting via CSS only — just colours the whole block nicely */
+    .line-num-col { 
+      display: inline-block; width: 2.4rem; 
+      color: #5a2a3a; text-align: right; margin-right: 1.2rem; 
+      user-select: none; font-size: 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -234,6 +292,39 @@
 
     <!-- PLANET CARDS -->
     <div class="planets-grid" id="planets-grid"></div>
+
+
+    <!-- PYTHON SCRIPT -->
+    <div class="script-section">
+      <h2 class="block-title">Python Script</h2>
+      <div class="divider"></div>
+      <p class="body-text">
+        The complete Blender 5.1.1 Python script used to procedurally generate the solar system — including all planets, orbital mechanics, textures, lighting, and camera animation.
+        Place your PNG textures in <code style="background:var(--c5);color:var(--c1);padding:1px 7px;border-radius:4px;font-size:0.88rem;">C:\solar_system\</code> before running.
+      </p>
+
+      <div class="script-toolbar">
+        <div class="script-toolbar-title">
+          solar_system_blender511.py &nbsp;<span>PYTHON · BLENDER 5.1.1</span>
+        </div>
+        <div class="script-btn-group">
+          <button class="script-btn script-btn-copy" id="copyBtn" onclick="copyScript()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Script
+          </button>
+          <button class="script-btn script-btn-download" onclick="downloadScript()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .py
+          </button>
+        </div>
+      </div>
+
+      <div class="script-box">
+        <div class="script-scroll">
+          <pre id="scriptPre"></pre>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -338,6 +429,557 @@
 
     // Initial render
     renderCards(null);
+
+    // ── Python script content ─────────────────────────────────────────────────
+    const PYTHON_SCRIPT = `"""
+Solar System for Blender 5.1.1
+================================
+TEXTURES  →  place PNGs in C:\\\\solar_system\\\\
+  sun.png  mercury.png  venus.png  earth.png  moon.png
+  mars.png  jupiter.png  saturn.png  saturn_ring.png
+  uranus.png  neptune.png  pluto.png  stars.png
+
+HOW TO USE:
+  1. Scripting tab → paste → Run Script
+  2. Timeline end = 3500, press Space to play
+  3. Numpad 0 = camera view
+  4. Z → Rendered to see textures/glow
+
+ANIMATION:
+  Frames 1–~650  : camera tours each planet up close
+  Frame ~650+     : zooms out, all orbits + spins begin
+  Total           : 3500 frames at 24 fps (~2 min 26 sec)
+"""
+
+import bpy
+import math
+import mathutils
+
+# ── Texture paths ──────────────────────────────────────────────────────────────
+TEXTURE_PATHS = {
+    "Sun":         r"C:\\solar_system\\sun.png",
+    "Mercury":     r"C:\\solar_system\\mercury.png",
+    "Venus":       r"C:\\solar_system\\venus.png",
+    "Earth":       r"C:\\solar_system\\earth.png",
+    "Moon":        r"C:\\solar_system\\moon.png",
+    "Mars":        r"C:\\solar_system\\mars.png",
+    "Jupiter":     r"C:\\solar_system\\jupiter.png",
+    "Saturn":      r"C:\\solar_system\\saturn.png",
+    "SaturnRings": r"C:\\solar_system\\saturn_ring.png",
+    "Uranus":      r"C:\\solar_system\\uranus.png",
+    "Neptune":     r"C:\\solar_system\\neptune.png",
+    "Pluto":       r"C:\\solar_system\\pluto.png",
+    "Stars":       r"C:\\solar_system\\stars.png",
+}
+
+# ── Planet data ────────────────────────────────────────────────────────────────
+# distance     = orbit radius in Blender units
+# radius       = sphere radius in Blender units
+# period       = orbital period in Earth days
+# rotation_hrs = sidereal day in hours  (negative = retrograde spin)
+planet_data = [
+    {"name": "Mercury", "distance":  2.0, "radius": 0.12, "period":    88, "rotation_hrs":  1407.6},
+    {"name": "Venus",   "distance":  3.0, "radius": 0.18, "period":   225, "rotation_hrs": -5832.5},
+    {"name": "Earth",   "distance":  4.0, "radius": 0.20, "period":   365, "rotation_hrs":    24.0},
+    {"name": "Moon",    "distance":  4.6, "radius": 0.07, "period":   365, "rotation_hrs":   655.2},
+    {"name": "Mars",    "distance":  5.5, "radius": 0.14, "period":   687, "rotation_hrs":    24.6},
+    {"name": "Jupiter", "distance":  7.5, "radius": 0.45, "period":  4333, "rotation_hrs":     9.9},
+    {"name": "Saturn",  "distance":  9.5, "radius": 0.38, "period": 10759, "rotation_hrs":    10.7},
+    {"name": "Uranus",  "distance": 11.5, "radius": 0.28, "period": 30685, "rotation_hrs":   -17.2},
+    {"name": "Neptune", "distance": 13.5, "radius": 0.26, "period": 60190, "rotation_hrs":    16.1},
+    {"name": "Pluto",   "distance": 15.5, "radius": 0.07, "period": 90560, "rotation_hrs":  -153.3},
+]
+
+AXIAL_TILTS = {
+    "Earth": 23.5, "Mars": 25.2, "Saturn": 26.7,
+    "Uranus": 97.8, "Neptune": 28.3, "Moon": 6.7, "Pluto": 122.5,
+}
+
+# ── Animation settings ─────────────────────────────────────────────────────────
+ZOOM_DURATION      = 60    # frames to hold on each planet close-up
+ZOOM_OUT_DURATION  = 50    # frames for pull-back to full system view
+ORBITAL_SPEED_MULT = 2.0   # speed multiplier vs real orbital periods
+TOTAL_FRAMES       = 3500
+
+ROTATION_START_FRAME = len(planet_data) * ZOOM_DURATION + ZOOM_OUT_DURATION + 24
+print(f"Orbits/spins start at frame: {ROTATION_START_FRAME}")
+
+# ── Safe attribute setter (handles renamed/removed attrs across versions) ───────
+def safe_set(obj, attr, val):
+    try:
+        setattr(obj, attr, val)
+    except AttributeError:
+        print(f"  ⚠️  {type(obj).__name__}.{attr} not available in this Blender version — skipped")
+
+# ── Camera interpolation (Blender 5.x layered-action compatible) ───────────────
+def set_camera_interpolation(cam_obj, mode='BEZIER'):
+    if not cam_obj.animation_data or not cam_obj.animation_data.action:
+        return
+    action = cam_obj.animation_data.action
+
+    def apply(fcurves):
+        for fc in fcurves:
+            for kp in fc.keyframe_points:
+                kp.interpolation = mode
+                if mode == 'BEZIER':
+                    kp.handle_left_type  = 'AUTO'
+                    kp.handle_right_type = 'AUTO'
+
+    applied = False
+    try:                                          # Blender 5.x layered actions
+        for layer in action.layers:
+            for strip in layer.strips:
+                try:
+                    cb = strip.channelbag(cam_obj.animation_data.action_slot)
+                    apply(cb.fcurves)
+                    applied = True
+                except Exception:
+                    pass
+    except AttributeError:
+        pass
+    if not applied:                               # legacy fallback
+        try:
+            apply(action.fcurves)
+        except Exception:
+            pass
+
+# ── Cleanup ────────────────────────────────────────────────────────────────────
+bpy.ops.object.select_all(action='SELECT')
+bpy.ops.object.delete(use_global=False)
+for block in list(bpy.data.meshes):    bpy.data.meshes.remove(block)
+for block in list(bpy.data.materials): bpy.data.materials.remove(block)
+for block in list(bpy.data.images):    bpy.data.images.remove(block)
+for block in list(bpy.data.curves):    bpy.data.curves.remove(block)
+
+# ── Render / scene settings ────────────────────────────────────────────────────
+scene = bpy.context.scene
+scene.render.engine = 'CYCLES'
+scene.frame_start   = 1
+scene.frame_end     = TOTAL_FRAMES
+scene.render.fps    = 24
+scene.render.resolution_x = 1920
+scene.render.resolution_y = 1080
+
+safe_set(scene.cycles, 'device',                 'GPU')
+safe_set(scene.cycles, 'samples',                128)
+safe_set(scene.cycles, 'use_adaptive_sampling',  True)
+safe_set(scene.cycles, 'adaptive_threshold',     0.01)
+safe_set(scene.cycles, 'max_bounces',            8)
+safe_set(scene.cycles, 'transparent_max_bounces',8)
+safe_set(scene.cycles, 'use_persistent_data',    True)   # wrapped — won't crash if missing
+safe_set(scene.cycles, 'use_denoising',          True)   # wrapped — won't crash if missing
+
+# GPU device setup
+try:
+    prefs = bpy.context.preferences.addons['cycles'].preferences
+    for ctype in ('OPTIX', 'CUDA', 'HIP', 'METAL'):
+        try:
+            prefs.compute_device_type = ctype
+            prefs.get_devices()
+            for d in prefs.devices:
+                d.use = True
+            print(f"✅ GPU: {ctype}")
+            break
+        except Exception:
+            continue
+except Exception as e:
+    print(f"⚠️ GPU setup skipped: {e}")
+
+# ── Material builder ───────────────────────────────────────────────────────────
+def make_material(name, emission_strength=0.0, alpha=False):
+    path = TEXTURE_PATHS.get(name)
+    mat  = bpy.data.materials.new(name=f"{name}_Mat")
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    nodes.clear()
+
+    out  = nodes.new('ShaderNodeOutputMaterial')
+    bsdf = nodes.new('ShaderNodeBsdfPrincipled')
+    bsdf.inputs['Roughness'].default_value = 0.8
+
+    tex_node = None
+    if path:
+        try:
+            img      = bpy.data.images.load(path, check_existing=True)
+            tex_node = nodes.new('ShaderNodeTexImage')
+            tex_node.image = img
+            uv       = nodes.new('ShaderNodeTexCoord')
+            links.new(uv.outputs['UV'],        tex_node.inputs['Vector'])
+            links.new(tex_node.outputs['Color'], bsdf.inputs['Base Color'])
+            if alpha:
+                links.new(tex_node.outputs['Alpha'], bsdf.inputs['Alpha'])
+                mat.blend_method = 'HASHED'
+            print(f"  ✅ Texture: {name}")
+        except Exception as e:
+            print(f"  ⚠️  Texture failed ({name}): {e}")
+
+    if emission_strength > 0:
+        emit = nodes.new('ShaderNodeEmission')
+        emit.inputs['Strength'].default_value = emission_strength
+        if tex_node:
+            links.new(tex_node.outputs['Color'], emit.inputs['Color'])
+        mix = nodes.new('ShaderNodeMixShader')
+        mix.inputs['Fac'].default_value = 0.5
+        links.new(bsdf.outputs['BSDF'],     mix.inputs[1])
+        links.new(emit.outputs['Emission'], mix.inputs[2])
+        links.new(mix.outputs['Shader'],    out.inputs['Surface'])
+    else:
+        links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
+
+    return mat
+
+# ── Orbit line ─────────────────────────────────────────────────────────────────
+def create_orbit_line(distance, name):
+    bpy.ops.curve.primitive_bezier_circle_add(radius=distance, location=(0, 0, 0))
+    orb = bpy.context.object
+    orb.name = f"{name}_OrbitLine"
+    orb.data.resolution_u = 64
+    orb.data.bevel_depth  = 0.015 if name == "Moon" else (0.025 if name == "Pluto" else 0.02)
+    orb.hide_select = True
+
+    mat   = bpy.data.materials.new(f"{name}_OrbitMat")
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    nodes.clear()
+    out  = nodes.new('ShaderNodeOutputMaterial')
+    emit = nodes.new('ShaderNodeEmission')
+    if name == "Moon":
+        emit.inputs['Color'].default_value    = (0.7, 0.7, 0.9, 1.0)
+        emit.inputs['Strength'].default_value = 0.8
+    elif name == "Pluto":
+        emit.inputs['Color'].default_value    = (1.0, 0.6, 0.2, 1.0)
+        emit.inputs['Strength'].default_value = 1.5
+    else:
+        emit.inputs['Color'].default_value    = (0.8, 0.8, 0.8, 1.0)
+        emit.inputs['Strength'].default_value = 1.0
+    links.new(emit.outputs['Emission'], out.inputs['Surface'])
+    orb.data.materials.append(mat)
+
+# ── Driver helper ──────────────────────────────────────────────────────────────
+def add_z_driver(obj, expression):
+    drv = obj.driver_add("rotation_euler", 2).driver
+    drv.type = 'SCRIPTED'
+    var = drv.variables.new()
+    var.name = "frame"
+    var.targets[0].id_type   = 'SCENE'
+    var.targets[0].id        = bpy.context.scene
+    var.targets[0].data_path = "frame_current"
+    drv.expression = expression
+
+# ── Saturn rings ───────────────────────────────────────────────────────────────
+def create_saturn_rings(orbit_empty, saturn_distance, radius):
+    bpy.ops.mesh.primitive_cylinder_add(
+        radius=radius * 1.7, depth=0.01, vertices=128,
+        location=(saturn_distance, 0, 0)
+    )
+    rings = bpy.context.object
+    rings.name = "Saturn_Rings"
+    rings.rotation_euler = (0, 0, 0)
+
+    rings_mat = make_material("SaturnRings", alpha=True)
+    if rings_mat:
+        rings.data.materials.append(rings_mat)
+
+    rings.parent = orbit_empty
+    rings.rotation_mode = 'XYZ'
+    ring_speed = 360 / 240
+    add_z_driver(rings,
+        f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {ring_speed}))")
+    print("🪐 Saturn rings created")
+
+# ── UV unwrap ──────────────────────────────────────────────────────────────────
+def unwrap(obj):
+    bpy.context.view_layer.objects.active = obj
+    try:
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.uv.unwrap(method='ANGLE_BASED', margin=0.001)
+        bpy.ops.object.mode_set(mode='OBJECT')
+    except Exception:
+        try:
+            bpy.ops.object.mode_set(mode='OBJECT')
+        except Exception:
+            pass
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  SUN
+# ═════════════════════════════════════════════════════════════════════════════
+bpy.ops.mesh.primitive_uv_sphere_add(radius=0.9, location=(0,0,0), segments=64, ring_count=32)
+sun = bpy.context.object
+sun.name = "Sun"
+bpy.ops.object.shade_smooth()
+unwrap(sun)
+sun.rotation_mode = 'XYZ'
+add_z_driver(sun,
+    f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {360/(25*24)}))")
+sun_mat = make_material("Sun", emission_strength=5.0)
+if sun_mat:
+    sun.data.materials.append(sun_mat)
+
+# Point light inside the Sun
+bpy.ops.object.light_add(type='POINT', location=(0, 0, 0))
+sun_light = bpy.context.object
+sun_light.name = "SunPointLight"
+sun_light.data.energy           = 5000.0
+sun_light.data.color            = (1.0, 0.97, 0.88)
+sun_light.data.shadow_soft_size = 2.0
+print("☀️ Sun created")
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  PLANETS, MOON, PLUTO
+# ═════════════════════════════════════════════════════════════════════════════
+planet_objects = []
+
+for planet in planet_data:
+    name     = planet["name"]
+    distance = planet["distance"]
+    radius   = planet["radius"]
+    rot_hrs  = planet["rotation_hrs"]
+
+    # Orbit pivot
+    bpy.ops.object.empty_add(type='PLAIN_AXES', location=(0, 0, 0))
+    orbit = bpy.context.object
+    orbit.name = f"{name}_Orbit"
+
+    create_orbit_line(distance, name)
+
+    # Planet sphere
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        radius=radius, location=(distance, 0, 0), segments=64, ring_count=32)
+    obj = bpy.context.object
+    obj.name = name
+    bpy.ops.object.shade_smooth()
+    unwrap(obj)
+
+    em = 0.5 if name == "Moon" else (1.2 if name == "Pluto" else 0.3)
+    mat = make_material(name, emission_strength=em)
+    if mat:
+        obj.data.materials.append(mat)
+
+    if name == "Saturn":
+        create_saturn_rings(orbit, distance, radius)
+
+    obj.parent = orbit
+    obj.rotation_mode = 'XYZ'
+    if name in AXIAL_TILTS:
+        obj.rotation_euler[0] = math.radians(AXIAL_TILTS[name])
+
+    # Self-rotation driver
+    if rot_hrs != 0:
+        rot_speed = (360 / abs(rot_hrs)) * (-1 if rot_hrs < 0 else 1)
+        add_z_driver(obj,
+            f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {rot_speed}))")
+
+    # Name label
+    bpy.ops.object.text_add(location=(distance, 0, radius + 0.3))
+    label = bpy.context.object
+    label.name = f"{name}_Label"
+    label.data.body    = name
+    label.data.size    = 0.8 if name == "Pluto" else max(0.4, radius * 0.6)
+    label.data.extrude = 0.08 if name == "Pluto" else 0.03
+    label.data.align_x = 'CENTER'
+    label.data.align_y = 'CENTER'
+    label.rotation_euler = (math.radians(90), 0, 0)
+    label.parent = orbit
+
+    lmat  = bpy.data.materials.new(f"{name}_LabelMat")
+    lmat.use_nodes = True
+    lnodes = lmat.node_tree.nodes
+    llinks = lmat.node_tree.links
+    lnodes.clear()
+    lout  = lnodes.new('ShaderNodeOutputMaterial')
+    lemit = lnodes.new('ShaderNodeEmission')
+    if name == "Moon":
+        lemit.inputs['Color'].default_value    = (0.9, 0.9, 1.0, 1.0)
+        lemit.inputs['Strength'].default_value = 2.0
+    elif name == "Pluto":
+        lemit.inputs['Color'].default_value    = (1.0, 0.8, 0.2, 1.0)
+        lemit.inputs['Strength'].default_value = 4.0
+    else:
+        lemit.inputs['Color'].default_value    = (1.0, 1.0, 0.8, 1.0)
+        lemit.inputs['Strength'].default_value = 2.0
+    llinks.new(lemit.outputs['Emission'], lout.inputs['Surface'])
+    label.data.materials.append(lmat)
+
+    # Orbital driver
+    orb_speed = (360 / planet["period"]) * ORBITAL_SPEED_MULT
+    orbit.rotation_mode = 'XYZ'
+    add_z_driver(orbit,
+        f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {orb_speed}))")
+
+    planet_objects.append({"object": obj, "orbit": orbit, "data": planet})
+    print(f"✅ {name}")
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  STARFIELD BACKGROUND
+# ═════════════════════════════════════════════════════════════════════════════
+world = bpy.data.worlds.get("World") or bpy.data.worlds.new("World")
+scene.world = world
+world.use_nodes = True
+wnodes = world.node_tree.nodes
+wlinks = world.node_tree.links
+wnodes.clear()
+wout = wnodes.new('ShaderNodeOutputWorld')
+wbg  = wnodes.new('ShaderNodeBackground')
+wbg.inputs['Strength'].default_value = 0.5
+
+stars_path = TEXTURE_PATHS.get("Stars")
+if stars_path:
+    try:
+        wenv = wnodes.new('ShaderNodeTexEnvironment')
+        wenv.image = bpy.data.images.load(stars_path, check_existing=True)
+        wlinks.new(wenv.outputs['Color'], wbg.inputs['Color'])
+        print("✅ Starfield loaded")
+    except Exception as e:
+        print(f"⚠️ Stars failed: {e}")
+        wbg.inputs['Color'].default_value = (0.0, 0.0, 0.02, 1.0)
+else:
+    wbg.inputs['Color'].default_value = (0.0, 0.0, 0.02, 1.0)
+wlinks.new(wbg.outputs['Background'], wout.inputs['Surface'])
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  LIGHTS
+# ═════════════════════════════════════════════════════════════════════════════
+bpy.ops.object.light_add(type='SUN', location=(0, 0, 30))
+bpy.context.object.data.energy = 5.0
+
+bpy.ops.object.light_add(type='AREA', location=(0, 0, 50))
+bpy.context.object.data.energy = 2.0
+bpy.context.object.data.size   = 100
+
+bpy.ops.object.light_add(type='POINT', location=(15, 0, 3))
+bpy.context.object.name        = "PlutoLight"
+bpy.context.object.data.energy = 8.0
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  CAMERA + ANIMATION
+# ═════════════════════════════════════════════════════════════════════════════
+bpy.ops.object.camera_add(location=(0, -45, 20))
+camera = bpy.context.object
+camera.name = "MainCamera"
+camera.data.clip_end   = 200.0
+camera.data.clip_start = 0.01
+scene.camera = camera
+
+# Frame 1: tight on the Sun
+camera.location       = (0, -5, 2)
+camera.rotation_euler = (math.radians(80), 0, 0)
+camera.keyframe_insert(data_path="location",       frame=1)
+camera.keyframe_insert(data_path="rotation_euler", frame=1)
+
+current_frame = 1
+
+for planet_info in planet_objects:
+    data     = planet_info["data"]
+    name     = data["name"]
+    distance = data["distance"]
+    radius   = data["radius"]
+
+    if name == "Pluto":
+        cx, cy, cz = distance - 1.0, -2.0, 1.0
+        direction  = mathutils.Vector((distance, 0, 0)) - mathutils.Vector((cx, cy, cz))
+        camera.rotation_euler = direction.to_track_quat('-Z', 'Y').to_euler()
+    elif name == "Saturn":
+        cd = max(radius * 12, 4.0)
+        cx, cy, cz = distance + cd*0.7, -cd*0.7, radius*3
+        camera.rotation_euler = (math.radians(70), 0, math.radians(45))
+    elif name == "Moon":
+        cd = max(radius * 10, 2.5)
+        cx, cy, cz = distance + cd*0.7, -cd*0.7, radius*3
+        camera.rotation_euler = (math.radians(70), 0, math.radians(45))
+    else:
+        cd = max(radius * 8, 3.0)
+        cx, cy, cz = distance + cd*0.7, -cd*0.7, radius*3
+        camera.rotation_euler = (math.radians(70), 0, math.radians(45))
+
+    zoom_in = current_frame + 24
+    camera.location = (cx, cy, cz)
+    camera.keyframe_insert(data_path="location",       frame=zoom_in)
+    camera.keyframe_insert(data_path="rotation_euler", frame=zoom_in)
+
+    hold = zoom_in + ZOOM_DURATION - 24
+    camera.keyframe_insert(data_path="location",       frame=hold)
+    camera.keyframe_insert(data_path="rotation_euler", frame=hold)
+    current_frame = hold
+
+# Zoom out to full system
+zoom_out = current_frame + ZOOM_OUT_DURATION
+camera.location       = (0, -45, 20)
+camera.rotation_euler = (math.radians(65), 0, 0)
+camera.keyframe_insert(data_path="location",       frame=zoom_out)
+camera.keyframe_insert(data_path="rotation_euler", frame=zoom_out)
+
+set_camera_interpolation(camera, mode='BEZIER')
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  VIEWPORT
+# ═════════════════════════════════════════════════════════════════════════════
+for area in bpy.context.screen.areas:
+    if area.type == 'VIEW_3D':
+        for space in area.spaces:
+            if space.type == 'VIEW_3D':
+                space.shading.type = 'RENDERED'
+                space.clip_end     = 200.0
+
+print("=" * 55)
+print("  ✅  Solar System ready!  Blender 5.1.1")
+print(f"  Orbits start at frame {ROTATION_START_FRAME}")
+print("  Textures: C:\\\\solar_system\\\\*.png")
+print("  TIP: N panel → View → Clip End → 500  if")
+print("       distant planets disappear on zoom-out")
+print("=" * 55)
+`;
+
+    // Render script with line numbers
+    (function renderScript() {
+      const pre = document.getElementById('scriptPre');
+      const lines = PYTHON_SCRIPT.split('\n');
+      pre.innerHTML = lines.map((line, i) => {
+        const num = String(i + 1).padStart(3, ' ');
+        const safe = line
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+        return `<span class="line-num-col">${num}</span>${safe}`;
+      }).join('\n');
+    })();
+
+    function copyScript() {
+      navigator.clipboard.writeText(PYTHON_SCRIPT).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Script`;
+        }, 2500);
+      }).catch(() => {
+        // Fallback for browsers without clipboard API
+        const ta = document.createElement('textarea');
+        ta.value = PYTHON_SCRIPT;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
+      });
+    }
+
+    function downloadScript() {
+      const blob = new Blob([PYTHON_SCRIPT], { type: 'text/plain' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'solar_system_blender511.py';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
   </script>
 
 </body>
