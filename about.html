@@ -1,149 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About | Multimedia & Authoring</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --c1: #be185d; --c2: #9d174d; --c3: #f472b6;
-      --c4: #fbcfe8; --c5: #1e0d16; --bg: #0a0608;
-      --white: #150c11; --text: #f0e6eb; --text-light: #c9a0b4;
+      --pink:#f472b6; --pink2:#db2777; --pink3:#be185d;
+      --bg:#06030a; --surface:#0e0814; --card:#160b1c;
+      --border:#2d1040; --muted:#5a2d6e; --mid:#a87cbf;
+      --light:#d4b0e8; --white:#f2e8f8;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0a0608; color: #f0e6eb; }
-    nav {
-      background: var(--c1); padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(190,24,93,0.35);
-    }
-    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; }
-    .nav-links { display: flex; gap: 0.5rem; }
-    .nav-links a {
-      color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
-      padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s, color 0.2s;
-    }
-    .nav-links a:hover, .nav-links a.active { background: rgba(190,24,93,0.2); color: #fff; }
-
-    .hero {
-      background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 60%, var(--c3) 100%);
-      padding: 5rem 2.5rem 4rem; text-align: center; position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c5); opacity: 0.8; margin-bottom: 1rem; }
-    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 3rem); color: #fff; margin-bottom: 0.6rem; }
-    .hero p { max-width: 560px; margin: 0 auto; color: rgba(240,180,210,0.85); font-size: 1rem; line-height: 1.75; font-weight: 300; }
-
-    .section { padding: 4rem 2.5rem; max-width: 900px; margin: 0 auto; }
-    .section-title { font-family: 'Fraunces', serif; font-size: 1.75rem; color: var(--c1); margin-bottom: 0.4rem; }
-    .section-divider { width: 48px; height: 3px; background: var(--c3); border-radius: 2px; margin-bottom: 2rem; }
-
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
-    @media(max-width:640px){ .about-grid { grid-template-columns: 1fr; } }
-
-    .info-card {
-      background: #150c11; border-radius: 14px; border: 1px solid #2e1020;
-      padding: 1.5rem; transition: box-shadow 0.2s;
-    }
-    .info-card:hover { box-shadow: 0 8px 28px rgba(190,24,93,0.25); }
-    .info-card-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c3); margin-bottom: 0.5rem; }
-    .info-card-value { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c1); font-weight: 600; }
-    .info-card-sub { font-size: 0.88rem; color: var(--text-light); margin-top: 0.3rem; line-height: 1.6; }
-
-    .about-body { font-size: 0.97rem; line-height: 1.85; color: var(--text-light); }
-    .about-body p { margin-bottom: 1.2rem; }
-    .about-body strong { color: var(--c1); font-weight: 500; }
-
-    .skills-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
-    .skill-tag {
-      background: #2e1020; color: #fbcfe8; font-size: 0.8rem;
-      padding: 5px 14px; border-radius: 20px; font-weight: 500;
-    }
-
-    footer {
-      background: var(--c1); color: var(--c5); text-align: center;
-      padding: 2rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.03em; line-height: 1.9;
-    }
-    footer span { color: var(--c4); }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Plus Jakarta Sans',sans-serif; background:linear-gradient(160deg,#06030a 0%,#12062a 50%,#200828 100%); background-attachment:fixed; color:var(--white); min-height:100vh; }
+    nav { background:linear-gradient(90deg,#06030a 0%,#12062a 60%,#1e0830 100%); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+    .nav-brand { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); letter-spacing:0.03em; text-decoration:none; }
+    .nav-links { display:flex; gap:0.4rem; }
+    .nav-links a { color:var(--mid); text-decoration:none; font-size:0.82rem; font-weight:500; padding:0.4rem 1rem; border-radius:30px; transition:color 0.2s,background 0.2s; }
+    .nav-links a:hover,.nav-links a.active { color:var(--white); background:rgba(244,114,182,0.15); }
+    footer { background:linear-gradient(90deg,#06030a 0%,#12062a 100%); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; }
+    footer span { color:var(--mid); }
+    .hero { padding:5rem 2.5rem 4rem; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+    .hero::after { content:''; position:absolute; top:0; right:0; width:50%; height:100%; background:radial-gradient(ellipse at right,rgba(244,114,182,0.08),transparent 70%); pointer-events:none; }
+    .breadcrumb { font-size:0.72rem; color:var(--muted); margin-bottom:1.5rem; letter-spacing:0.1em; text-transform:uppercase; }
+    .breadcrumb a { color:inherit; text-decoration:none; transition:color 0.2s; }
+    .breadcrumb a:hover { color:var(--pink); }
+    .hero h1 { font-family:'Fraunces',serif; font-size:clamp(2.5rem,6vw,4.5rem); color:var(--white); font-weight:700; line-height:1.08; margin-bottom:0.6rem; }
+    .hero p { max-width:520px; color:var(--mid); font-size:0.9rem; line-height:1.85; font-weight:300; }
+    .content { max-width:1000px; margin:0 auto; padding:5rem 2.5rem; }
+    .block-title { font-family:'Fraunces',serif; font-size:1.8rem; color:var(--white); margin-bottom:0.3rem; font-weight:700; margin-top:4rem; }
+    .block-title:first-child { margin-top:0; }
+    .block-sub { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:2.5rem; display:flex; align-items:center; gap:10px; }
+    .block-sub::before { content:''; width:20px; height:1px; background:var(--pink); }
+    .info-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-bottom:1rem; }
+    .info-card { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:12px; padding:1.5rem; transition:border-color 0.2s; backdrop-filter:blur(6px); }
+    .info-card:hover { border-color:var(--pink); }
+    .info-label { font-size:0.66rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--pink); margin-bottom:0.6rem; }
+    .info-value { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); font-weight:700; }
+    .info-sub { font-size:0.8rem; color:var(--mid); margin-top:0.3rem; line-height:1.6; }
+    .about-body { font-size:0.9rem; line-height:1.9; color:var(--mid); }
+    .about-body p { margin-bottom:1.3rem; }
+    .about-body strong { color:var(--light); font-weight:500; }
+    .skills-list { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:2rem; }
+    .skill-tag { background:rgba(244,114,182,0.08); color:var(--mid); font-size:0.72rem; padding:6px 14px; border:1px solid var(--border); border-radius:30px; letter-spacing:0.06em; transition:border-color 0.2s,color 0.2s; }
+    .skill-tag:hover { border-color:var(--pink); color:var(--pink); }
+    @media(max-width:600px){ .hero,.content{ padding-left:1.2rem; padding-right:1.2rem; } nav{ padding:0 1.2rem; } }
   </style>
 </head>
 <body>
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
-    </div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html" class="active">About</a></div>
   </nav>
-
-  <section class="hero">
-    <p class="hero-eyebrow">Meet the Creator</p>
+  <div class="hero">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; About</div>
     <h1>About</h1>
     <p>A brief introduction to the person behind the projects and the course that shaped them.</p>
-  </section>
-
-  <div class="section">
-    <h2 class="section-title">Student Profile</h2>
-    <div class="section-divider"></div>
-
-    <div class="about-grid">
-      <div class="info-card">
-        <div class="info-card-label">Full Name</div>
-        <div class="info-card-value">Glaiza Marie D. Reblinca</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-label">Program &amp; Section</div>
-        <div class="info-card-value">BSIT · NS · 2A</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-label">Subject</div>
-        <div class="info-card-value">Multimedia and Authoring</div>
-        <div class="info-card-sub">Digital media production, animation, and 3D visualization</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-label">Academic Year</div>
-        <div class="info-card-value">2025 – 2026</div>
-        <div class="info-card-sub">Second Year, Second Semester</div>
-      </div>
+  </div>
+  <div class="content">
+    <h2 class="block-title">Student Profile</h2>
+    <div class="block-sub">Identity</div>
+    <div class="info-grid">
+      <div class="info-card"><div class="info-label">Full Name</div><div class="info-value">Glaiza Marie D. Reblinca</div></div>
+      <div class="info-card"><div class="info-label">Program &amp; Section</div><div class="info-value">BSIT · NS · 2A</div></div>
+      <div class="info-card"><div class="info-label">Subject</div><div class="info-value">Multimedia and Authoring</div><div class="info-sub">Digital media production, animation, and 3D visualization</div></div>
+      <div class="info-card"><div class="info-label">Academic Year</div><div class="info-value">2025 – 2026</div><div class="info-sub">Second Year, Second Semester</div></div>
     </div>
-
-    <h2 class="section-title">About This Site</h2>
-    <div class="section-divider"></div>
+    <h2 class="block-title">About This Site</h2>
+    <div class="block-sub">Context</div>
     <div class="about-body">
-      <p>
-        This website serves as a digital portfolio for the <strong>Multimedia and Authoring</strong> course, documenting the creative journey through two major projects: <strong>Rotoscoping</strong> and <strong>3D Rendering</strong>. Each project challenged the application of digital storytelling tools and techniques across multiple weeks of work.
-      </p>
-      <p>
-        The <strong>rotoscoping project</strong> involved tracing over live-action footage frame by frame, transforming real movement into stylized animation. The process required patience, precision, and a deep understanding of how motion works in time.
-      </p>
-      <p>
-        The <strong>3D rendering project</strong> focused on building a realistic model of the solar system using industry-standard tools. It explores concepts like lighting, texturing, orbital mechanics, and perspective — all rendered to produce a visually compelling output.
-      </p>
-      <p>
-        Together, these projects reflect a growing proficiency in digital media authoring and a genuine curiosity for the intersection of <strong>art and technology</strong>.
-      </p>
-
+      <p>This website serves as a digital portfolio for the <strong>Multimedia and Authoring</strong> course, documenting the creative journey through two major projects: <strong>Rotoscoping</strong> and <strong>3D Rendering</strong>.</p>
+      <p>The <strong>rotoscoping project</strong> involved splitting reference footage into 5-second clips, rendering them through After Effects, then tracing and editing each frame in Photoshop.</p>
+      <p>The <strong>3D rendering project</strong> built a realistic model of the solar system — exploring lighting, texturing, orbital mechanics, and perspective.</p>
+      <p>Together, these projects reflect a growing proficiency in digital media authoring and a genuine curiosity for the intersection of <strong>art and technology</strong>.</p>
       <div class="skills-list">
-        <span class="skill-tag">Rotoscoping</span>
-        <span class="skill-tag">3D Rendering</span>
-        <span class="skill-tag">Animation</span>
-        <span class="skill-tag">Digital Media</span>
-        <span class="skill-tag">Video Production</span>
-        <span class="skill-tag">Multimedia Authoring</span>
-        <span class="skill-tag">Solar System Modeling</span>
+        <span class="skill-tag">Rotoscoping</span><span class="skill-tag">3D Rendering</span><span class="skill-tag">After Effects</span><span class="skill-tag">Photoshop</span><span class="skill-tag">Animation</span><span class="skill-tag">Digital Media</span><span class="skill-tag">Video Production</span><span class="skill-tag">Solar System Modeling</span>
       </div>
     </div>
   </div>
-
-  <footer>
-    © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
-    <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
-  </footer>
+  <footer>© 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/><span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span></footer>
 </body>
 </html>
