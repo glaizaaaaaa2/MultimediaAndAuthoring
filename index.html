@@ -8,154 +8,161 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --c1: #be185d; --c2: #9d174d; --c3: #f472b6;
-      --c4: #fbcfe8; --c5: #1e0d16; --bg: #0a0608;
-      --white: #150c11; --text: #f0e6eb; --text-light: #c9a0b4;
+      --pink:    #f472b6;
+      --pink2:   #db2777;
+      --pink3:   #be185d;
+      --bg:      #06030a;
+      --surface: #0e0814;
+      --card:    #160b1c;
+      --border:  #2d1040;
+      --muted:   #5a2d6e;
+      --mid:     #a87cbf;
+      --light:   #d4b0e8;
+      --white:   #f2e8f8;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0a0608; color: #f0e6eb; }
-
-    /* NAV */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(160deg, #06030a 0%, #12062a 50%, #200828 100%);
+      background-attachment: fixed;
+      color: var(--white); min-height: 100vh;
+    }
     nav {
-      background: var(--c1); padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(190,24,93,0.35);
+      background: linear-gradient(90deg, #06030a 0%, #12062a 60%, #1e0830 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem; display: flex; align-items: center;
+      justify-content: space-between; height: 64px;
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(12px);
     }
-    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--c5); letter-spacing: 0.03em; text-decoration: none; }
+    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--white); letter-spacing: 0.03em; text-decoration: none; }
     .nav-links { display: flex; gap: 0.4rem; }
     .nav-links a {
-      color: var(--c5); text-decoration: none; font-size: 0.82rem; font-weight: 500;
-      padding: 0.4rem 1rem; border-radius: 30px; transition: background 0.2s;
+      color: var(--mid); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+      padding: 0.4rem 1rem; border-radius: 30px; letter-spacing: 0.04em;
+      transition: color 0.2s, background 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { background: rgba(190,24,93,0.2); color: #fff; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); background: rgba(244,114,182,0.15); }
+    footer {
+      background: linear-gradient(90deg, #06030a 0%, #12062a 100%);
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 2.5rem 1.5rem;
+      font-size: 0.82rem; letter-spacing: 0.04em; color: var(--muted); line-height: 2.2;
+    }
+    footer span { color: var(--mid); }
 
-    /* HERO — split layout */
+    /* HERO */
     .hero {
       display: grid; grid-template-columns: 1fr 1fr;
-      min-height: 88vh; overflow: hidden;
+      min-height: 90vh; overflow: hidden;
     }
     .hero-left {
-      background: linear-gradient(160deg, var(--c1) 0%, var(--c2) 60%, var(--c3) 100%);
+      background: linear-gradient(160deg, rgba(244,114,182,0.18) 0%, rgba(190,24,93,0.08) 60%, transparent 100%);
+      border-right: 1px solid var(--border);
       padding: 5rem 3.5rem; display: flex; flex-direction: column; justify-content: center;
       position: relative; overflow: hidden;
     }
-    .hero-left::after {
-      content: ''; position: absolute; bottom: -80px; right: -80px;
-      width: 320px; height: 320px; border-radius: 50%;
-      border: 60px solid rgba(255,255,255,0.05);
+    .hero-left::before {
+      content: ''; position: absolute; bottom: -120px; right: -80px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,114,182,0.12) 0%, transparent 70%);
     }
     .hero-eyebrow {
       font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--c4); margin-bottom: 1.5rem;
-      display: flex; align-items: center; gap: 10px;
+      color: var(--pink); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 10px; position: relative;
     }
-    .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--c4); }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--pink); display: block; }
     .hero h1 {
       font-family: 'Fraunces', serif;
       font-size: clamp(2.4rem, 4vw, 4rem);
-      color: #fff; font-weight: 700; line-height: 1.1; margin-bottom: 0.6rem;
+      color: var(--white); font-weight: 700; line-height: 1.08; margin-bottom: 0.6rem; position: relative;
     }
-    .hero h1 em { font-style: italic; color: var(--c4); }
+    .hero h1 em { font-style: italic; color: var(--pink); }
     .hero h2 {
       font-family: 'Fraunces', serif; font-style: italic;
       font-size: clamp(1rem, 2vw, 1.4rem);
-      color: rgba(240,180,210,0.7); font-weight: 400; margin-bottom: 1.8rem;
+      color: var(--mid); font-weight: 400; margin-bottom: 1.8rem; position: relative;
     }
-    .hero p { color: rgba(200,140,170,0.7); font-size: 0.9rem; line-height: 1.8; font-weight: 300; max-width: 420px; }
+    .hero p { color: var(--mid); font-size: 0.9rem; line-height: 1.8; font-weight: 300; max-width: 420px; position: relative; }
     .hero-right {
-      background: #150c11; padding: 5rem 3.5rem;
-      display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;
+      background: linear-gradient(160deg, rgba(18,6,42,0.9) 0%, rgba(22,11,28,0.95) 100%);
+      padding: 5rem 3.5rem; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;
     }
-    .hero-right-label {
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--c3); margin-bottom: 0.5rem;
-    }
-    .hero-right h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--c1); margin-bottom: 1.5rem; }
+    .hero-right-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.3rem; }
+    .hero-right h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--white); margin-bottom: 1.5rem; }
     .quick-links { display: flex; flex-direction: column; gap: 0.9rem; }
     .quick-link {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 1.4rem; background: #0a0608;
-      border: 1.5px solid var(--c5); border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      background: rgba(244,114,182,0.05);
+      border: 1px solid var(--border); border-radius: 12px;
       text-decoration: none; color: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
     }
-    .quick-link:hover { border-color: var(--c3); box-shadow: 0 6px 20px rgba(190,24,93,0.15); transform: translateX(4px); }
-    .quick-link-info { display: flex; flex-direction: column; gap: 3px; }
-    .quick-link-tag { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c3); }
-    .quick-link-name { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--c1); font-weight: 700; }
+    .quick-link:hover { border-color: var(--pink); background: rgba(244,114,182,0.1); transform: translateX(4px); }
+    .quick-link-tag { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); margin-bottom: 3px; }
+    .quick-link-name { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--white); font-weight: 700; }
     .quick-link-arrow {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: var(--c5); display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      background: var(--border); display: flex; align-items: center; justify-content: center;
       transition: background 0.2s;
     }
-    .quick-link:hover .quick-link-arrow { background: var(--c3); }
-    .quick-link:hover .quick-link-arrow svg path { stroke: #f0e6eb; }
+    .quick-link:hover .quick-link-arrow { background: var(--pink2); }
 
-    /* ABOUT STRIP */
+    /* INFO STRIP */
     .about-strip {
-      background: #150c11; border-top: 1px solid #2e1020; border-bottom: 1px solid #2e1020;
-      padding: 2.5rem 2.5rem; display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+      background: rgba(18,6,42,0.7); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 2rem 2.5rem; display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+      backdrop-filter: blur(8px);
     }
-    .about-strip-item { display: flex; flex-direction: column; gap: 4px; }
-    .strip-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c3); }
-    .strip-value { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--c1); font-weight: 700; }
-    .strip-divider { width: 1px; height: 36px; background: var(--c5); }
+    .strip-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--pink); margin-bottom: 4px; }
+    .strip-value { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--white); font-weight: 700; }
+    .strip-divider { width: 1px; height: 36px; background: var(--border); }
 
     /* SECTION */
     .section { padding: 5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
-    .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
-    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c3); margin-bottom: 0.4rem; }
-    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: #fbcfe8; }
+    .section-eyebrow { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; }
+    .section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--pink); display: block; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--white); margin-bottom: 2.5rem; }
 
-    /* PROJECT CARDS — new horizontal layout */
+    /* PROJECT CARDS */
     .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
     .project-card {
-      background: #150c11; border-radius: 16px; border: 1.5px solid #2e1020;
-      display: grid; grid-template-columns: 280px 1fr;
+      background: rgba(22,11,28,0.8); border-radius: 16px; border: 1px solid var(--border);
+      display: grid; grid-template-columns: 260px 1fr;
       overflow: hidden; text-decoration: none; color: inherit;
       transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      backdrop-filter: blur(6px);
     }
-    .project-card:hover { border-color: var(--c3); box-shadow: 0 12px 40px rgba(190,24,93,0.18); transform: translateY(-3px); }
+    .project-card:hover { border-color: var(--pink); box-shadow: 0 12px 50px rgba(244,114,182,0.15); transform: translateY(-3px); }
     .card-visual {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 200px; position: relative; overflow: hidden;
+      min-height: 200px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(244,114,182,0.15) 0%, rgba(190,24,93,0.08) 100%);
+      border-right: 1px solid var(--border);
     }
-    .card-visual-roto { background: linear-gradient(135deg, var(--c1), var(--c3)); }
-    .card-visual-3d   { background: linear-gradient(135deg, var(--c2), var(--c4)); }
     .card-number {
       font-family: 'Fraunces', serif; font-size: 6rem; font-weight: 700;
-      color: rgba(255,255,255,0.15); position: absolute;
-      bottom: -10px; right: 10px; line-height: 1;
+      color: rgba(244,114,182,0.12); position: absolute; bottom: -10px; right: 10px; line-height: 1;
     }
     .card-icon { position: relative; z-index: 1; }
     .card-info { padding: 2rem 2.2rem; display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; }
-    .card-tag { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c3); }
-    .card-info h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; color: #fbcfe8; }
-    .card-info p { font-size: 0.88rem; color: var(--text-light); line-height: 1.75; }
-    .card-cta {
-      display: inline-flex; align-items: center; gap: 6px; margin-top: 0.5rem;
-      font-size: 0.8rem; font-weight: 600; color: var(--c2); letter-spacing: 0.04em;
-    }
+    .card-tag { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--pink); }
+    .card-info h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--white); }
+    .card-info p { font-size: 0.88rem; color: var(--mid); line-height: 1.75; }
+    .card-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--pink); letter-spacing: 0.04em; }
     .card-cta svg { transition: transform 0.2s; }
     .project-card:hover .card-cta svg { transform: translateX(4px); }
 
-    /* FOOTER */
-    footer {
-      background: var(--c1); color: var(--c5); text-align: center;
-      padding: 2.5rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.03em; line-height: 2;
-    }
-    footer span { color: var(--c4); }
-
     @media(max-width:768px){
       .hero { grid-template-columns: 1fr; }
-      .hero-left { padding: 4rem 1.5rem; min-height: 60vh; }
-      .hero-right { padding: 3rem 1.5rem; }
+      .hero-left, .hero-right { padding: 4rem 1.5rem; }
       .project-card { grid-template-columns: 1fr; }
       .card-visual { min-height: 160px; }
       nav { padding: 0 1.2rem; }
       .section { padding: 3.5rem 1.2rem; }
-      .about-strip { padding: 1.8rem 1.2rem; gap: 1.5rem; }
+      .about-strip { padding: 1.5rem 1.2rem; gap: 1.5rem; }
       .strip-divider { display: none; }
     }
   </style>
@@ -184,106 +191,70 @@
       </div>
       <div class="quick-links">
         <a href="rotoscoping.html" class="quick-link">
-          <div class="quick-link-info">
-            <span class="quick-link-tag">Project 01 · Animation</span>
-            <span class="quick-link-name">Rotoscoping</span>
-          </div>
-          <div class="quick-link-arrow">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+          <div><div class="quick-link-tag">Project 01 · Animation</div><div class="quick-link-name">Rotoscoping</div></div>
+          <div class="quick-link-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </a>
         <a href="rendering.html" class="quick-link">
-          <div class="quick-link-info">
-            <span class="quick-link-tag">Project 02 · 3D Rendering</span>
-            <span class="quick-link-name">Solar System</span>
-          </div>
-          <div class="quick-link-arrow">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+          <div><div class="quick-link-tag">Project 02 · 3D Rendering</div><div class="quick-link-name">Solar System</div></div>
+          <div class="quick-link-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </a>
         <a href="about.html" class="quick-link">
-          <div class="quick-link-info">
-            <span class="quick-link-tag">Info</span>
-            <span class="quick-link-name">About This Site</span>
-          </div>
-          <div class="quick-link-arrow">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+          <div><div class="quick-link-tag">Info</div><div class="quick-link-name">About This Site</div></div>
+          <div class="quick-link-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </a>
       </div>
     </div>
   </div>
 
   <div class="about-strip">
-    <div class="about-strip-item">
-      <span class="strip-label">Student</span>
-      <span class="strip-value">Glaiza Marie D. Reblinca</span>
-    </div>
+    <div><div class="strip-label">Student</div><div class="strip-value">Glaiza Marie D. Reblinca</div></div>
     <div class="strip-divider"></div>
-    <div class="about-strip-item">
-      <span class="strip-label">Program</span>
-      <span class="strip-value">BSIT — NS — 2A</span>
-    </div>
+    <div><div class="strip-label">Program</div><div class="strip-value">BSIT — NS — 2A</div></div>
     <div class="strip-divider"></div>
-    <div class="about-strip-item">
-      <span class="strip-label">Subject</span>
-      <span class="strip-value">Multimedia and Authoring</span>
-    </div>
+    <div><div class="strip-label">Subject</div><div class="strip-value">Multimedia and Authoring</div></div>
     <div class="strip-divider"></div>
-    <div class="about-strip-item">
-      <span class="strip-label">Year</span>
-      <span class="strip-value">2025 — 2026</span>
-    </div>
+    <div><div class="strip-label">Year</div><div class="strip-value">2025 — 2026</div></div>
   </div>
 
   <div class="section">
-    <div class="section-header">
-      <div>
-        <p class="section-eyebrow">Selected Works</p>
-        <h2 class="section-title">Projects</h2>
-      </div>
-    </div>
-
+    <div class="section-eyebrow">Selected Works</div>
+    <h2 class="section-title">Projects</h2>
     <div class="projects-list">
-
       <a href="rotoscoping.html" class="project-card">
-        <div class="card-visual card-visual-roto">
+        <div class="card-visual">
           <div class="card-number">01</div>
-          <svg class="card-icon" width="60" height="60" viewBox="0 0 64 64" fill="none">
-            <rect x="8" y="12" width="48" height="34" rx="3" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
-            <path d="M20 30 L44 30" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="4 3"/>
-            <path d="M26 22 Q32 16 38 22" stroke="rgba(255,255,255,0.8)" stroke-width="2" fill="none"/>
-            <circle cx="32" cy="34" r="6" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.8)" stroke-width="1.8"/>
-            <path d="M29.5 34 L34.5 31.5 L34.5 36.5 Z" fill="white"/>
+          <svg class="card-icon" width="56" height="56" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="12" width="48" height="34" rx="3" fill="none" stroke="rgba(244,114,182,0.7)" stroke-width="2"/>
+            <path d="M20 30 L44 30" stroke="rgba(244,114,182,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <circle cx="32" cy="34" r="6" fill="rgba(244,114,182,0.15)" stroke="rgba(244,114,182,0.7)" stroke-width="1.8"/>
+            <path d="M29.5 34 L34.5 31.5 L34.5 36.5 Z" fill="#f472b6"/>
           </svg>
         </div>
         <div class="card-info">
           <span class="card-tag">Animation · Project 01</span>
           <h3>Rotoscoping</h3>
-          <p>Rotoscoping is an animation technique where artists trace over live-action footage frame by frame to produce realistic motion. Explore the full output, step-by-step photo tutorials, and 12-week clip progress.</p>
+          <p>An animation technique where artists trace over live-action footage frame by frame. Explore the full output, step-by-step photo tutorials, and 12-week clip progress.</p>
           <div class="card-cta">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </a>
-
       <a href="rendering.html" class="project-card">
-        <div class="card-visual card-visual-3d">
+        <div class="card-visual">
           <div class="card-number">02</div>
-          <svg class="card-icon" width="60" height="60" viewBox="0 0 64 64" fill="none">
-            <circle cx="32" cy="32" r="20" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
-            <ellipse cx="32" cy="32" rx="20" ry="8" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1" stroke-dasharray="4 3"/>
-            <circle cx="32" cy="32" r="5" fill="rgba(255,255,255,0.9)"/>
-            <circle cx="52" cy="32" r="3" fill="rgba(255,255,255,0.7)"/>
-            <circle cx="14" cy="22" r="2.5" fill="rgba(255,255,255,0.55)"/>
+          <svg class="card-icon" width="56" height="56" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="20" fill="none" stroke="rgba(244,114,182,0.6)" stroke-width="1.5"/>
+            <ellipse cx="32" cy="32" rx="20" ry="8" fill="none" stroke="rgba(244,114,182,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+            <circle cx="32" cy="32" r="5" fill="rgba(244,114,182,0.8)"/>
+            <circle cx="52" cy="32" r="3" fill="rgba(244,114,182,0.5)"/>
+            <circle cx="14" cy="22" r="2.5" fill="rgba(244,114,182,0.4)"/>
           </svg>
         </div>
         <div class="card-info">
           <span class="card-tag">3D Rendering · Project 02</span>
           <h3>3D Rendering — Solar System</h3>
-          <p>3D rendering transforms mathematical models into photorealistic imagery using light simulation, textures, and geometry. Features a fully interactive planetary age calculator for the entire solar system.</p>
+          <p>Transforms mathematical models into photorealistic imagery. Features planetary video cards and a fully interactive age calculator for the entire solar system.</p>
           <div class="card-cta">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </a>
-
     </div>
   </div>
 
