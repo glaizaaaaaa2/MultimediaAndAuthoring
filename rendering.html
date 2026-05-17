@@ -1,979 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>3D Rendering | Multimedia & Authoring</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --c1: #be185d; --c2: #9d174d; --c3: #f472b6;
-      --c4: #fbcfe8; --c5: #1e0d16; --bg: #0a0608;
-      --white: #150c11; --text: #f0e6eb; --text-light: #c9a0b4;
+      --pink:#f472b6; --pink2:#db2777; --pink3:#be185d;
+      --bg:#06030a; --surface:#0e0814; --card:#160b1c;
+      --border:#2d1040; --muted:#5a2d6e; --mid:#a87cbf;
+      --light:#d4b0e8; --white:#f2e8f8;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0a0608; color: #f0e6eb; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Plus Jakarta Sans',sans-serif; background:linear-gradient(160deg,#06030a 0%,#12062a 50%,#200828 100%); background-attachment:fixed; color:var(--white); min-height:100vh; }
+    nav { background:linear-gradient(90deg,#06030a 0%,#12062a 60%,#1e0830 100%); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+    .nav-brand { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); letter-spacing:0.03em; text-decoration:none; }
+    .nav-links { display:flex; gap:0.4rem; }
+    .nav-links a { color:var(--mid); text-decoration:none; font-size:0.82rem; font-weight:500; padding:0.4rem 1rem; border-radius:30px; transition:color 0.2s,background 0.2s; }
+    .nav-links a:hover { color:var(--white); background:rgba(244,114,182,0.15); }
 
-    nav {
-      background: var(--c1); padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(190,24,93,0.35);
-    }
-    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--c5); letter-spacing: 0.04em; text-decoration: none; }
-    .nav-links { display: flex; gap: 0.5rem; }
-    .nav-links a {
-      color: var(--c5); text-decoration: none; font-size: 0.875rem; font-weight: 500;
-      padding: 0.45rem 1.1rem; border-radius: 30px; transition: background 0.2s;
-    }
-    .nav-links a:hover { background: rgba(190,24,93,0.2); color: #fff; }
+    .hero { padding:5rem 2.5rem 4rem; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.1),transparent 70%); pointer-events:none; }
+    .breadcrumb { font-size:0.72rem; color:var(--muted); margin-bottom:1.2rem; letter-spacing:0.08em; text-transform:uppercase; position:relative; }
+    .breadcrumb a { color:inherit; text-decoration:none; }
+    .breadcrumb a:hover { color:var(--pink); }
+    .hero h1 { font-family:'Fraunces',serif; font-size:clamp(2rem,5vw,3.8rem); color:var(--white); margin-bottom:0.6rem; line-height:1.1; position:relative; }
+    .hero h1 em { font-style:italic; color:var(--pink); }
+    .hero p { max-width:620px; color:var(--mid); font-size:0.92rem; line-height:1.82; font-weight:300; position:relative; }
 
-    .hero {
-      background: linear-gradient(135deg, #1a2433 0%, var(--c1) 50%, var(--c2) 100%);
-      padding: 4.5rem 2.5rem 3.5rem; position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content:''; position:absolute; inset:0;
-      background: radial-gradient(ellipse at 70% 50%, rgba(170,183,184,0.08) 0%, transparent 60%);
-    }
-    .breadcrumb { font-size: 0.78rem; color: var(--c5); opacity: 0.7; margin-bottom: 1rem; letter-spacing: 0.05em; }
-    .breadcrumb a { color: inherit; text-decoration: none; }
-    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.9rem,4vw,3rem); color: #fff; margin-bottom: 0.6rem; }
-    .hero p { max-width: 660px; color: rgba(240,180,210,0.85); font-size: 0.98rem; line-height: 1.78; font-weight: 300; }
+    .content { max-width:1100px; margin:0 auto; padding:4rem 2.5rem; }
+    .block-title { font-family:'Fraunces',serif; font-size:1.7rem; color:var(--white); margin-bottom:0.3rem; margin-top:4rem; }
+    .block-title:first-child { margin-top:0; }
+    .block-sub { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:1.8rem; display:flex; align-items:center; gap:10px; }
+    .block-sub::before { content:''; width:24px; height:2px; background:var(--pink); border-radius:2px; }
+    .body-text { font-size:0.9rem; line-height:1.85; color:var(--mid); margin-bottom:2rem; max-width:700px; font-weight:300; }
 
-    .content { max-width: 1060px; margin: 0 auto; padding: 3.5rem 2.5rem; }
-    .block-title { font-family: 'Fraunces', serif; font-size: 1.55rem; color: var(--c1); margin-bottom: 0.35rem; margin-top: 3rem; }
-    .block-title:first-child { margin-top: 0; }
-    .divider { width: 42px; height: 3px; background: var(--c3); border-radius: 2px; margin-bottom: 1.8rem; }
-    .body-text { font-size: 0.95rem; line-height: 1.82; color: var(--text-light); margin-bottom: 1.5rem; }
+    .video-wrap { border-radius:14px; overflow:hidden; aspect-ratio:16/9; margin-bottom:0.8rem; border:1px solid var(--border); box-shadow:0 8px 40px rgba(244,114,182,0.12); }
+    .video-wrap iframe { width:100%; height:100%; border:none; display:block; }
+    .video-label { font-size:0.76rem; color:var(--muted); margin-bottom:2.5rem; font-style:italic; }
 
-    /* VIDEO */
-    .video-embed {
-      background: #000; border-radius: 14px; overflow: hidden;
-      aspect-ratio: 16/9; margin-bottom: 0.8rem;
-      box-shadow: 0 8px 30px rgba(190,24,93,0.2);
-    }
-    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
-    .video-placeholder {
-      width: 100%; height: 100%; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 12px;
-      background: linear-gradient(135deg, #1a0a10, var(--c1));
-      color: rgba(255,255,255,0.7); font-size: 0.88rem;
-    }
-    .video-label { font-size: 0.82rem; color: var(--text-light); margin-top: 0.4rem; margin-bottom: 2rem; font-style: italic; }
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+    .tool-card { background:rgba(22,11,28,0.9); padding:1.5rem; transition:background 0.2s; }
+    .tool-card:hover { background:rgba(45,16,64,0.5); }
+    .tool-icon { font-size:1.4rem; margin-bottom:0.7rem; }
+    .tool-name { font-weight:600; font-size:0.9rem; color:var(--white); margin-bottom:0.35rem; }
+    .tool-desc { font-size:0.8rem; color:var(--mid); line-height:1.7; font-weight:300; }
 
-    /* TOOLS GRID */
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 1rem; }
-    .tool-card {
-      background: #150c11; border-radius: 12px; border: 1px solid #2e1020;
-      padding: 1.2rem 1.3rem;
-    }
-    .tool-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
-    .tool-name { font-weight: 500; font-size: 0.95rem; color: var(--c1); margin-bottom: 0.3rem; }
-    .tool-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
-
-    /* AGE CALCULATOR */
-    .calc-box {
-      background: #150c11; border-radius: 16px; border: 1px solid #2e1020;
-      padding: 2rem 2rem 2.2rem; margin-bottom: 0.5rem;
-    }
-    .calc-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.2rem; }
-    .calc-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
-    .calc-field label { font-size: 0.82rem; color: var(--text-light); font-weight: 500; letter-spacing: 0.04em; }
-    .calc-field input {
-      padding: 0.6rem 0.85rem; border: 1.5px solid var(--c5); border-radius: 8px;
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; color: var(--text);
-      background: #0a0608; transition: border 0.2s; outline: none;
-    }
-    .calc-field input:focus { border-color: var(--c3); }
-    .calc-btn {
-      padding: 0.65rem 1.6rem; background: var(--c1); color: #fff;
-      border: none; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.9rem; font-weight: 500; cursor: pointer;
-      transition: background 0.2s; white-space: nowrap;
-    }
-    .calc-btn:hover { background: var(--c2); }
-    .calc-hint { font-size: 0.8rem; color: var(--c3); }
+    .calc-box { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:16px; padding:2rem 2.2rem; margin-bottom:2rem; position:relative; overflow:hidden; backdrop-filter:blur(8px); }
+    .calc-box::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--pink3),var(--pink),var(--light)); }
+    .calc-row { display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1rem; }
+    .calc-field { display:flex; flex-direction:column; gap:6px; flex:1; min-width:180px; }
+    .calc-field label { font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--mid); }
+    .calc-field input { padding:0.7rem 1rem; border:1px solid var(--border); background:rgba(6,3,10,0.8); font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem; color:var(--white); border-radius:8px; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+    .calc-field input:focus { border-color:var(--pink); box-shadow:0 0 0 3px rgba(244,114,182,0.12); }
+    .calc-field input::placeholder { color:var(--muted); }
+    .calc-btn { padding:0.72rem 2rem; background:var(--pink2); color:#fff; border:none; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:0.06em; border-radius:8px; cursor:pointer; transition:background 0.2s,box-shadow 0.2s; white-space:nowrap; }
+    .calc-btn:hover { background:var(--pink3); box-shadow:0 0 20px rgba(244,114,182,0.25); }
+    .calc-hint { font-size:0.76rem; color:var(--muted); }
 
     /* PLANET CARDS */
-    .planets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 1.5rem; }
-    .planet-card {
-      background: var(--white); border-radius: 14px; border: 1px solid var(--c5);
-      overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .planet-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(190,24,93,0.18); }
-    .planet-header {
-      padding: 1.2rem 1.3rem 0.9rem;
-      display: flex; align-items: center; gap: 12px;
-      border-bottom: 1px solid var(--c5);
-    }
-    .planet-emoji { font-size: 2.2rem; line-height: 1; }
-    .planet-name { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--c1); }
-    .planet-type { font-size: 0.75rem; color: var(--c3); margin-top: 1px; }
-    .planet-stats { padding: 0.9rem 1.3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem 0.6rem; }
-    .planet-stat-label { font-size: 0.7rem; color: var(--c3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1px; }
-    .planet-stat-val { font-size: 0.88rem; color: var(--c1); font-weight: 500; }
-    .planet-age-row {
-      background: linear-gradient(135deg, var(--c1), var(--c3));
-      padding: 0.8rem 1.3rem;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .planet-age-label { font-size: 0.78rem; color: rgba(240,180,210,0.85); }
-    .planet-age-val { font-family: 'Fraunces', serif; font-size: 1.2rem; color: #fff; font-weight: 600; }
-    .planet-age-val.empty { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.82rem; color: rgba(213,219,219,0.6); font-weight: 400; }
+    .planets-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; }
+    .planet-card { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s; backdrop-filter:blur(6px); }
+    .planet-card:hover { border-color:var(--pink); transform:translateY(-4px); box-shadow:0 16px 50px rgba(244,114,182,0.15); }
 
-    footer {
-      background: var(--c1); color: var(--c5); text-align: center;
-      padding: 2rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.03em; line-height: 1.9; margin-top: 3rem;
-    }
-    footer span { color: var(--c4); }
+    .planet-video-wrap { width:100%; aspect-ratio:16/9; background:#000; overflow:hidden; }
+    .planet-video-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
+    .planet-video-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:rgba(22,11,28,0.9); color:var(--muted); }
+    .planet-video-placeholder span { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.6; }
 
-    @media(max-width:600px){
-      .hero, .content { padding-left: 1.2rem; padding-right: 1.2rem; }
-      nav { padding: 0 1.2rem; }
-      .calc-row { flex-direction: column; }
-    }
+    .planet-card-top { padding:1rem 1.3rem 0.8rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .planet-name { font-family:'Fraunces',serif; font-size:1.15rem; color:var(--white); font-weight:700; }
+    .planet-type { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--pink); margin-top:2px; }
+    .planet-number { font-family:'Fraunces',serif; font-size:2.5rem; color:var(--border); font-weight:700; line-height:1; }
 
-    /* SCRIPT SECTION */
-    .script-section { margin-top: 3.5rem; }
-    .script-toolbar {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-    .script-toolbar-title {
-      font-size: 0.82rem; color: var(--text-light); font-weight: 500; letter-spacing: 0.04em;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .script-toolbar-title span { 
-      background: var(--c5); color: var(--c1); font-size: 0.72rem; 
-      padding: 2px 10px; border-radius: 30px; font-weight: 600; letter-spacing: 0.06em;
-    }
-    .script-btn-group { display: flex; gap: 0.6rem; }
-    .script-btn {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      padding: 0.5rem 1.2rem; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.84rem; font-weight: 500; cursor: pointer; border: none;
-      transition: background 0.18s, transform 0.12s; text-decoration: none;
-    }
-    .script-btn:active { transform: scale(0.97); }
-    .script-btn-copy {
-      background: var(--c5); color: var(--c1); border: 1.5px solid var(--c4);
-    }
-    .script-btn-copy:hover { background: var(--c4); }
-    .script-btn-copy.copied { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
-    .script-btn-download {
-      background: var(--c1); color: #fff;
-    }
-    .script-btn-download:hover { background: var(--c2); }
-    .script-box {
-      background: #130a10; border-radius: 14px;
-      border: 1px solid #3d1a2a;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(131,24,67,0.13);
-    }
-    .script-scroll {
-      overflow: auto; max-height: 520px;
-      padding: 1.6rem 1.8rem;
-    }
-    .script-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .script-scroll::-webkit-scrollbar-track { background: #1e0e18; }
-    .script-scroll::-webkit-scrollbar-thumb { background: var(--c2); border-radius: 3px; }
-    .script-scroll pre {
-      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-      font-size: 0.8rem; line-height: 1.75;
-      color: #e8c8d8; white-space: pre; tab-size: 4;
-      margin: 0;
-    }
-    /* syntax-ish tinting via CSS only — just colours the whole block nicely */
-    .line-num-col { 
-      display: inline-block; width: 2.4rem; 
-      color: #5a2a3a; text-align: right; margin-right: 1.2rem; 
-      user-select: none; font-size: 0.75rem;
-    }
+    .planet-stats { padding:0.9rem 1.3rem; display:grid; grid-template-columns:1fr 1fr; gap:0.7rem 0.5rem; border-bottom:1px solid var(--border); }
+    .stat-label { font-size:0.62rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2px; }
+    .stat-val { font-size:0.84rem; color:var(--light); font-weight:500; }
+
+    .planet-age-row { padding:0.9rem 1.3rem; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg,rgba(190,24,93,0.2),rgba(244,114,182,0.08)); }
+    .age-label { font-size:0.68rem; color:var(--mid); letter-spacing:0.08em; text-transform:uppercase; }
+    .age-val { font-family:'Fraunces',serif; font-size:1.4rem; color:var(--pink); font-weight:700; }
+    .age-val.empty { font-family:'Plus Jakarta Sans',sans-serif; font-size:0.75rem; color:var(--muted); font-weight:300; }
+
+    footer { background:linear-gradient(90deg,#06030a 0%,#12062a 100%); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; margin-top:4rem; }
+    footer span { color:var(--mid); }
+    @media(max-width:600px){ .hero,.content{ padding-left:1.2rem; padding-right:1.2rem; } nav{ padding:0 1.2rem; } .calc-row{ flex-direction:column; } }
   </style>
 </head>
 <body>
-
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a></div>
   </nav>
 
   <div class="hero">
     <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; 3D Rendering</div>
-    <h1>3D Rendering — Solar System</h1>
-    <p>
-      3D rendering is the process of converting three-dimensional digital models into two-dimensional images using simulated light, materials, and camera perspectives. This project brings the solar system to life through accurate modeling, planetary textures, and orbital mechanics — rendered with dedicated 3D software tools.
-    </p>
+    <h1>3D Rendering —<br/><em>Solar System</em></h1>
+    <p>3D rendering converts three-dimensional digital models into imagery using simulated light, materials, and camera perspectives. This project brings the solar system to life through accurate modeling, planetary textures, and orbital mechanics — with an interactive age calculator for every planet.</p>
   </div>
 
   <div class="content">
-
-    <!-- FINAL OUTPUT -->
     <h2 class="block-title">Partial Output</h2>
-    <div class="divider"></div>
-    <p class="body-text">
-      The 2-Week 3D rendered solar system animation — featuring all eight planets in orbit around the Sun, with accurate relative sizing, texturing, and lighting simulation.
-    </p>
+    <div class="block-sub">2-Week Render</div>
+    <p class="body-text">The 2-week 3D rendered solar system animation — featuring all eight planets in orbit around the Sun, with accurate relative sizing, texturing, and lighting simulation.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/WzjYkJQQweE" allowfullscreen></iframe>
+    </div>
+    <p class="video-label">Solar System 3D Render — Partial Output (2 Weeks)</p>
 
-      <div class="video-embed">
-  <iframe src="https://www.youtube.com/embed/WzjYkJQQweE" allowfullscreen></iframe>
-</div>
-<p class="video-label">Solar System 3D Render — Partial Output (2 Weeks)</p>
-
-    <!-- TOOLS USED -->
     <h2 class="block-title">Tools &amp; Technologies</h2>
-    <div class="divider"></div>
-    <p class="body-text">
-      The following tools and concepts were used in the production of the 3D solar system rendering project.
-    </p>
+    <div class="block-sub">Production Stack</div>
+    <p class="body-text">The following tools and concepts were used in the production of the 3D solar system rendering project.</p>
     <div class="tools-grid">
-      <div class="tool-card">
-        <div class="tool-icon">🎛️</div>
-        <div class="tool-name">3D Modeling Software</div>
-        <div class="tool-desc">Used to create spherical meshes for each celestial body, set orbital paths, and animate planetary rotations.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">💡</div>
-        <div class="tool-name">Lighting &amp; Shading</div>
-        <div class="tool-desc">Point lights simulate the Sun's radiance. Ambient and directional lights create depth and realistic shadow casting.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🖼️</div>
-        <div class="tool-name">Texture Mapping</div>
-        <div class="tool-desc">High-resolution planetary surface maps (NASA textures) were UV-mapped onto spherical geometry for photorealism.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📷</div>
-        <div class="tool-name">Camera &amp; Composition</div>
-        <div class="tool-desc">Animated camera paths orbit the scene to showcase each planet, using depth-of-field to focus attention.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">⚙️</div>
-        <div class="tool-name">Rendering Engine</div>
-        <div class="tool-desc">A ray-tracing or rasterization engine computes the final image, converting 3D geometry to 2D pixels with realistic light bounce.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">🎬</div>
-        <div class="tool-name">Video Compositing</div>
-        <div class="tool-desc">Rendered frames were composited into a final video, with color grading applied for a cinematic space atmosphere.</div>
-      </div>
+      <div class="tool-card"><div class="tool-icon">🎛️</div><div class="tool-name">3D Modeling Software</div><div class="tool-desc">Used to create spherical meshes for each celestial body, set orbital paths, and animate planetary rotations.</div></div>
+      <div class="tool-card"><div class="tool-icon">💡</div><div class="tool-name">Lighting &amp; Shading</div><div class="tool-desc">Point lights simulate the Sun's radiance. Ambient and directional lights create depth and realistic shadow casting.</div></div>
+      <div class="tool-card"><div class="tool-icon">🖼️</div><div class="tool-name">Texture Mapping</div><div class="tool-desc">High-resolution planetary surface maps were UV-mapped onto spherical geometry for photorealism.</div></div>
+      <div class="tool-card"><div class="tool-icon">📷</div><div class="tool-name">Camera &amp; Composition</div><div class="tool-desc">Animated camera paths orbit the scene to showcase each planet, using depth-of-field to focus attention.</div></div>
+      <div class="tool-card"><div class="tool-icon">⚙️</div><div class="tool-name">Rendering Engine</div><div class="tool-desc">A ray-tracing engine converts 3D geometry to 2D pixels with realistic light bounce and shadow.</div></div>
+      <div class="tool-card"><div class="tool-icon">🎬</div><div class="tool-name">Video Compositing</div><div class="tool-desc">Rendered frames composited into a final video with color grading for a cinematic space atmosphere.</div></div>
     </div>
 
-    <!-- AGE CALCULATOR -->
     <h2 class="block-title">Planetary Age Calculator</h2>
-    <div class="divider"></div>
-    <p class="body-text">
-      Every planet takes a different amount of time to orbit the Sun — meaning your age is different on each one! Enter your birthdate to discover how old you are across the solar system.
-    </p>
-
+    <div class="block-sub">Interactive Tool</div>
+    <p class="body-text">Every planet takes a different amount of time to orbit the Sun — meaning your age is different on each one. Enter your Earth age to find out how old you are across the solar system.</p>
     <div class="calc-box">
       <div class="calc-row">
         <div class="calc-field">
-          <label>YOUR AGE (in Earth years)</label>
-          <input type="number" id="age-input" min="0" max="150" step="0.1" placeholder="e.g. 20" />
+          <label>Your Age (in Earth Years)</label>
+          <input type="number" id="age-input" min="0" max="150" step="0.1" placeholder="e.g. 20"/>
         </div>
-        <button class="calc-btn" onclick="calculateAges()">Calculate My Ages ›</button>
+        <button class="calc-btn" onclick="calculateAges()">Calculate ›</button>
       </div>
-      <p class="calc-hint">* Age, revolutions completed, and orbital period are all calculated from your Earth age using each planet's orbital data.</p>
+      <p class="calc-hint">* Age, total orbits, and orbital period are all calculated from your Earth age using each planet's real orbital data.</p>
     </div>
-
-    <!-- PLANET CARDS -->
     <div class="planets-grid" id="planets-grid"></div>
-
-
-    <!-- PYTHON SCRIPT -->
-    <div class="script-section">
-      <h2 class="block-title">Python Script</h2>
-      <div class="divider"></div>
-      <p class="body-text">
-        The complete Blender 5.1.1 Python script used to procedurally generate the solar system — including all planets, orbital mechanics, textures, lighting, and camera animation.
-        Place your PNG textures in <code style="background:var(--c5);color:var(--c1);padding:1px 7px;border-radius:4px;font-size:0.88rem;">C:\solar_system\</code> before running.
-      </p>
-
-      <div class="script-toolbar">
-        <div class="script-toolbar-title">
-          solar_system_blender511.py &nbsp;<span>PYTHON · BLENDER 5.1.1</span>
-        </div>
-        <div class="script-btn-group">
-          <button class="script-btn script-btn-copy" id="copyBtn" onclick="copyScript()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copy Script
-          </button>
-          <button class="script-btn script-btn-download" onclick="downloadScript()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download .py
-          </button>
-        </div>
-      </div>
-
-      <div class="script-box">
-        <div class="script-scroll">
-          <pre id="scriptPre"></pre>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <footer>
-    © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
-    <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
-  </footer>
+  <footer>© 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/><span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span></footer>
 
   <script>
     const planets = [
-      { name:'Sun',     emoji:'☀️',  type:'Star',               orbitalPeriodDays:365.25,   distance:'0 AU — center of solar system' },
-      { name:'Mercury', emoji:'🪨',  type:'Terrestrial Planet', orbitalPeriodDays:87.97,    distance:'0.387 AU (57.9M km)' },
-      { name:'Venus',   emoji:'🌕',  type:'Terrestrial Planet', orbitalPeriodDays:224.70,   distance:'0.723 AU (108.2M km)' },
-      { name:'Earth',   emoji:'🌍',  type:'Terrestrial Planet', orbitalPeriodDays:365.25,   distance:'1.000 AU (149.6M km)' },
-      { name:'Mars',    emoji:'🔴',  type:'Terrestrial Planet', orbitalPeriodDays:686.97,   distance:'1.524 AU (227.9M km)' },
-      { name:'Jupiter', emoji:'🟠',  type:'Gas Giant',          orbitalPeriodDays:4332.59,  distance:'5.203 AU (778.6M km)' },
-      { name:'Saturn',  emoji:'🪐',  type:'Gas Giant',          orbitalPeriodDays:10759.22, distance:'9.537 AU (1.43B km)' },
-      { name:'Uranus',  emoji:'🔵',  type:'Ice Giant',          orbitalPeriodDays:30688.50, distance:'19.19 AU (2.87B km)' },
-      { name:'Neptune', emoji:'🫧',  type:'Ice Giant',          orbitalPeriodDays:60195.00, distance:'30.07 AU (4.50B km)' },
+      { name:'Sun',     index:1,  type:'Star',               orbitalPeriodDays:365.25,   distance:'0 AU — center',       video:'videos/sun.mp4' },
+      { name:'Mercury', index:2,  type:'Terrestrial Planet', orbitalPeriodDays:87.97,    distance:'0.387 AU (57.9M km)',  video:'videos/mercury.mp4' },
+      { name:'Venus',   index:3,  type:'Terrestrial Planet', orbitalPeriodDays:224.70,   distance:'0.723 AU (108.2M km)', video:'videos/venus.mp4' },
+      { name:'Earth',   index:4,  type:'Terrestrial Planet', orbitalPeriodDays:365.25,   distance:'1.000 AU (149.6M km)', video:'videos/earth.mp4' },
+      { name:'Mars',    index:5,  type:'Terrestrial Planet', orbitalPeriodDays:686.97,   distance:'1.524 AU (227.9M km)', video:'videos/mars.mp4' },
+      { name:'Jupiter', index:6,  type:'Gas Giant',          orbitalPeriodDays:4332.59,  distance:'5.203 AU (778.6M km)', video:'videos/jupiter.mp4' },
+      { name:'Saturn',  index:7,  type:'Gas Giant',          orbitalPeriodDays:10759.22, distance:'9.537 AU (1.43B km)',  video:'videos/saturn.mp4' },
+      { name:'Uranus',  index:8,  type:'Ice Giant',          orbitalPeriodDays:30688.50, distance:'19.19 AU (2.87B km)',  video:'videos/uranus.mp4' },
+      { name:'Neptune', index:9,  type:'Ice Giant',          orbitalPeriodDays:60195.00, distance:'30.07 AU (4.50B km)', video:'videos/neptune.mp4' },
     ];
 
     function renderCards(earthAge) {
       const grid = document.getElementById('planets-grid');
       const hasAge = earthAge !== null && !isNaN(earthAge);
       const earthDays = hasAge ? earthAge * 365.25 : null;
-
-      grid.innerHTML = planets.map(p => {
-        // Orbital period in Earth years
+      grid.innerHTML = planets.map((p,i) => {
         const periodYears = p.orbitalPeriodDays / 365.25;
-        const periodFmt = periodYears >= 1
-          ? periodYears.toFixed(2) + ' Earth yrs'
-          : p.orbitalPeriodDays.toFixed(2) + ' Earth days';
-
-        // Revolutions per Earth year
+        const periodFmt = periodYears >= 1 ? periodYears.toFixed(2)+' Earth yrs' : p.orbitalPeriodDays.toFixed(2)+' Earth days';
         const revsPerYear = 365.25 / p.orbitalPeriodDays;
-        const revsFmt = revsPerYear >= 1
-          ? revsPerYear.toFixed(2) + ' / Earth yr'
-          : (1 / revsPerYear).toFixed(2) + ' Earth yrs / orbit';
-
-        // Calculated values from age input
-        let ageDisplay, totalRevsDisplay, totalOrbitalDisplay;
+        const revsFmt = revsPerYear >= 1 ? revsPerYear.toFixed(2)+' / Earth yr' : (1/revsPerYear).toFixed(2)+' Earth yrs / orbit';
+        let ageDisplay, totalRevs;
         if (hasAge) {
           const planetAge = earthDays / p.orbitalPeriodDays;
-          const totalRevs = planetAge; // same as planet age in orbits
-          const totalOrbitalYrs = earthAge * (365.25 / p.orbitalPeriodDays) * periodYears;
-
-          ageDisplay = `<span class="planet-age-val">${planetAge.toFixed(2)} yrs</span>`;
-          totalRevsDisplay = `${totalRevs.toFixed(2)} orbits completed`;
-          totalOrbitalDisplay = periodFmt;
+          ageDisplay = `<span class="age-val">${planetAge.toFixed(2)} yrs</span>`;
+          totalRevs = planetAge.toFixed(2)+' orbits';
         } else {
-          ageDisplay = `<span class="planet-age-val empty">Enter age above</span>`;
-          totalRevsDisplay = '—';
-          totalOrbitalDisplay = periodFmt;
+          ageDisplay = `<span class="age-val empty">Enter age above</span>`;
+          totalRevs = '—';
         }
-
-        return `
-          <div class="planet-card">
-            <div class="planet-header">
-              <div class="planet-emoji">${p.emoji}</div>
-              <div>
-                <div class="planet-name">${p.name}</div>
-                <div class="planet-type">${p.type}</div>
-              </div>
-            </div>
-            <div class="planet-stats">
-              <div>
-                <div class="planet-stat-label">Orbital Period</div>
-                <div class="planet-stat-val">${totalOrbitalDisplay}</div>
-              </div>
-              <div>
-                <div class="planet-stat-label">Revolutions / yr</div>
-                <div class="planet-stat-val">${revsFmt}</div>
-              </div>
-              <div style="grid-column:1/-1">
-                <div class="planet-stat-label">Distance from Sun</div>
-                <div class="planet-stat-val">${p.distance}</div>
-              </div>
-              <div style="grid-column:1/-1">
-                <div class="planet-stat-label">Total Orbits Completed</div>
-                <div class="planet-stat-val">${totalRevsDisplay}</div>
-              </div>
-            </div>
-            <div class="planet-age-row">
-              <span class="planet-age-label">Your age on ${p.name}</span>
-              ${ageDisplay}
-            </div>
-          </div>`;
+        const num = String(p.index).padStart(2,'0');
+        return `<div class="planet-card">
+          <div class="planet-video-wrap">
+            <video autoplay muted loop playsinline>
+              <source src="${p.video}" type="video/mp4"/>
+            </video>
+          </div>
+          <div class="planet-card-top">
+            <div><div class="planet-name">${p.name}</div><div class="planet-type">${p.type}</div></div>
+            <div class="planet-number">${num}</div>
+          </div>
+          <div class="planet-stats">
+            <div><div class="stat-label">Orbital Period</div><div class="stat-val">${periodFmt}</div></div>
+            <div><div class="stat-label">Revolutions / yr</div><div class="stat-val">${revsFmt}</div></div>
+            <div><div class="stat-label">Distance from Sun</div><div class="stat-val">${p.distance}</div></div>
+            <div><div class="stat-label">Orbits Completed</div><div class="stat-val">${totalRevs}</div></div>
+          </div>
+          <div class="planet-age-row">
+            <span class="age-label">Your age on ${p.name}</span>
+            ${ageDisplay}
+          </div>
+        </div>`;
       }).join('');
     }
 
     function calculateAges() {
       const val = parseFloat(document.getElementById('age-input').value);
-      if (isNaN(val) || val < 0) { alert('Please enter a valid age (0 or above).'); return; }
+      if (isNaN(val) || val < 0) { alert('Please enter a valid age.'); return; }
       if (val > 150) { alert('Please enter a realistic age (0–150).'); return; }
       renderCards(val);
     }
-
-    // Allow pressing Enter
-    document.getElementById('age-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') calculateAges();
-    });
-
-    // Initial render
+    document.getElementById('age-input').addEventListener('keydown', e => { if(e.key==='Enter') calculateAges(); });
     renderCards(null);
-
-    // ── Python script content ─────────────────────────────────────────────────
-    const PYTHON_SCRIPT = `"""
-Solar System for Blender 5.1.1
-================================
-TEXTURES  →  place PNGs in C:\\\\solar_system\\\\
-  sun.png  mercury.png  venus.png  earth.png  moon.png
-  mars.png  jupiter.png  saturn.png  saturn_ring.png
-  uranus.png  neptune.png  pluto.png  stars.png
-
-HOW TO USE:
-  1. Scripting tab → paste → Run Script
-  2. Timeline end = 3500, press Space to play
-  3. Numpad 0 = camera view
-  4. Z → Rendered to see textures/glow
-
-ANIMATION:
-  Frames 1–~650  : camera tours each planet up close
-  Frame ~650+     : zooms out, all orbits + spins begin
-  Total           : 3500 frames at 24 fps (~2 min 26 sec)
-"""
-
-import bpy
-import math
-import mathutils
-
-# ── Texture paths ──────────────────────────────────────────────────────────────
-TEXTURE_PATHS = {
-    "Sun":         r"C:\\solar_system\\sun.png",
-    "Mercury":     r"C:\\solar_system\\mercury.png",
-    "Venus":       r"C:\\solar_system\\venus.png",
-    "Earth":       r"C:\\solar_system\\earth.png",
-    "Moon":        r"C:\\solar_system\\moon.png",
-    "Mars":        r"C:\\solar_system\\mars.png",
-    "Jupiter":     r"C:\\solar_system\\jupiter.png",
-    "Saturn":      r"C:\\solar_system\\saturn.png",
-    "SaturnRings": r"C:\\solar_system\\saturn_ring.png",
-    "Uranus":      r"C:\\solar_system\\uranus.png",
-    "Neptune":     r"C:\\solar_system\\neptune.png",
-    "Pluto":       r"C:\\solar_system\\pluto.png",
-    "Stars":       r"C:\\solar_system\\stars.png",
-}
-
-# ── Planet data ────────────────────────────────────────────────────────────────
-# distance     = orbit radius in Blender units
-# radius       = sphere radius in Blender units
-# period       = orbital period in Earth days
-# rotation_hrs = sidereal day in hours  (negative = retrograde spin)
-planet_data = [
-    {"name": "Mercury", "distance":  2.0, "radius": 0.12, "period":    88, "rotation_hrs":  1407.6},
-    {"name": "Venus",   "distance":  3.0, "radius": 0.18, "period":   225, "rotation_hrs": -5832.5},
-    {"name": "Earth",   "distance":  4.0, "radius": 0.20, "period":   365, "rotation_hrs":    24.0},
-    {"name": "Moon",    "distance":  4.6, "radius": 0.07, "period":   365, "rotation_hrs":   655.2},
-    {"name": "Mars",    "distance":  5.5, "radius": 0.14, "period":   687, "rotation_hrs":    24.6},
-    {"name": "Jupiter", "distance":  7.5, "radius": 0.45, "period":  4333, "rotation_hrs":     9.9},
-    {"name": "Saturn",  "distance":  9.5, "radius": 0.38, "period": 10759, "rotation_hrs":    10.7},
-    {"name": "Uranus",  "distance": 11.5, "radius": 0.28, "period": 30685, "rotation_hrs":   -17.2},
-    {"name": "Neptune", "distance": 13.5, "radius": 0.26, "period": 60190, "rotation_hrs":    16.1},
-    {"name": "Pluto",   "distance": 15.5, "radius": 0.07, "period": 90560, "rotation_hrs":  -153.3},
-]
-
-AXIAL_TILTS = {
-    "Earth": 23.5, "Mars": 25.2, "Saturn": 26.7,
-    "Uranus": 97.8, "Neptune": 28.3, "Moon": 6.7, "Pluto": 122.5,
-}
-
-# ── Animation settings ─────────────────────────────────────────────────────────
-ZOOM_DURATION      = 60    # frames to hold on each planet close-up
-ZOOM_OUT_DURATION  = 50    # frames for pull-back to full system view
-ORBITAL_SPEED_MULT = 2.0   # speed multiplier vs real orbital periods
-TOTAL_FRAMES       = 3500
-
-ROTATION_START_FRAME = len(planet_data) * ZOOM_DURATION + ZOOM_OUT_DURATION + 24
-print(f"Orbits/spins start at frame: {ROTATION_START_FRAME}")
-
-# ── Safe attribute setter (handles renamed/removed attrs across versions) ───────
-def safe_set(obj, attr, val):
-    try:
-        setattr(obj, attr, val)
-    except AttributeError:
-        print(f"  ⚠️  {type(obj).__name__}.{attr} not available in this Blender version — skipped")
-
-# ── Camera interpolation (Blender 5.x layered-action compatible) ───────────────
-def set_camera_interpolation(cam_obj, mode='BEZIER'):
-    if not cam_obj.animation_data or not cam_obj.animation_data.action:
-        return
-    action = cam_obj.animation_data.action
-
-    def apply(fcurves):
-        for fc in fcurves:
-            for kp in fc.keyframe_points:
-                kp.interpolation = mode
-                if mode == 'BEZIER':
-                    kp.handle_left_type  = 'AUTO'
-                    kp.handle_right_type = 'AUTO'
-
-    applied = False
-    try:                                          # Blender 5.x layered actions
-        for layer in action.layers:
-            for strip in layer.strips:
-                try:
-                    cb = strip.channelbag(cam_obj.animation_data.action_slot)
-                    apply(cb.fcurves)
-                    applied = True
-                except Exception:
-                    pass
-    except AttributeError:
-        pass
-    if not applied:                               # legacy fallback
-        try:
-            apply(action.fcurves)
-        except Exception:
-            pass
-
-# ── Cleanup ────────────────────────────────────────────────────────────────────
-bpy.ops.object.select_all(action='SELECT')
-bpy.ops.object.delete(use_global=False)
-for block in list(bpy.data.meshes):    bpy.data.meshes.remove(block)
-for block in list(bpy.data.materials): bpy.data.materials.remove(block)
-for block in list(bpy.data.images):    bpy.data.images.remove(block)
-for block in list(bpy.data.curves):    bpy.data.curves.remove(block)
-
-# ── Render / scene settings ────────────────────────────────────────────────────
-scene = bpy.context.scene
-scene.render.engine = 'CYCLES'
-scene.frame_start   = 1
-scene.frame_end     = TOTAL_FRAMES
-scene.render.fps    = 24
-scene.render.resolution_x = 1920
-scene.render.resolution_y = 1080
-
-safe_set(scene.cycles, 'device',                 'GPU')
-safe_set(scene.cycles, 'samples',                128)
-safe_set(scene.cycles, 'use_adaptive_sampling',  True)
-safe_set(scene.cycles, 'adaptive_threshold',     0.01)
-safe_set(scene.cycles, 'max_bounces',            8)
-safe_set(scene.cycles, 'transparent_max_bounces',8)
-safe_set(scene.cycles, 'use_persistent_data',    True)   # wrapped — won't crash if missing
-safe_set(scene.cycles, 'use_denoising',          True)   # wrapped — won't crash if missing
-
-# GPU device setup
-try:
-    prefs = bpy.context.preferences.addons['cycles'].preferences
-    for ctype in ('OPTIX', 'CUDA', 'HIP', 'METAL'):
-        try:
-            prefs.compute_device_type = ctype
-            prefs.get_devices()
-            for d in prefs.devices:
-                d.use = True
-            print(f"✅ GPU: {ctype}")
-            break
-        except Exception:
-            continue
-except Exception as e:
-    print(f"⚠️ GPU setup skipped: {e}")
-
-# ── Material builder ───────────────────────────────────────────────────────────
-def make_material(name, emission_strength=0.0, alpha=False):
-    path = TEXTURE_PATHS.get(name)
-    mat  = bpy.data.materials.new(name=f"{name}_Mat")
-    mat.use_nodes = True
-    nodes = mat.node_tree.nodes
-    links = mat.node_tree.links
-    nodes.clear()
-
-    out  = nodes.new('ShaderNodeOutputMaterial')
-    bsdf = nodes.new('ShaderNodeBsdfPrincipled')
-    bsdf.inputs['Roughness'].default_value = 0.8
-
-    tex_node = None
-    if path:
-        try:
-            img      = bpy.data.images.load(path, check_existing=True)
-            tex_node = nodes.new('ShaderNodeTexImage')
-            tex_node.image = img
-            uv       = nodes.new('ShaderNodeTexCoord')
-            links.new(uv.outputs['UV'],        tex_node.inputs['Vector'])
-            links.new(tex_node.outputs['Color'], bsdf.inputs['Base Color'])
-            if alpha:
-                links.new(tex_node.outputs['Alpha'], bsdf.inputs['Alpha'])
-                mat.blend_method = 'HASHED'
-            print(f"  ✅ Texture: {name}")
-        except Exception as e:
-            print(f"  ⚠️  Texture failed ({name}): {e}")
-
-    if emission_strength > 0:
-        emit = nodes.new('ShaderNodeEmission')
-        emit.inputs['Strength'].default_value = emission_strength
-        if tex_node:
-            links.new(tex_node.outputs['Color'], emit.inputs['Color'])
-        mix = nodes.new('ShaderNodeMixShader')
-        mix.inputs['Fac'].default_value = 0.5
-        links.new(bsdf.outputs['BSDF'],     mix.inputs[1])
-        links.new(emit.outputs['Emission'], mix.inputs[2])
-        links.new(mix.outputs['Shader'],    out.inputs['Surface'])
-    else:
-        links.new(bsdf.outputs['BSDF'], out.inputs['Surface'])
-
-    return mat
-
-# ── Orbit line ─────────────────────────────────────────────────────────────────
-def create_orbit_line(distance, name):
-    bpy.ops.curve.primitive_bezier_circle_add(radius=distance, location=(0, 0, 0))
-    orb = bpy.context.object
-    orb.name = f"{name}_OrbitLine"
-    orb.data.resolution_u = 64
-    orb.data.bevel_depth  = 0.015 if name == "Moon" else (0.025 if name == "Pluto" else 0.02)
-    orb.hide_select = True
-
-    mat   = bpy.data.materials.new(f"{name}_OrbitMat")
-    mat.use_nodes = True
-    nodes = mat.node_tree.nodes
-    links = mat.node_tree.links
-    nodes.clear()
-    out  = nodes.new('ShaderNodeOutputMaterial')
-    emit = nodes.new('ShaderNodeEmission')
-    if name == "Moon":
-        emit.inputs['Color'].default_value    = (0.7, 0.7, 0.9, 1.0)
-        emit.inputs['Strength'].default_value = 0.8
-    elif name == "Pluto":
-        emit.inputs['Color'].default_value    = (1.0, 0.6, 0.2, 1.0)
-        emit.inputs['Strength'].default_value = 1.5
-    else:
-        emit.inputs['Color'].default_value    = (0.8, 0.8, 0.8, 1.0)
-        emit.inputs['Strength'].default_value = 1.0
-    links.new(emit.outputs['Emission'], out.inputs['Surface'])
-    orb.data.materials.append(mat)
-
-# ── Driver helper ──────────────────────────────────────────────────────────────
-def add_z_driver(obj, expression):
-    drv = obj.driver_add("rotation_euler", 2).driver
-    drv.type = 'SCRIPTED'
-    var = drv.variables.new()
-    var.name = "frame"
-    var.targets[0].id_type   = 'SCENE'
-    var.targets[0].id        = bpy.context.scene
-    var.targets[0].data_path = "frame_current"
-    drv.expression = expression
-
-# ── Saturn rings ───────────────────────────────────────────────────────────────
-def create_saturn_rings(orbit_empty, saturn_distance, radius):
-    bpy.ops.mesh.primitive_cylinder_add(
-        radius=radius * 1.7, depth=0.01, vertices=128,
-        location=(saturn_distance, 0, 0)
-    )
-    rings = bpy.context.object
-    rings.name = "Saturn_Rings"
-    rings.rotation_euler = (0, 0, 0)
-
-    rings_mat = make_material("SaturnRings", alpha=True)
-    if rings_mat:
-        rings.data.materials.append(rings_mat)
-
-    rings.parent = orbit_empty
-    rings.rotation_mode = 'XYZ'
-    ring_speed = 360 / 240
-    add_z_driver(rings,
-        f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {ring_speed}))")
-    print("🪐 Saturn rings created")
-
-# ── UV unwrap ──────────────────────────────────────────────────────────────────
-def unwrap(obj):
-    bpy.context.view_layer.objects.active = obj
-    try:
-        bpy.ops.object.mode_set(mode='EDIT')
-        bpy.ops.uv.unwrap(method='ANGLE_BASED', margin=0.001)
-        bpy.ops.object.mode_set(mode='OBJECT')
-    except Exception:
-        try:
-            bpy.ops.object.mode_set(mode='OBJECT')
-        except Exception:
-            pass
-
-# ═════════════════════════════════════════════════════════════════════════════
-#  SUN
-# ═════════════════════════════════════════════════════════════════════════════
-bpy.ops.mesh.primitive_uv_sphere_add(radius=0.9, location=(0,0,0), segments=64, ring_count=32)
-sun = bpy.context.object
-sun.name = "Sun"
-bpy.ops.object.shade_smooth()
-unwrap(sun)
-sun.rotation_mode = 'XYZ'
-add_z_driver(sun,
-    f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {360/(25*24)}))")
-sun_mat = make_material("Sun", emission_strength=5.0)
-if sun_mat:
-    sun.data.materials.append(sun_mat)
-
-# Point light inside the Sun
-bpy.ops.object.light_add(type='POINT', location=(0, 0, 0))
-sun_light = bpy.context.object
-sun_light.name = "SunPointLight"
-sun_light.data.energy           = 5000.0
-sun_light.data.color            = (1.0, 0.97, 0.88)
-sun_light.data.shadow_soft_size = 2.0
-print("☀️ Sun created")
-
-# ═════════════════════════════════════════════════════════════════════════════
-#  PLANETS, MOON, PLUTO
-# ═════════════════════════════════════════════════════════════════════════════
-planet_objects = []
-
-for planet in planet_data:
-    name     = planet["name"]
-    distance = planet["distance"]
-    radius   = planet["radius"]
-    rot_hrs  = planet["rotation_hrs"]
-
-    # Orbit pivot
-    bpy.ops.object.empty_add(type='PLAIN_AXES', location=(0, 0, 0))
-    orbit = bpy.context.object
-    orbit.name = f"{name}_Orbit"
-
-    create_orbit_line(distance, name)
-
-    # Planet sphere
-    bpy.ops.mesh.primitive_uv_sphere_add(
-        radius=radius, location=(distance, 0, 0), segments=64, ring_count=32)
-    obj = bpy.context.object
-    obj.name = name
-    bpy.ops.object.shade_smooth()
-    unwrap(obj)
-
-    em = 0.5 if name == "Moon" else (1.2 if name == "Pluto" else 0.3)
-    mat = make_material(name, emission_strength=em)
-    if mat:
-        obj.data.materials.append(mat)
-
-    if name == "Saturn":
-        create_saturn_rings(orbit, distance, radius)
-
-    obj.parent = orbit
-    obj.rotation_mode = 'XYZ'
-    if name in AXIAL_TILTS:
-        obj.rotation_euler[0] = math.radians(AXIAL_TILTS[name])
-
-    # Self-rotation driver
-    if rot_hrs != 0:
-        rot_speed = (360 / abs(rot_hrs)) * (-1 if rot_hrs < 0 else 1)
-        add_z_driver(obj,
-            f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {rot_speed}))")
-
-    # Name label
-    bpy.ops.object.text_add(location=(distance, 0, radius + 0.3))
-    label = bpy.context.object
-    label.name = f"{name}_Label"
-    label.data.body    = name
-    label.data.size    = 0.8 if name == "Pluto" else max(0.4, radius * 0.6)
-    label.data.extrude = 0.08 if name == "Pluto" else 0.03
-    label.data.align_x = 'CENTER'
-    label.data.align_y = 'CENTER'
-    label.rotation_euler = (math.radians(90), 0, 0)
-    label.parent = orbit
-
-    lmat  = bpy.data.materials.new(f"{name}_LabelMat")
-    lmat.use_nodes = True
-    lnodes = lmat.node_tree.nodes
-    llinks = lmat.node_tree.links
-    lnodes.clear()
-    lout  = lnodes.new('ShaderNodeOutputMaterial')
-    lemit = lnodes.new('ShaderNodeEmission')
-    if name == "Moon":
-        lemit.inputs['Color'].default_value    = (0.9, 0.9, 1.0, 1.0)
-        lemit.inputs['Strength'].default_value = 2.0
-    elif name == "Pluto":
-        lemit.inputs['Color'].default_value    = (1.0, 0.8, 0.2, 1.0)
-        lemit.inputs['Strength'].default_value = 4.0
-    else:
-        lemit.inputs['Color'].default_value    = (1.0, 1.0, 0.8, 1.0)
-        lemit.inputs['Strength'].default_value = 2.0
-    llinks.new(lemit.outputs['Emission'], lout.inputs['Surface'])
-    label.data.materials.append(lmat)
-
-    # Orbital driver
-    orb_speed = (360 / planet["period"]) * ORBITAL_SPEED_MULT
-    orbit.rotation_mode = 'XYZ'
-    add_z_driver(orbit,
-        f"radians(max(0, (frame - {ROTATION_START_FRAME}) * {orb_speed}))")
-
-    planet_objects.append({"object": obj, "orbit": orbit, "data": planet})
-    print(f"✅ {name}")
-
-# ═════════════════════════════════════════════════════════════════════════════
-#  STARFIELD BACKGROUND
-# ═════════════════════════════════════════════════════════════════════════════
-world = bpy.data.worlds.get("World") or bpy.data.worlds.new("World")
-scene.world = world
-world.use_nodes = True
-wnodes = world.node_tree.nodes
-wlinks = world.node_tree.links
-wnodes.clear()
-wout = wnodes.new('ShaderNodeOutputWorld')
-wbg  = wnodes.new('ShaderNodeBackground')
-wbg.inputs['Strength'].default_value = 0.5
-
-stars_path = TEXTURE_PATHS.get("Stars")
-if stars_path:
-    try:
-        wenv = wnodes.new('ShaderNodeTexEnvironment')
-        wenv.image = bpy.data.images.load(stars_path, check_existing=True)
-        wlinks.new(wenv.outputs['Color'], wbg.inputs['Color'])
-        print("✅ Starfield loaded")
-    except Exception as e:
-        print(f"⚠️ Stars failed: {e}")
-        wbg.inputs['Color'].default_value = (0.0, 0.0, 0.02, 1.0)
-else:
-    wbg.inputs['Color'].default_value = (0.0, 0.0, 0.02, 1.0)
-wlinks.new(wbg.outputs['Background'], wout.inputs['Surface'])
-
-# ═════════════════════════════════════════════════════════════════════════════
-#  LIGHTS
-# ═════════════════════════════════════════════════════════════════════════════
-bpy.ops.object.light_add(type='SUN', location=(0, 0, 30))
-bpy.context.object.data.energy = 5.0
-
-bpy.ops.object.light_add(type='AREA', location=(0, 0, 50))
-bpy.context.object.data.energy = 2.0
-bpy.context.object.data.size   = 100
-
-bpy.ops.object.light_add(type='POINT', location=(15, 0, 3))
-bpy.context.object.name        = "PlutoLight"
-bpy.context.object.data.energy = 8.0
-
-# ═════════════════════════════════════════════════════════════════════════════
-#  CAMERA + ANIMATION
-# ═════════════════════════════════════════════════════════════════════════════
-bpy.ops.object.camera_add(location=(0, -45, 20))
-camera = bpy.context.object
-camera.name = "MainCamera"
-camera.data.clip_end   = 200.0
-camera.data.clip_start = 0.01
-scene.camera = camera
-
-# Frame 1: tight on the Sun
-camera.location       = (0, -5, 2)
-camera.rotation_euler = (math.radians(80), 0, 0)
-camera.keyframe_insert(data_path="location",       frame=1)
-camera.keyframe_insert(data_path="rotation_euler", frame=1)
-
-current_frame = 1
-
-for planet_info in planet_objects:
-    data     = planet_info["data"]
-    name     = data["name"]
-    distance = data["distance"]
-    radius   = data["radius"]
-
-    if name == "Pluto":
-        cx, cy, cz = distance - 1.0, -2.0, 1.0
-        direction  = mathutils.Vector((distance, 0, 0)) - mathutils.Vector((cx, cy, cz))
-        camera.rotation_euler = direction.to_track_quat('-Z', 'Y').to_euler()
-    elif name == "Saturn":
-        cd = max(radius * 12, 4.0)
-        cx, cy, cz = distance + cd*0.7, -cd*0.7, radius*3
-        camera.rotation_euler = (math.radians(70), 0, math.radians(45))
-    elif name == "Moon":
-        cd = max(radius * 10, 2.5)
-        cx, cy, cz = distance + cd*0.7, -cd*0.7, radius*3
-        camera.rotation_euler = (math.radians(70), 0, math.radians(45))
-    else:
-        cd = max(radius * 8, 3.0)
-        cx, cy, cz = distance + cd*0.7, -cd*0.7, radius*3
-        camera.rotation_euler = (math.radians(70), 0, math.radians(45))
-
-    zoom_in = current_frame + 24
-    camera.location = (cx, cy, cz)
-    camera.keyframe_insert(data_path="location",       frame=zoom_in)
-    camera.keyframe_insert(data_path="rotation_euler", frame=zoom_in)
-
-    hold = zoom_in + ZOOM_DURATION - 24
-    camera.keyframe_insert(data_path="location",       frame=hold)
-    camera.keyframe_insert(data_path="rotation_euler", frame=hold)
-    current_frame = hold
-
-# Zoom out to full system
-zoom_out = current_frame + ZOOM_OUT_DURATION
-camera.location       = (0, -45, 20)
-camera.rotation_euler = (math.radians(65), 0, 0)
-camera.keyframe_insert(data_path="location",       frame=zoom_out)
-camera.keyframe_insert(data_path="rotation_euler", frame=zoom_out)
-
-set_camera_interpolation(camera, mode='BEZIER')
-
-# ═════════════════════════════════════════════════════════════════════════════
-#  VIEWPORT
-# ═════════════════════════════════════════════════════════════════════════════
-for area in bpy.context.screen.areas:
-    if area.type == 'VIEW_3D':
-        for space in area.spaces:
-            if space.type == 'VIEW_3D':
-                space.shading.type = 'RENDERED'
-                space.clip_end     = 200.0
-
-print("=" * 55)
-print("  ✅  Solar System ready!  Blender 5.1.1")
-print(f"  Orbits start at frame {ROTATION_START_FRAME}")
-print("  Textures: C:\\\\solar_system\\\\*.png")
-print("  TIP: N panel → View → Clip End → 500  if")
-print("       distant planets disappear on zoom-out")
-print("=" * 55)
-`;
-
-    // Render script with line numbers
-    (function renderScript() {
-      const pre = document.getElementById('scriptPre');
-      const lines = PYTHON_SCRIPT.split('\n');
-      pre.innerHTML = lines.map((line, i) => {
-        const num = String(i + 1).padStart(3, ' ');
-        const safe = line
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
-        return `<span class="line-num-col">${num}</span>${safe}`;
-      }).join('\n');
-    })();
-
-    function copyScript() {
-      navigator.clipboard.writeText(PYTHON_SCRIPT).then(() => {
-        const btn = document.getElementById('copyBtn');
-        btn.classList.add('copied');
-        btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Script`;
-        }, 2500);
-      }).catch(() => {
-        // Fallback for browsers without clipboard API
-        const ta = document.createElement('textarea');
-        ta.value = PYTHON_SCRIPT;
-        ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        const btn = document.getElementById('copyBtn');
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
-      });
-    }
-
-    function downloadScript() {
-      const blob = new Blob([PYTHON_SCRIPT], { type: 'text/plain' });
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement('a');
-      a.href     = url;
-      a.download = 'solar_system_blender511.py';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
   </script>
-
 </body>
 </html>
