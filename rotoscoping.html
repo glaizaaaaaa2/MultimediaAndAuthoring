@@ -1,157 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rotoscoping | Multimedia & Authoring</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --c1: #be185d; --c2: #9d174d; --c3: #f472b6;
-      --c4: #fbcfe8; --c5: #1e0d16; --bg: #0a0608;
-      --white: #150c11; --text: #f0e6eb; --text-light: #c9a0b4;
+      --pink:#f472b6; --pink2:#db2777; --pink3:#be185d;
+      --bg:#06030a; --surface:#0e0814; --card:#160b1c;
+      --border:#2d1040; --muted:#5a2d6e; --mid:#a87cbf;
+      --light:#d4b0e8; --white:#f2e8f8;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0a0608; color: #f0e6eb; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Plus Jakarta Sans',sans-serif; background:linear-gradient(160deg,#06030a 0%,#12062a 50%,#200828 100%); background-attachment:fixed; color:var(--white); min-height:100vh; }
+    nav { background:linear-gradient(90deg,#06030a 0%,#12062a 60%,#1e0830 100%); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+    .nav-brand { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); letter-spacing:0.03em; text-decoration:none; }
+    .nav-links { display:flex; gap:0.4rem; }
+    .nav-links a { color:var(--mid); text-decoration:none; font-size:0.82rem; font-weight:500; padding:0.4rem 1rem; border-radius:30px; transition:color 0.2s,background 0.2s; }
+    .nav-links a:hover { color:var(--white); background:rgba(244,114,182,0.15); }
 
-    nav {
-      background: var(--c1); padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 16px rgba(190,24,93,0.35);
-    }
-    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--c5); letter-spacing: 0.03em; text-decoration: none; }
-    .nav-links { display: flex; gap: 0.4rem; }
-    .nav-links a { color: var(--c5); text-decoration: none; font-size: 0.82rem; font-weight: 500; padding: 0.4rem 1rem; border-radius: 30px; transition: background 0.2s; }
-    .nav-links a:hover { background: rgba(190,24,93,0.2); color: #fff; }
+    .hero { padding:5rem 2.5rem 4rem; border-bottom:1px solid var(--border); position:relative; overflow:hidden; display:grid; grid-template-columns:1fr auto; align-items:end; gap:2rem; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.1),transparent 70%); pointer-events:none; }
+    .breadcrumb { font-size:0.72rem; color:var(--muted); margin-bottom:1.2rem; letter-spacing:0.08em; text-transform:uppercase; position:relative; }
+    .breadcrumb a { color:inherit; text-decoration:none; }
+    .breadcrumb a:hover { color:var(--pink); }
+    .hero h1 { font-family:'Fraunces',serif; font-size:clamp(2rem,5vw,3.5rem); color:var(--white); margin-bottom:0.6rem; line-height:1.1; position:relative; }
+    .hero h1 em { font-style:italic; color:var(--pink); }
+    .hero p { max-width:600px; color:var(--mid); font-size:0.92rem; line-height:1.82; font-weight:300; position:relative; }
+    .hero-stat { background:rgba(244,114,182,0.08); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem; text-align:center; white-space:nowrap; position:relative; backdrop-filter:blur(8px); }
+    .hero-stat-num { font-family:'Fraunces',serif; font-size:2.5rem; color:var(--pink); font-weight:700; line-height:1; }
+    .hero-stat-label { font-size:0.72rem; color:var(--mid); letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; }
 
-    /* HERO — sidebar layout */
-    .hero {
-      background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
-      padding: 4.5rem 2.5rem 4rem; position: relative; overflow: hidden;
-      display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .breadcrumb { font-size: 0.72rem; color: var(--c4); opacity: 0.8; margin-bottom: 1rem; letter-spacing: 0.06em; position: relative; }
-    .breadcrumb a { color: inherit; text-decoration: none; }
-    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: #fff; margin-bottom: 0.6rem; position: relative; }
-    .hero p { max-width: 600px; color: rgba(240,180,210,0.82); font-size: 0.92rem; line-height: 1.8; font-weight: 300; position: relative; }
-    .hero-stat {
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
-      padding: 1.2rem 1.5rem; text-align: center; white-space: nowrap; position: relative;
-    }
-    .hero-stat-num { font-family: 'Fraunces', serif; font-size: 2.5rem; color: #fff; font-weight: 700; line-height: 1; }
-    .hero-stat-label { font-size: 0.72rem; color: var(--c4); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+    .content { max-width:1060px; margin:0 auto; padding:4rem 2.5rem; }
+    .block-title { font-family:'Fraunces',serif; font-size:1.7rem; color:var(--white); margin-bottom:0.3rem; margin-top:4rem; }
+    .block-title:first-child { margin-top:0; }
+    .block-sub { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:1.8rem; display:flex; align-items:center; gap:10px; }
+    .block-sub::before { content:''; width:24px; height:2px; background:var(--pink); border-radius:2px; }
+    .body-text { font-size:0.9rem; line-height:1.85; color:var(--mid); margin-bottom:2rem; max-width:700px; font-weight:300; }
 
-    /* CONTENT */
-    .content { max-width: 1060px; margin: 0 auto; padding: 4rem 2.5rem; }
+    .video-wrap { border-radius:14px; overflow:hidden; aspect-ratio:16/9; margin-bottom:0.8rem; border:1px solid var(--border); box-shadow:0 8px 40px rgba(244,114,182,0.12); }
+    .video-wrap iframe { width:100%; height:100%; border:none; display:block; }
+    .video-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:var(--card); color:var(--mid); font-size:0.85rem; }
+    .play-ring { width:60px; height:60px; border:1.5px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .video-label { font-size:0.76rem; color:var(--muted); margin-bottom:2.5rem; font-style:italic; }
 
-    .block-title { font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--c1); margin-bottom: 0.3rem; margin-top: 4rem; }
-    .block-title:first-child { margin-top: 0; }
-    .block-sub { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c3); margin-bottom: 1.8rem; display: flex; align-items: center; gap: 8px; }
-    .block-sub::before { content: ''; width: 24px; height: 2px; background: var(--c3); border-radius: 2px; }
-    .body-text { font-size: 0.92rem; line-height: 1.85; color: var(--text-light); margin-bottom: 2rem; max-width: 700px; }
+    .steps-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.2rem; }
+    .step-card { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color 0.2s,box-shadow 0.2s; backdrop-filter:blur(6px); }
+    .step-card:hover { border-color:var(--pink); box-shadow:0 8px 30px rgba(244,114,182,0.12); }
+    .step-photo { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+    .step-photo[src$=".mp4"] { aspect-ratio:16/9; }
+    video.step-photo { width:100%; aspect-ratio:16/9; display:block; background:#000; }
+    .step-body { padding:1.1rem 1.2rem 1.3rem; }
+    .step-number { display:inline-block; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--white); background:var(--pink3); padding:3px 10px; border-radius:20px; margin-bottom:0.6rem; font-weight:600; }
+    .step-body h4 { font-family:'Fraunces',serif; font-size:1rem; color:var(--white); margin-bottom:0.4rem; }
+    .step-body p { font-size:0.82rem; color:var(--mid); line-height:1.7; }
 
-    /* VIDEO */
-    .video-wrap { border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; margin-bottom: 0.8rem; box-shadow: 0 8px 32px rgba(190,24,93,0.2); }
-    .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
-    .video-placeholder {
-      width: 100%; height: 100%; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 14px;
-      background: linear-gradient(135deg, var(--c1), var(--c3));
-      color: rgba(255,255,255,0.75); font-size: 0.88rem;
-    }
-    .play-ring { width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .video-label { font-size: 0.78rem; color: var(--text-light); margin-bottom: 3rem; font-style: italic; }
+    .weeks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; }
+    .week-card { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color 0.2s,box-shadow 0.2s; backdrop-filter:blur(6px); }
+    .week-card:hover { border-color:var(--pink); box-shadow:0 8px 30px rgba(244,114,182,0.12); }
+    .week-video { aspect-ratio:16/9; overflow:hidden; }
+    .week-video iframe { width:100%; height:100%; border:none; display:block; }
+    .week-photo-placeholder { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,rgba(45,16,64,0.6),rgba(22,11,28,0.9)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); }
+    .week-photo-placeholder span { font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.6; }
+    .week-body { padding:1rem 1.2rem 1.2rem; }
+    .week-badge { display:inline-block; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--pink); border:1px solid var(--border); padding:2px 9px; border-radius:20px; margin-bottom:0.5rem; }
+    .week-body h4 { font-family:'Fraunces',serif; font-size:1rem; color:var(--white); margin-bottom:0.3rem; }
+    .week-body p { font-size:0.8rem; color:var(--mid); line-height:1.65; }
 
-    /* STEP CARDS — photo style */
-    .steps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .step-card { background: #150c11; border-radius: 14px; border: 1.5px solid #2e1020; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
-    .step-card:hover { border-color: var(--c4); box-shadow: 0 8px 28px rgba(190,24,93,0.15); }
-    .step-photo {
-      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
-      background: var(--c5);
-    }
-    .step-photo-placeholder {
-      width: 100%; aspect-ratio: 4/3;
-      background: linear-gradient(135deg, #1e0d16 0%, #2e1020 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-      color: #f472b6; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
-    }
-    .step-photo-placeholder svg { opacity: 0.5; }
-    .step-photo-placeholder span { opacity: 0.7; }
-    .step-body { padding: 1.2rem 1.3rem 1.4rem; }
-    .step-number {
-      display: inline-block; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--white); background: var(--c2); padding: 3px 10px; border-radius: 20px;
-      margin-bottom: 0.6rem; font-weight: 600;
-    }
-    .step-body h4 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--c1); margin-bottom: 0.45rem; }
-    .step-body p { font-size: 0.83rem; color: var(--text-light); line-height: 1.7; }
-    .photo-note {
-      display: flex; align-items: center; gap: 5px; margin-top: 0.8rem;
-      font-size: 0.7rem; color: var(--c3); letter-spacing: 0.05em; text-transform: uppercase;
-    }
-
-    /* WEEKLY PROGRESS GRID */
-    .weeks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-
-    /* WEEK CARD — video for week 1, photo placeholder for rest */
-    .week-card { background: #150c11; border-radius: 14px; border: 1.5px solid #2e1020; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
-    .week-card:hover { border-color: var(--c4); box-shadow: 0 8px 28px rgba(190,24,93,0.15); }
-    .week-video { aspect-ratio: 16/9; overflow: hidden; }
-    .week-video iframe { width: 100%; height: 100%; border: none; display: block; }
-    .week-photo-placeholder {
-      width: 100%; aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #1e0d16, #2e1020);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-      color: var(--c2);
-    }
-    .week-photo-placeholder svg { opacity: 0.45; }
-    .week-photo-placeholder span { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
-    .week-body { padding: 1rem 1.2rem 1.3rem; }
-    .week-badge {
-      display: inline-block; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--c2); border: 1px solid var(--c4); padding: 2px 9px; border-radius: 20px;
-      margin-bottom: 0.5rem;
-    }
-    .week-body h4 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--c1); margin-bottom: 0.35rem; }
-    .week-body p { font-size: 0.8rem; color: var(--text-light); line-height: 1.65; }
-
-    footer {
-      background: var(--c1); color: var(--c5); text-align: center;
-      padding: 2rem 1.5rem; font-size: 0.82rem; letter-spacing: 0.03em; line-height: 1.9; margin-top: 3rem;
-    }
-    footer span { color: var(--c4); }
-
-    @media(max-width:768px){
-      .hero { grid-template-columns: 1fr; padding: 3.5rem 1.2rem 3rem; }
-      .hero-stat { display: none; }
-      .content { padding: 3rem 1.2rem; }
-      nav { padding: 0 1.2rem; }
-    }
+    footer { background:linear-gradient(90deg,#06030a 0%,#12062a 100%); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; margin-top:3rem; }
+    footer span { color:var(--mid); }
+    @media(max-width:768px){ .hero{ grid-template-columns:1fr; padding:3.5rem 1.2rem 3rem; } .hero-stat{ display:none; } .content{ padding:3rem 1.2rem; } nav{ padding:0 1.2rem; } }
   </style>
 </head>
 <body>
-
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a></div>
   </nav>
 
   <div class="hero">
     <div>
       <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Rotoscoping</div>
-      <h1>Rotoscoping</h1>
-      <p>Rotoscoping is the technique of animating by tracing over live-action video footage frame by frame. This project documents the full creative process — from raw footage through After Effects and Photoshop to a finished animated output.</p>
+      <h1>Roto<em>scoping</em></h1>
+      <p>The technique of animating by tracing over live-action video footage frame by frame. This project documents the full creative process — from raw footage through After Effects and Photoshop to a finished animated output.</p>
     </div>
     <div class="hero-stat">
       <div class="hero-stat-num">12</div>
@@ -160,139 +93,93 @@
   </div>
 
   <div class="content">
-
-    <!-- FINAL OUTPUT -->
     <h2 class="block-title">Final Output</h2>
     <div class="block-sub">Completed Animation</div>
     <p class="body-text">The completed rotoscoping animation — the culmination of 12 weeks of frame-by-frame tracing, color work, and compositing.</p>
-    <p credits to https://www.tiktok.com/@__littlemy/video/7538115192845028614?_r=1&_t=ZS-95seMFyeN2S </p>
     <div class="video-wrap">
       <div class="video-placeholder">
-        <div class="play-ring"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4L14 9L6 14V4Z" fill="white"/></svg></div>
+        <div class="play-ring"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4L14 9L6 14V4Z" fill="#f472b6"/></svg></div>
         <span>Rotoscoping — Final Output</span>
-        <span style="font-size:0.72rem;opacity:0.6;"> </span>
+        <span style="font-size:0.72rem;opacity:0.5;">Replace with your YouTube embed URL</span>
       </div>
       <!-- REPLACE WITH: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
     </div>
-    <p class="video-label">Replace the placeholder above with your YouTube embed URL.</p>
+    <p class="video-label">Add your YouTube embed URL inside the video-wrap div above.</p>
 
-    <!-- STEP BY STEP — PHOTOS -->
     <h2 class="block-title">Step-by-Step Tutorial</h2>
     <div class="block-sub">Process</div>
-    <p class="body-text">A visual walkthrough of the rotoscoping process. Each step below shows a photo of the actual screen/action at that stage.</p>
+    <p class="body-text">A visual walkthrough of the rotoscoping process — from preparing applications to editing the final frames in Photoshop.</p>
 
     <div class="steps-grid">
-
- 
- 
       <div class="step-card">
-  <video controls class="step-photo">
-    <source src="images/lv_0_20260423203322.mp4" type="video/mp4" />
-  </video>
-  <div class="step-body">
-    <span class="step-number">Source Video</span>
-    <h4>Reference</h4>
-    <p>Pick a reference for rotoscoping.</p>
-     <p> I used https://www.tiktok.com/@__littlemy/video/7538115192845028614</p>
-  </div>
-</div>
-      
+        <video controls class="step-photo">
+          <source src="images/lv_0_20260423203322.mp4" type="video/mp4"/>
+        </video>
+        <div class="step-body">
+          <span class="step-number">Source Video</span>
+          <h4>Reference</h4>
+          <p>Pick a reference for rotoscoping. Source: <a href="https://www.tiktok.com/@__littlemy/video/7538115192845028614" style="color:var(--pink);">TikTok @__littlemy</a></p>
+        </div>
+      </div>
       <div class="step-card">
-        <img src="images/step1.jpeg" alt="Step 1 - Prepare Applications" class="step-photo" />
+        <img src="images/step1.jpeg" alt="Step 1 - Prepare Applications" class="step-photo"/>
         <div class="step-body">
           <span class="step-number">Step 1</span>
           <h4>Prepare the Applications</h4>
           <p>Set up Adobe After Effects and Photoshop. Organize your project files and folders on your desktop before starting.</p>
         </div>
       </div>
-
       <div class="step-card">
-        <img src="images/step2.png" alt="Step 2 - Splitting" class="step-photo" />
+        <img src="images/step2.png" alt="Step 2 - Splitting" class="step-photo"/>
         <div class="step-body">
           <span class="step-number">Step 2</span>
           <h4>Split the Video into 5-Second Clips</h4>
           <p>Cut your reference footage into manageable 5-second segments so each week covers one clip.</p>
         </div>
       </div>
-
       <div class="step-card">
-        <img src="images/step3.png" alt="Step 3 - Exporting as PNG Sequence" class="step-photo" />
+        <img src="images/step3.png" alt="Step 3 - Render Queue" class="step-photo"/>
         <div class="step-body">
           <span class="step-number">Step 3</span>
           <h4>After Effects — Export via Render Queue</h4>
           <p>Import clips into After Effects. Go to <em>Composition → Add to Render Queue</em>, set format to PNG Sequence, and render.</p>
         </div>
       </div>
-
       <div class="step-card">
-        <img src="images/step4.png" alt="Step 4 - Importing to Photoshop" class="step-photo" />
+        <img src="images/step4.png" alt="Step 4 - Import to Photoshop" class="step-photo"/>
         <div class="step-body">
           <span class="step-number">Step 4</span>
           <h4>Import Rendered Frames into Photoshop</h4>
-          <p>Open Photoshop → <em>File → Open</em> → select first frame → check "Image Sequence" → set FPS → open. Each frame is now a layer.</p>
+          <p>Open Photoshop → <em>File → Open</em> → select first frame → check "Image Sequence" → set FPS → open.</p>
         </div>
       </div>
-
       <div class="step-card">
-        <img src="images/step5.png" alt="Step 5 - Editing" class="step-photo" />
+        <img src="images/step5.png" alt="Step 5 - Editing" class="step-photo"/>
         <div class="step-body">
           <span class="step-number">Step 5</span>
           <h4>Edit the Rendered Frames</h4>
-          <p>Trace and color each frame in Photoshop. Use the brush tool, paint bucket, and layer masks to build up the rotoscoped animation.</p>
+          <p>Trace and color each frame in Photoshop using brush tool, paint bucket, and layer masks.</p>
         </div>
       </div>
-
     </div>
 
-    <!-- WEEKLY PROGRESS -->
     <h2 class="block-title" style="margin-top:4rem;">Weekly Progress</h2>
     <div class="block-sub">5-Second Clips</div>
-    <p class="body-text">Each module below represents one 5-second clip of the rotoscoping project. Week 1 includes the progress video — remaining weeks show photo documentation.</p>
+    <p class="body-text">Each module represents one 5-second clip — rendered from After Effects and edited frame by frame in Photoshop.</p>
 
     <div class="weeks-grid" id="weeks-grid">
-
-      <!-- WEEK 1 — YouTube embed -->
       <div class="week-card">
-        <div class="week-video">
-          <iframe
-            src="https://www.youtube.com/embed/KFQJ6VWmizs"
-            allowfullscreen
-            title="Week 1 Progress">
-          </iframe>
-          <!-- REPLACE YOUR_WEEK1_VIDEO_ID with your actual YouTube video ID -->
-        </div>
-        <div class="week-body">
-          <span class="week-badge">Week 1</span>
-          <h4>Clip 1 — 0:00–0:05</h4>
-          <p>First 5-second segment rendered from After Effects and edited frame by frame in Photoshop.</p>
-        </div>
+        <div class="week-video"><iframe src="https://www.youtube.com/embed/KFQJ6VWmizs" allowfullscreen title="Week 1"></iframe></div>
+        <div class="week-body"><span class="week-badge">Week 1</span><h4>Clip 1 — 0:00–0:05</h4><p>First 5-second segment rendered from After Effects and edited frame by frame in Photoshop.</p></div>
       </div>
-
-      <!-- WEEK 2 — YouTube embed -->
       <div class="week-card">
-        <div class="week-video">
-          <iframe
-            src="https://www.youtube.com/embed/yrweODGfTA0"
-            allowfullscreen
-            title="Week 2 Progress">
-          </iframe>
-        </div>
-        <div class="week-body">
-          <span class="week-badge">Week 2</span>
-          <h4>Clip 2 — 0:05–0:10</h4>
-          <p>Second 5-second segment rendered from After Effects and edited frame by frame in Photoshop.</p>
-        </div>
+        <div class="week-video"><iframe src="https://www.youtube.com/embed/yrweODGfTA0" allowfullscreen title="Week 2"></iframe></div>
+        <div class="week-body"><span class="week-badge">Week 2</span><h4>Clip 2 — 0:05–0:10</h4><p>Second 5-second segment rendered from After Effects and edited frame by frame in Photoshop.</p></div>
       </div>
-      
-
-    </div><!-- end weeks-grid, weeks 2-12 rendered below by JS -->
-
+    </div>
   </div>
 
-  <footer>
-    © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
-    <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
-  </footer>
+  <footer>© 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/><span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span></footer>
 
   <script>
     const clips = [
@@ -307,25 +194,14 @@
       { n:11, title:"Clip 11 — 0:50–0:55", desc:"Eleventh segment — near-final clip with refined shading and finishing detail work." },
       { n:12, title:"Clip 12 — 0:55–1:00", desc:"Final 5-second clip completed. All segments combined for the finished output." },
     ];
-
-    const grid = document.getElementById('weeks-grid');
-    grid.innerHTML += clips.map(c => `
+    document.getElementById('weeks-grid').innerHTML += clips.map(c => `
       <div class="week-card">
         <div class="week-photo-placeholder">
-          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
-            <rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M4 22l7-7 5 5 4-5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="13" r="2.5" fill="currentColor" opacity="0.5"/>
-          </svg>
-          <span>Add photo here</span>
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 22l7-7 5 5 4-5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Add photo</span>
         </div>
-        <div class="week-body">
-          <span class="week-badge">Week ${c.n}</span>
-          <h4>${c.title}</h4>
-          <p>${c.desc}</p>
-        </div>
+        <div class="week-body"><span class="week-badge">Week ${c.n}</span><h4>${c.title}</h4><p>${c.desc}</p></div>
       </div>`).join('');
   </script>
-
 </body>
 </html>
