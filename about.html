@@ -1,85 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About | Multimedia & Authoring</title>
+  <title>About | Multimedia &amp; Authoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
   <style>
+    /* ── TOKENS ── */
     :root {
-      --pink:#f472b6; --pink2:#db2777; --pink3:#be185d;
+      --accent:#f472b6; --accent2:#db2777; --accent3:#be185d;
       --bg:#06030a; --surface:#0e0814; --card:#160b1c;
       --border:#2d1040; --muted:#5a2d6e; --mid:#a87cbf;
-      --light:#d4b0e8; --white:#f2e8f8;
+      --subtle:#d4b0e8; --fg:#f2e8f8;
+      --nav-bg:rgba(6,3,10,0.78);
+      --card-bg:rgba(22,11,28,0.72);
+      --transition:0.28s cubic-bezier(.4,0,.2,1);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Plus Jakarta Sans',sans-serif; background:linear-gradient(160deg,#06030a 0%,#12062a 50%,#200828 100%); background-attachment:fixed; color:var(--white); min-height:100vh; }
-    nav { background:linear-gradient(90deg,#06030a 0%,#12062a 60%,#1e0830 100%); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
-    .nav-brand { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); letter-spacing:0.03em; text-decoration:none; }
-    .nav-links { display:flex; gap:0.4rem; }
-    .nav-links a { color:var(--mid); text-decoration:none; font-size:0.82rem; font-weight:500; padding:0.4rem 1rem; border-radius:30px; transition:color 0.2s,background 0.2s; }
-    .nav-links a:hover,.nav-links a.active { color:var(--white); background:rgba(244,114,182,0.15); }
-    footer { background:linear-gradient(90deg,#06030a 0%,#12062a 100%); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; }
-    footer span { color:var(--mid); }
-    .hero { padding:5rem 2.5rem 4rem; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
-    .hero::after { content:''; position:absolute; top:0; right:0; width:50%; height:100%; background:radial-gradient(ellipse at right,rgba(244,114,182,0.08),transparent 70%); pointer-events:none; }
-    .breadcrumb { font-size:0.72rem; color:var(--muted); margin-bottom:1.5rem; letter-spacing:0.1em; text-transform:uppercase; }
-    .breadcrumb a { color:inherit; text-decoration:none; transition:color 0.2s; }
-    .breadcrumb a:hover { color:var(--pink); }
-    .hero h1 { font-family:'Fraunces',serif; font-size:clamp(2.5rem,6vw,4.5rem); color:var(--white); font-weight:700; line-height:1.08; margin-bottom:0.6rem; }
-    .hero p { max-width:520px; color:var(--mid); font-size:0.9rem; line-height:1.85; font-weight:300; }
-    .content { max-width:1000px; margin:0 auto; padding:5rem 2.5rem; }
-    .block-title { font-family:'Fraunces',serif; font-size:1.8rem; color:var(--white); margin-bottom:0.3rem; font-weight:700; margin-top:4rem; }
-    .block-title:first-child { margin-top:0; }
-    .block-sub { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:2.5rem; display:flex; align-items:center; gap:10px; }
-    .block-sub::before { content:''; width:20px; height:1px; background:var(--pink); }
-    .info-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-bottom:1rem; }
-    .info-card { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:12px; padding:1.5rem; transition:border-color 0.2s; backdrop-filter:blur(6px); }
-    .info-card:hover { border-color:var(--pink); }
-    .info-label { font-size:0.66rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--pink); margin-bottom:0.6rem; }
-    .info-value { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); font-weight:700; }
-    .info-sub { font-size:0.8rem; color:var(--mid); margin-top:0.3rem; line-height:1.6; }
-    .about-body { font-size:0.9rem; line-height:1.9; color:var(--mid); }
-    .about-body p { margin-bottom:1.3rem; }
-    .about-body strong { color:var(--light); font-weight:500; }
-    .skills-list { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:2rem; }
-    .skill-tag { background:rgba(244,114,182,0.08); color:var(--mid); font-size:0.72rem; padding:6px 14px; border:1px solid var(--border); border-radius:30px; letter-spacing:0.06em; transition:border-color 0.2s,color 0.2s; }
-    .skill-tag:hover { border-color:var(--pink); color:var(--pink); }
-    @media(max-width:600px){ .hero,.content{ padding-left:1.2rem; padding-right:1.2rem; } nav{ padding:0 1.2rem; } }
+    [data-theme="light"] {
+      --accent:#d97706; --accent2:#b45309; --accent3:#92400e;
+      --bg:#fef9ee; --surface:#fff8e6; --card:#fffbf2;
+      --border:#f0d080; --muted:#c8a84b; --mid:#8b6914;
+      --subtle:#5c4a1e; --fg:#1a1200;
+      --nav-bg:rgba(254,249,238,0.88);
+      --card-bg:rgba(255,251,242,0.85);
+    }
+    /* ── RESET ── */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;transition:background var(--transition),color var(--transition);}
+
+    /* ── NAV ── */
+    nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;backdrop-filter:blur(18px);}
+    .nav-brand{font-family:'DM Serif Display',serif;font-size:1rem;font-weight:400;color:var(--fg);letter-spacing:0.04em;text-decoration:none;}
+    .nav-right{display:flex;align-items:center;gap:0.3rem;}
+    .nav-links{display:flex;gap:0.3rem;}
+    .nav-links a{color:var(--mid);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.4rem 1rem;border-radius:30px;letter-spacing:0.05em;transition:color var(--transition),background var(--transition);}
+    .nav-links a:hover,.nav-links a.active{color:var(--fg);background:rgba(244,114,182,0.13);}
+    [data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{background:rgba(217,119,6,0.12);}
+    #theme-toggle{display:flex;align-items:center;gap:5px;background:var(--card-bg);border:1px solid var(--border);border-radius:30px;padding:0.35rem 0.9rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;color:var(--mid);transition:all var(--transition);white-space:nowrap;}
+    #theme-toggle:hover{border-color:var(--accent);color:var(--fg);}
+    .toggle-icon{font-size:0.9rem;line-height:1;}
+
+    /* ── HERO ── */
+    .hero{padding:5rem 2.5rem 4rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.07),transparent 70%);pointer-events:none;}
+    [data-theme="light"] .hero::before{background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(217,119,6,0.08),transparent 70%);}
+    .breadcrumb{font-family:'DM Serif Display',serif;font-size:0.65rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:0.1em;text-transform:uppercase;position:relative;}
+    .breadcrumb a{color:inherit;text-decoration:none;transition:color var(--transition);}
+    .breadcrumb a:hover{color:var(--accent);}
+    .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.8rem);color:var(--fg);margin-bottom:0.6rem;line-height:1.05;font-weight:400;position:relative;}
+    .hero h1 em{font-style:italic;color:var(--accent);}
+    .hero p{max-width:560px;color:var(--mid);font-size:0.9rem;line-height:1.88;font-weight:300;position:relative;}
+
+    /* ── CONTENT ── */
+    .content{max-width:1100px;margin:0 auto;padding:4rem 2.5rem;}
+    .block-title{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--fg);margin-bottom:0.3rem;margin-top:4rem;font-weight:400;}
+    .block-title:first-child{margin-top:0;}
+    .block-sub{font-family:'DM Serif Display',serif;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;display:flex;align-items:center;gap:10px;}
+    .block-sub::before{content:'';width:22px;height:2px;background:var(--accent);border-radius:2px;}
+
+    /* ── INFO GRID ── */
+    .info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:3rem;}
+    .info-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color var(--transition),transform var(--transition);backdrop-filter:blur(6px);}
+    .info-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+    .info-label{font-family:'DM Serif Display',serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.6rem;}
+    .info-value{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--fg);font-weight:400;line-height:1.3;}
+    .info-sub{font-size:0.8rem;color:var(--mid);margin-top:0.4rem;line-height:1.6;font-weight:300;}
+
+    /* ── BODY TEXT ── */
+    .body-text{font-size:0.9rem;line-height:1.9;color:var(--mid);margin-bottom:2rem;max-width:700px;font-weight:300;}
+    .body-text p{margin-bottom:1.3rem;}
+    .body-text strong{color:var(--subtle);font-weight:500;}
+
+    /* ── SKILLS ── */
+    .skills-list{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:2rem;}
+    .skill-tag{background:rgba(244,114,182,0.07);color:var(--mid);font-size:0.72rem;padding:6px 14px;border:1px solid var(--border);border-radius:30px;letter-spacing:0.06em;transition:border-color var(--transition),color var(--transition);}
+    [data-theme="light"] .skill-tag{background:rgba(217,119,6,0.07);}
+    .skill-tag:hover{border-color:var(--accent);color:var(--accent);}
+
+    /* ── PROJECT LINKS ── */
+    .project-links{display:flex;flex-direction:column;gap:0.85rem;margin-top:1.5rem;}
+    .proj-link{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;transition:border-color var(--transition),transform var(--transition);}
+    .proj-link:hover{border-color:var(--accent);transform:translateX(4px);}
+    .proj-link-tag{font-family:'DM Serif Display',serif;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
+    .proj-link-name{font-family:'DM Serif Display',serif;font-size:0.98rem;color:var(--fg);}
+    .proj-link-arrow{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:var(--border);display:flex;align-items:center;justify-content:center;transition:background var(--transition);}
+    .proj-link:hover .proj-link-arrow{background:var(--accent2);}
+
+    /* ── FOOTER ── */
+    footer{background:rgba(6,3,10,0.82);border-top:1px solid var(--border);text-align:center;padding:2.5rem 1.5rem;font-size:0.8rem;letter-spacing:0.04em;color:var(--muted);line-height:2.2;margin-top:4rem;transition:background var(--transition);}
+    [data-theme="light"] footer{background:rgba(254,249,238,0.9);}
+    footer span{color:var(--mid);}
+
+    @media(max-width:768px){
+      .hero,.content{padding-left:1.2rem;padding-right:1.2rem;}
+      nav{padding:0 1.2rem;}
+      #theme-toggle .toggle-label{display:none;}
+    }
   </style>
 </head>
 <body>
+  <script src="theme.js"></script>
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
-    <div class="nav-links"><a href="index.html">Home</a><a href="about.html" class="active">About</a></div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+      </div>
+      <button id="theme-toggle" onclick="toggleTheme()" aria-label="Switch theme">
+        <span class="toggle-icon">☀</span>
+        <span class="toggle-label">Light</span>
+      </button>
+    </div>
   </nav>
+
   <div class="hero">
     <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; About</div>
-    <h1>About</h1>
+    <h1>About <em>This Site</em></h1>
     <p>A brief introduction to the person behind the projects and the course that shaped them.</p>
   </div>
+
   <div class="content">
+
     <h2 class="block-title">Student Profile</h2>
     <div class="block-sub">Identity</div>
     <div class="info-grid">
-      <div class="info-card"><div class="info-label">Full Name</div><div class="info-value">Glaiza Marie D. Reblinca</div></div>
-      <div class="info-card"><div class="info-label">Program &amp; Section</div><div class="info-value">BSIT · NS · 2A</div></div>
-      <div class="info-card"><div class="info-label">Subject</div><div class="info-value">Multimedia and Authoring</div><div class="info-sub">Digital media production, animation, and 3D visualization</div></div>
-      <div class="info-card"><div class="info-label">Academic Year</div><div class="info-value">2025 – 2026</div><div class="info-sub">Second Year, Second Semester</div></div>
+      <div class="info-card">
+        <div class="info-label">Full Name</div>
+        <div class="info-value">Glaiza Marie D. Reblinca</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Program &amp; Section</div>
+        <div class="info-value">BSIT · NS · 2A</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Subject</div>
+        <div class="info-value">Multimedia and Authoring</div>
+        <div class="info-sub">Digital media production, animation, and 3D visualization</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Academic Year</div>
+        <div class="info-value">2025 – 2026</div>
+        <div class="info-sub">Second Year, Second Semester</div>
+      </div>
     </div>
+
     <h2 class="block-title">About This Site</h2>
     <div class="block-sub">Context</div>
-    <div class="about-body">
+    <div class="body-text">
       <p>This website serves as a digital portfolio for the <strong>Multimedia and Authoring</strong> course, documenting the creative journey through two major projects: <strong>Rotoscoping</strong> and <strong>3D Rendering</strong>.</p>
       <p>The <strong>rotoscoping project</strong> involved splitting reference footage into 5-second clips, rendering them through After Effects, then tracing and editing each frame in Photoshop.</p>
       <p>The <strong>3D rendering project</strong> built a realistic model of the solar system — exploring lighting, texturing, orbital mechanics, and perspective.</p>
       <p>Together, these projects reflect a growing proficiency in digital media authoring and a genuine curiosity for the intersection of <strong>art and technology</strong>.</p>
       <div class="skills-list">
-        <span class="skill-tag">Rotoscoping</span><span class="skill-tag">3D Rendering</span><span class="skill-tag">After Effects</span><span class="skill-tag">Photoshop</span><span class="skill-tag">Animation</span><span class="skill-tag">Digital Media</span><span class="skill-tag">Video Production</span><span class="skill-tag">Solar System Modeling</span>
+        <span class="skill-tag">Rotoscoping</span>
+        <span class="skill-tag">3D Rendering</span>
+        <span class="skill-tag">After Effects</span>
+        <span class="skill-tag">Photoshop</span>
+        <span class="skill-tag">Animation</span>
+        <span class="skill-tag">Digital Media</span>
+        <span class="skill-tag">Video Production</span>
+        <span class="skill-tag">Solar System Modeling</span>
       </div>
     </div>
+
+    <h2 class="block-title">Browse Projects</h2>
+    <div class="block-sub">Selected Works</div>
+    <div class="project-links">
+      <a href="rotoscoping.html" class="proj-link">
+        <div>
+          <div class="proj-link-tag">Project 01 · Animation</div>
+          <div class="proj-link-name">Rotoscoping</div>
+        </div>
+        <div class="proj-link-arrow">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+      <a href="rendering.html" class="proj-link">
+        <div>
+          <div class="proj-link-tag">Project 02 · 3D Rendering</div>
+          <div class="proj-link-name">Solar System</div>
+        </div>
+        <div class="proj-link-arrow">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+    </div>
+
   </div>
-  <footer>© 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/><span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span></footer>
+
+  <footer>
+    © 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/>
+    <span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span>
+  </footer>
+
+  <script src="stars.js"></script>
 </body>
 </html>
