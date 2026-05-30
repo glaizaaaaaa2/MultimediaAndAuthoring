@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>3D Rendering | Multimedia & Authoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --pink:#f472b6; --pink2:#db2777; --pink3:#be185d;
@@ -14,79 +14,87 @@
       --light:#d4b0e8; --white:#f2e8f8;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Plus Jakarta Sans',sans-serif; background:linear-gradient(160deg,#06030a 0%,#12062a 50%,#200828 100%); background-attachment:fixed; color:var(--white); min-height:100vh; }
-    nav { background:linear-gradient(90deg,#06030a 0%,#12062a 60%,#1e0830 100%); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
-    .nav-brand { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--white); letter-spacing:0.03em; text-decoration:none; }
+    body { font-family:'DM Sans',sans-serif; background:#06030a; color:var(--white); min-height:100vh; }
+    nav { background:rgba(6,3,10,0.75); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(16px); }
+    .nav-brand { font-family:'DM Serif Display',serif; font-size:1.05rem; color:var(--white); letter-spacing:0.02em; text-decoration:none; }
     .nav-links { display:flex; gap:0.4rem; }
     .nav-links a { color:var(--mid); text-decoration:none; font-size:0.82rem; font-weight:500; padding:0.4rem 1rem; border-radius:30px; transition:color 0.2s,background 0.2s; }
     .nav-links a:hover { color:var(--white); background:rgba(244,114,182,0.15); }
 
     .hero { padding:5rem 2.5rem 4rem; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
-    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.1),transparent 70%); pointer-events:none; }
-    .breadcrumb { font-size:0.72rem; color:var(--muted); margin-bottom:1.2rem; letter-spacing:0.08em; text-transform:uppercase; position:relative; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.08),transparent 70%); pointer-events:none; }
+    .breadcrumb { font-size:0.7rem; color:var(--muted); margin-bottom:1.2rem; letter-spacing:0.08em; text-transform:uppercase; position:relative; }
     .breadcrumb a { color:inherit; text-decoration:none; }
     .breadcrumb a:hover { color:var(--pink); }
-    .hero h1 { font-family:'Fraunces',serif; font-size:clamp(2rem,5vw,3.8rem); color:var(--white); margin-bottom:0.6rem; line-height:1.1; position:relative; }
+    .hero h1 { font-family:'DM Serif Display',serif; font-size:clamp(2rem,5vw,3.8rem); color:var(--white); margin-bottom:0.6rem; line-height:1.1; position:relative; font-weight:400; }
     .hero h1 em { font-style:italic; color:var(--pink); }
-    .hero p { max-width:620px; color:var(--mid); font-size:0.92rem; line-height:1.82; font-weight:300; position:relative; }
+    .hero p { max-width:620px; color:var(--mid); font-size:0.92rem; line-height:1.85; font-weight:300; position:relative; }
 
     .content { max-width:1100px; margin:0 auto; padding:4rem 2.5rem; }
-    .block-title { font-family:'Fraunces',serif; font-size:1.7rem; color:var(--white); margin-bottom:0.3rem; margin-top:4rem; }
+    .block-title { font-family:'DM Serif Display',serif; font-size:1.65rem; color:var(--white); margin-bottom:0.3rem; margin-top:4rem; font-weight:400; }
     .block-title:first-child { margin-top:0; }
-    .block-sub { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:1.8rem; display:flex; align-items:center; gap:10px; }
+    .block-sub { font-size:0.66rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:1.8rem; display:flex; align-items:center; gap:10px; }
     .block-sub::before { content:''; width:24px; height:2px; background:var(--pink); border-radius:2px; }
-    .body-text { font-size:0.9rem; line-height:1.85; color:var(--mid); margin-bottom:2rem; max-width:700px; font-weight:300; }
+    .body-text { font-size:0.9rem; line-height:1.88; color:var(--mid); margin-bottom:2rem; max-width:700px; font-weight:300; }
 
-    .video-wrap { border-radius:14px; overflow:hidden; aspect-ratio:16/9; margin-bottom:0.8rem; border:1px solid var(--border); box-shadow:0 8px 40px rgba(244,114,182,0.12); }
+    .video-wrap { border-radius:14px; overflow:hidden; aspect-ratio:16/9; margin-bottom:0.8rem; border:1px solid var(--border); box-shadow:0 8px 40px rgba(244,114,182,0.1); }
     .video-wrap iframe { width:100%; height:100%; border:none; display:block; }
-    .video-label { font-size:0.76rem; color:var(--muted); margin-bottom:2.5rem; font-style:italic; }
+    .video-label { font-size:0.75rem; color:var(--muted); margin-bottom:2.5rem; font-style:italic; }
 
+    /* TOOLS — no emoji, text-only */
     .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
     .tool-card { background:rgba(22,11,28,0.9); padding:1.5rem; transition:background 0.2s; }
     .tool-card:hover { background:rgba(45,16,64,0.5); }
-    .tool-icon { font-size:1.4rem; margin-bottom:0.7rem; }
-    .tool-name { font-weight:600; font-size:0.9rem; color:var(--white); margin-bottom:0.35rem; }
-    .tool-desc { font-size:0.8rem; color:var(--mid); line-height:1.7; font-weight:300; }
+    .tool-label { font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--pink); margin-bottom:0.5rem; }
+    .tool-name { font-family:'DM Serif Display',serif; font-size:1rem; color:var(--white); margin-bottom:0.35rem; }
+    .tool-desc { font-size:0.8rem; color:var(--mid); line-height:1.72; font-weight:300; }
 
-    .calc-box { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:16px; padding:2rem 2.2rem; margin-bottom:2rem; position:relative; overflow:hidden; backdrop-filter:blur(8px); }
+    /* CALCULATOR */
+    .calc-box { background:rgba(22,11,28,0.7); border:1px solid var(--border); border-radius:16px; padding:2rem 2.2rem; margin-bottom:2rem; position:relative; overflow:hidden; backdrop-filter:blur(8px); }
     .calc-box::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--pink3),var(--pink),var(--light)); }
     .calc-row { display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1rem; }
     .calc-field { display:flex; flex-direction:column; gap:6px; flex:1; min-width:180px; }
-    .calc-field label { font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--mid); }
-    .calc-field input { padding:0.7rem 1rem; border:1px solid var(--border); background:rgba(6,3,10,0.8); font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem; color:var(--white); border-radius:8px; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+    .calc-field label { font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--mid); }
+    .calc-field input { padding:0.7rem 1rem; border:1px solid var(--border); background:rgba(6,3,10,0.8); font-family:'DM Sans',sans-serif; font-size:0.95rem; color:var(--white); border-radius:8px; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
     .calc-field input:focus { border-color:var(--pink); box-shadow:0 0 0 3px rgba(244,114,182,0.12); }
     .calc-field input::placeholder { color:var(--muted); }
-    .calc-btn { padding:0.72rem 2rem; background:var(--pink2); color:#fff; border:none; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:0.06em; border-radius:8px; cursor:pointer; transition:background 0.2s,box-shadow 0.2s; white-space:nowrap; }
+    .calc-btn { padding:0.72rem 2rem; background:var(--pink2); color:#fff; border:none; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:0.06em; border-radius:8px; cursor:pointer; transition:background 0.2s,box-shadow 0.2s; white-space:nowrap; }
     .calc-btn:hover { background:var(--pink3); box-shadow:0 0 20px rgba(244,114,182,0.25); }
-    .calc-hint { font-size:0.76rem; color:var(--muted); }
+    .calc-hint { font-size:0.75rem; color:var(--muted); }
 
-    /* PLANET CARDS */
-    .planets-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; }
-    .planet-card { background:rgba(22,11,28,0.8); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s; backdrop-filter:blur(6px); }
-    .planet-card:hover { border-color:var(--pink); transform:translateY(-4px); box-shadow:0 16px 50px rgba(244,114,182,0.15); }
+    /* PLANET SELECTOR */
+    .planet-selector-row { display:flex; flex-wrap:wrap; gap:0.55rem; margin-bottom:2rem; }
+    .planet-btn { padding:0.45rem 1.1rem; border:1px solid var(--border); border-radius:30px; background:rgba(22,11,28,0.7); color:var(--mid); font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; cursor:pointer; transition:all 0.18s; letter-spacing:0.03em; }
+    .planet-btn:hover { border-color:var(--pink); color:var(--white); }
+    .planet-btn.active { background:var(--pink2); border-color:var(--pink2); color:#fff; }
 
-    .planet-video-wrap { width:100%; aspect-ratio:16/9; background:#000; overflow:hidden; }
-    .planet-video-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
-    .planet-video-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:rgba(22,11,28,0.9); color:var(--muted); }
-    .planet-video-placeholder span { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.6; }
+    /* PLANET DETAIL */
+    .planet-detail { background:rgba(22,11,28,0.7); border:1px solid var(--border); border-radius:18px; overflow:hidden; backdrop-filter:blur(8px); display:none; animation:fadeUp 0.3s ease; }
+    .planet-detail.visible { display:block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    .detail-video-wrap { width:100%; aspect-ratio:16/9; background:#000; position:relative; overflow:hidden; }
+    .detail-video-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
+    .detail-body { padding:1.8rem 2rem 2rem; }
+    .detail-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:1.4rem; }
+    .detail-name { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--white); line-height:1; }
+    .detail-type { font-size:0.63rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--pink); margin-top:6px; }
+    .detail-num { font-family:'DM Serif Display',serif; font-size:3.5rem; color:rgba(244,114,182,0.12); line-height:1; }
+    .detail-stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:1rem 1.5rem; margin-bottom:1.4rem; }
+    .detail-stat { border-bottom:1px solid var(--border); padding-bottom:0.8rem; }
+    .ds-label { font-size:0.61rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+    .ds-val { font-size:0.88rem; color:var(--light); font-weight:500; }
+    .detail-age-banner { background:linear-gradient(135deg,rgba(190,24,93,0.2),rgba(244,114,182,0.07)); border-radius:10px; padding:1rem 1.4rem; display:flex; justify-content:space-between; align-items:center; }
+    .dab-label { font-size:0.67rem; color:var(--mid); letter-spacing:0.08em; text-transform:uppercase; }
+    .dab-val { font-family:'DM Serif Display',serif; font-size:1.7rem; color:var(--pink); }
+    .dab-val.empty { font-family:'DM Sans',sans-serif; font-size:0.78rem; color:var(--muted); font-weight:300; }
 
-    .planet-card-top { padding:1rem 1.3rem 0.8rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-    .planet-name { font-family:'Fraunces',serif; font-size:1.15rem; color:var(--white); font-weight:700; }
-    .planet-type { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--pink); margin-top:2px; }
-    .planet-number { font-family:'Fraunces',serif; font-size:2.5rem; color:var(--border); font-weight:700; line-height:1; }
+    /* PLANET GRID (mini cards shown only before selection) */
+    .planet-prompt { text-align:center; padding:3rem 1rem; color:var(--muted); font-size:0.85rem; border:1px dashed var(--border); border-radius:14px; }
+    .planet-prompt strong { display:block; font-family:'DM Serif Display',serif; font-size:1.1rem; color:var(--mid); margin-bottom:0.4rem; }
 
-    .planet-stats { padding:0.9rem 1.3rem; display:grid; grid-template-columns:1fr 1fr; gap:0.7rem 0.5rem; border-bottom:1px solid var(--border); }
-    .stat-label { font-size:0.62rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2px; }
-    .stat-val { font-size:0.84rem; color:var(--light); font-weight:500; }
-
-    .planet-age-row { padding:0.9rem 1.3rem; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg,rgba(190,24,93,0.2),rgba(244,114,182,0.08)); }
-    .age-label { font-size:0.68rem; color:var(--mid); letter-spacing:0.08em; text-transform:uppercase; }
-    .age-val { font-family:'Fraunces',serif; font-size:1.4rem; color:var(--pink); font-weight:700; }
-    .age-val.empty { font-family:'Plus Jakarta Sans',sans-serif; font-size:0.75rem; color:var(--muted); font-weight:300; }
-
-    footer { background:linear-gradient(90deg,#06030a 0%,#12062a 100%); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; margin-top:4rem; }
+    footer { background:rgba(6,3,10,0.8); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; margin-top:4rem; }
     footer span { color:var(--mid); }
-    @media(max-width:600px){ .hero,.content{ padding-left:1.2rem; padding-right:1.2rem; } nav{ padding:0 1.2rem; } .calc-row{ flex-direction:column; } }
+    @media(max-width:600px){ .hero,.content{ padding-left:1.2rem; padding-right:1.2rem; } nav{ padding:0 1.2rem; } .calc-row{ flex-direction:column; } .detail-body{ padding:1.2rem; } }
   </style>
 </head>
 <body>
@@ -114,17 +122,17 @@
     <div class="block-sub">Production Stack</div>
     <p class="body-text">The following tools and concepts were used in the production of the 3D solar system rendering project.</p>
     <div class="tools-grid">
-      <div class="tool-card"><div class="tool-icon">🎛️</div><div class="tool-name">3D Modeling Software</div><div class="tool-desc">Used to create spherical meshes for each celestial body, set orbital paths, and animate planetary rotations.</div></div>
-      <div class="tool-card"><div class="tool-icon">💡</div><div class="tool-name">Lighting &amp; Shading</div><div class="tool-desc">Point lights simulate the Sun's radiance. Ambient and directional lights create depth and realistic shadow casting.</div></div>
-      <div class="tool-card"><div class="tool-icon">🖼️</div><div class="tool-name">Texture Mapping</div><div class="tool-desc">High-resolution planetary surface maps were UV-mapped onto spherical geometry for photorealism.</div></div>
-      <div class="tool-card"><div class="tool-icon">📷</div><div class="tool-name">Camera &amp; Composition</div><div class="tool-desc">Animated camera paths orbit the scene to showcase each planet, using depth-of-field to focus attention.</div></div>
-      <div class="tool-card"><div class="tool-icon">⚙️</div><div class="tool-name">Rendering Engine</div><div class="tool-desc">A ray-tracing engine converts 3D geometry to 2D pixels with realistic light bounce and shadow.</div></div>
-      <div class="tool-card"><div class="tool-icon">🎬</div><div class="tool-name">Video Compositing</div><div class="tool-desc">Rendered frames composited into a final video with color grading for a cinematic space atmosphere.</div></div>
+      <div class="tool-card"><div class="tool-label">Modeling</div><div class="tool-name">3D Modeling Software</div><div class="tool-desc">Used to create spherical meshes for each celestial body, set orbital paths, and animate planetary rotations.</div></div>
+      <div class="tool-card"><div class="tool-label">Illumination</div><div class="tool-name">Lighting &amp; Shading</div><div class="tool-desc">Point lights simulate the Sun's radiance. Ambient and directional lights create depth and realistic shadow casting.</div></div>
+      <div class="tool-card"><div class="tool-label">Textures</div><div class="tool-name">Texture Mapping</div><div class="tool-desc">High-resolution planetary surface maps were UV-mapped onto spherical geometry for photorealism.</div></div>
+      <div class="tool-card"><div class="tool-label">Cinematography</div><div class="tool-name">Camera &amp; Composition</div><div class="tool-desc">Animated camera paths orbit the scene to showcase each planet, using depth-of-field to focus attention.</div></div>
+      <div class="tool-card"><div class="tool-label">Pipeline</div><div class="tool-name">Rendering Engine</div><div class="tool-desc">A ray-tracing engine converts 3D geometry to 2D pixels with realistic light bounce and shadow.</div></div>
+      <div class="tool-card"><div class="tool-label">Post-Production</div><div class="tool-name">Video Compositing</div><div class="tool-desc">Rendered frames composited into a final video with color grading for a cinematic space atmosphere.</div></div>
     </div>
 
     <h2 class="block-title">Planetary Age Calculator</h2>
     <div class="block-sub">Interactive Tool</div>
-    <p class="body-text">Every planet takes a different amount of time to orbit the Sun — meaning your age is different on each one. Enter your Earth age to find out how old you are across the solar system.</p>
+    <p class="body-text">Every planet takes a different amount of time to orbit the Sun — meaning your age is different on each one. Enter your Earth age, then select a planet to explore.</p>
     <div class="calc-box">
       <div class="calc-row">
         <div class="calc-field">
@@ -133,77 +141,105 @@
         </div>
         <button class="calc-btn" onclick="calculateAges()">Calculate ›</button>
       </div>
-      <p class="calc-hint">* Age, total orbits, and orbital period are all calculated from your Earth age using each planet's real orbital data.</p>
+      <p class="calc-hint">* Enter your age and pick any planet below to see your age, orbit count, and orbital data.</p>
     </div>
-    <div class="planets-grid" id="planets-grid"></div>
+
+    <!-- Planet selector pills (hidden until age is entered) -->
+    <div id="planet-selector" style="display:none;">
+      <div class="planet-selector-row" id="selector-row"></div>
+      <div class="planet-detail" id="planet-detail"></div>
+    </div>
+
+    <div class="planet-prompt" id="planet-prompt">
+      <strong>Enter your age above to begin</strong>
+      Select a planet from the menu that appears to view its video, orbital data, and your age on that world.
+    </div>
   </div>
 
   <footer>© 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/><span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span></footer>
 
+  <script src="stars.js"></script>
   <script>
     const planets = [
       { name:'Sun',     index:1,  type:'Star',               orbitalPeriodDays:365.25,   distance:'0 AU — center',       video:'videos/sun.mp4' },
       { name:'Mercury', index:2,  type:'Terrestrial Planet', orbitalPeriodDays:87.97,    distance:'0.387 AU (57.9M km)',  video:'videos/mercury.mp4' },
-      { name:'Venus',   index:3,  type:'Terrestrial Planet', orbitalPeriodDays:224.70,   distance:'0.723 AU (108.2M km)', video:'videos/venus.mp4' },
-      { name:'Earth',   index:4,  type:'Terrestrial Planet', orbitalPeriodDays:365.25,   distance:'1.000 AU (149.6M km)', video:'videos/earth.mp4' },
-      { name:'Mars',    index:5,  type:'Terrestrial Planet', orbitalPeriodDays:686.97,   distance:'1.524 AU (227.9M km)', video:'videos/mars.mp4' },
-      { name:'Jupiter', index:6,  type:'Gas Giant',          orbitalPeriodDays:4332.59,  distance:'5.203 AU (778.6M km)', video:'videos/jupiter.mp4' },
-      { name:'Saturn',  index:7,  type:'Gas Giant',          orbitalPeriodDays:10759.22, distance:'9.537 AU (1.43B km)',  video:'videos/saturn.mp4' },
-      { name:'Uranus',  index:8,  type:'Ice Giant',          orbitalPeriodDays:30688.50, distance:'19.19 AU (2.87B km)',  video:'videos/uranus.mp4' },
-      { name:'Neptune', index:9,  type:'Ice Giant',          orbitalPeriodDays:60195.00, distance:'30.07 AU (4.50B km)', video:'videos/neptune.mp4' },
+      { name:'Venus',   index:3,  type:'Terrestrial Planet', orbitalPeriodDays:224.70,   distance:'0.723 AU (108.2M km)',video:'videos/venus.mp4' },
+      { name:'Earth',   index:4,  type:'Terrestrial Planet', orbitalPeriodDays:365.25,   distance:'1.000 AU (149.6M km)',video:'videos/earth.mp4' },
+      { name:'Mars',    index:5,  type:'Terrestrial Planet', orbitalPeriodDays:686.97,   distance:'1.524 AU (227.9M km)',video:'videos/mars.mp4' },
+      { name:'Jupiter', index:6,  type:'Gas Giant',          orbitalPeriodDays:4332.59,  distance:'5.203 AU (778.6M km)',video:'videos/jupiter.mp4' },
+      { name:'Saturn',  index:7,  type:'Gas Giant',          orbitalPeriodDays:10759.22, distance:'9.537 AU (1.43B km)', video:'videos/saturn.mp4' },
+      { name:'Uranus',  index:8,  type:'Ice Giant',          orbitalPeriodDays:30688.50, distance:'19.19 AU (2.87B km)', video:'videos/uranus.mp4' },
+      { name:'Neptune', index:9,  type:'Ice Giant',          orbitalPeriodDays:60195.00, distance:'30.07 AU (4.50B km)',video:'videos/neptune.mp4' },
     ];
 
-    function renderCards(earthAge) {
-      const grid = document.getElementById('planets-grid');
-      const hasAge = earthAge !== null && !isNaN(earthAge);
-      const earthDays = hasAge ? earthAge * 365.25 : null;
-      grid.innerHTML = planets.map((p,i) => {
-        const periodYears = p.orbitalPeriodDays / 365.25;
-        const periodFmt = periodYears >= 1 ? periodYears.toFixed(2)+' Earth yrs' : p.orbitalPeriodDays.toFixed(2)+' Earth days';
-        const revsPerYear = 365.25 / p.orbitalPeriodDays;
-        const revsFmt = revsPerYear >= 1 ? revsPerYear.toFixed(2)+' / Earth yr' : (1/revsPerYear).toFixed(2)+' Earth yrs / orbit';
-        let ageDisplay, totalRevs;
-        if (hasAge) {
-          const planetAge = earthDays / p.orbitalPeriodDays;
-          ageDisplay = `<span class="age-val">${planetAge.toFixed(2)} yrs</span>`;
-          totalRevs = planetAge.toFixed(2)+' orbits';
-        } else {
-          ageDisplay = `<span class="age-val empty">Enter age above</span>`;
-          totalRevs = '—';
-        }
-        const num = String(p.index).padStart(2,'0');
-        return `<div class="planet-card">
-          <div class="planet-video-wrap">
-            <video autoplay muted loop playsinline>
-              <source src="${p.video}" type="video/mp4"/>
-            </video>
+    let currentAge = null;
+    let currentPlanetIndex = null;
+
+    function buildSelectors() {
+      const row = document.getElementById('selector-row');
+      row.innerHTML = planets.map((p,i) => `<button class="planet-btn" onclick="selectPlanet(${i})">${p.name}</button>`).join('');
+    }
+
+    function selectPlanet(idx) {
+      currentPlanetIndex = idx;
+      const p = planets[idx];
+      // update button states
+      document.querySelectorAll('.planet-btn').forEach((btn,i) => btn.classList.toggle('active', i===idx));
+
+      const earthDays = currentAge * 365.25;
+      const periodYears = p.orbitalPeriodDays / 365.25;
+      const periodFmt = periodYears >= 1 ? periodYears.toFixed(2)+' Earth yrs' : p.orbitalPeriodDays.toFixed(2)+' Earth days';
+      const revsPerYear = 365.25 / p.orbitalPeriodDays;
+      const revsFmt = revsPerYear >= 1 ? revsPerYear.toFixed(2)+' / Earth yr' : (1/revsPerYear).toFixed(2)+' Earth yrs / orbit';
+      const planetAge = earthDays / p.orbitalPeriodDays;
+      const totalRevs = planetAge.toFixed(2)+' orbits';
+      const num = String(p.index).padStart(2,'0');
+
+      const detail = document.getElementById('planet-detail');
+      detail.innerHTML = `
+        <div class="detail-video-wrap">
+          <video autoplay muted loop playsinline>
+            <source src="${p.video}" type="video/mp4"/>
+          </video>
+        </div>
+        <div class="detail-body">
+          <div class="detail-header">
+            <div>
+              <div class="detail-name">${p.name}</div>
+              <div class="detail-type">${p.type}</div>
+            </div>
+            <div class="detail-num">${num}</div>
           </div>
-          <div class="planet-card-top">
-            <div><div class="planet-name">${p.name}</div><div class="planet-type">${p.type}</div></div>
-            <div class="planet-number">${num}</div>
+          <div class="detail-stats">
+            <div class="detail-stat"><div class="ds-label">Orbital Period</div><div class="ds-val">${periodFmt}</div></div>
+            <div class="detail-stat"><div class="ds-label">Revolutions / yr</div><div class="ds-val">${revsFmt}</div></div>
+            <div class="detail-stat"><div class="ds-label">Distance from Sun</div><div class="ds-val">${p.distance}</div></div>
+            <div class="detail-stat"><div class="ds-label">Orbits Completed</div><div class="ds-val">${totalRevs}</div></div>
           </div>
-          <div class="planet-stats">
-            <div><div class="stat-label">Orbital Period</div><div class="stat-val">${periodFmt}</div></div>
-            <div><div class="stat-label">Revolutions / yr</div><div class="stat-val">${revsFmt}</div></div>
-            <div><div class="stat-label">Distance from Sun</div><div class="stat-val">${p.distance}</div></div>
-            <div><div class="stat-label">Orbits Completed</div><div class="stat-val">${totalRevs}</div></div>
-          </div>
-          <div class="planet-age-row">
-            <span class="age-label">Your age on ${p.name}</span>
-            ${ageDisplay}
+          <div class="detail-age-banner">
+            <span class="dab-label">Your age on ${p.name}</span>
+            <span class="dab-val">${planetAge.toFixed(2)} yrs</span>
           </div>
         </div>`;
-      }).join('');
+      detail.classList.remove('visible');
+      void detail.offsetWidth; // reflow for animation restart
+      detail.classList.add('visible');
+      detail.scrollIntoView({ behavior:'smooth', block:'nearest' });
     }
 
     function calculateAges() {
       const val = parseFloat(document.getElementById('age-input').value);
       if (isNaN(val) || val < 0) { alert('Please enter a valid age.'); return; }
       if (val > 150) { alert('Please enter a realistic age (0–150).'); return; }
-      renderCards(val);
+      currentAge = val;
+      document.getElementById('planet-prompt').style.display = 'none';
+      document.getElementById('planet-selector').style.display = 'block';
+      buildSelectors();
+      // auto-select first planet for immediate feedback
+      selectPlanet(0);
     }
+
     document.getElementById('age-input').addEventListener('keydown', e => { if(e.key==='Enter') calculateAges(); });
-    renderCards(null);
   </script>
 </body>
 </html>
