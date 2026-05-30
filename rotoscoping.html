@@ -1,82 +1,119 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rotoscoping | Multimedia & Authoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --pink:#f472b6; --pink2:#db2777; --pink3:#be185d;
-      --bg:#06030a; --surface:#0e0814; --card:#160b1c;
-      --border:#2d1040; --muted:#5a2d6e; --mid:#a87cbf;
-      --light:#d4b0e8; --white:#f2e8f8;
+    :root{
+      --accent:#f472b6;--accent2:#db2777;--accent3:#be185d;
+      --bg:#06030a;--surface:#0e0814;--card:#160b1c;
+      --border:#2d1040;--muted:#5a2d6e;--mid:#a87cbf;
+      --subtle:#d4b0e8;--fg:#f2e8f8;
+      --nav-bg:rgba(6,3,10,0.78);
+      --card-bg:rgba(22,11,28,0.72);
+      --transition:0.28s cubic-bezier(.4,0,.2,1);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'DM Sans',sans-serif; background:#06030a; color:var(--white); min-height:100vh; }
-    nav { background:rgba(6,3,10,0.75); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:64px; position:sticky; top:0; z-index:100; backdrop-filter:blur(16px); }
-    .nav-brand { font-family:'DM Serif Display',serif; font-size:1.05rem; color:var(--white); letter-spacing:0.02em; text-decoration:none; }
-    .nav-links { display:flex; gap:0.4rem; }
-    .nav-links a { color:var(--mid); text-decoration:none; font-size:0.82rem; font-weight:500; padding:0.4rem 1rem; border-radius:30px; transition:color 0.2s,background 0.2s; }
-    .nav-links a:hover { color:var(--white); background:rgba(244,114,182,0.15); }
+    [data-theme="light"]{
+      --accent:#d97706;--accent2:#b45309;--accent3:#92400e;
+      --bg:#fef9ee;--surface:#fff8e6;--card:#fffbf2;
+      --border:#f0d080;--muted:#c8a84b;--mid:#8b6914;
+      --subtle:#5c4a1e;--fg:#1a1200;
+      --nav-bg:rgba(254,249,238,0.88);
+      --card-bg:rgba(255,251,242,0.85);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;transition:background var(--transition),color var(--transition);}
 
-    .hero { padding:5rem 2.5rem 4rem; border-bottom:1px solid var(--border); position:relative; overflow:hidden; display:grid; grid-template-columns:1fr auto; align-items:end; gap:2rem; }
-    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.08),transparent 70%); pointer-events:none; }
-    .breadcrumb { font-size:0.7rem; color:var(--muted); margin-bottom:1.2rem; letter-spacing:0.08em; text-transform:uppercase; position:relative; }
-    .breadcrumb a { color:inherit; text-decoration:none; }
-    .breadcrumb a:hover { color:var(--pink); }
-    .hero h1 { font-family:'DM Serif Display',serif; font-size:clamp(2rem,5vw,3.5rem); color:var(--white); margin-bottom:0.6rem; line-height:1.1; position:relative; font-weight:400; }
-    .hero h1 em { font-style:italic; color:var(--pink); }
-    .hero p { max-width:600px; color:var(--mid); font-size:0.92rem; line-height:1.85; font-weight:300; position:relative; }
-    .hero-stat { background:rgba(244,114,182,0.07); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem; text-align:center; white-space:nowrap; position:relative; backdrop-filter:blur(8px); }
-    .hero-stat-num { font-family:'DM Serif Display',serif; font-size:2.5rem; color:var(--pink); line-height:1; }
-    .hero-stat-label { font-size:0.7rem; color:var(--mid); letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; }
+    nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;backdrop-filter:blur(18px);}
+    .nav-brand{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--fg);letter-spacing:0.04em;text-decoration:none;}
+    .nav-right{display:flex;align-items:center;gap:0.3rem;}
+    .nav-links{display:flex;gap:0.3rem;}
+    .nav-links a{color:var(--mid);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.4rem 1rem;border-radius:30px;letter-spacing:0.05em;transition:color var(--transition),background var(--transition);}
+    .nav-links a:hover{color:var(--fg);background:rgba(244,114,182,0.12);}
+    [data-theme="light"] .nav-links a:hover{background:rgba(217,119,6,0.12);}
+    #theme-toggle{display:flex;align-items:center;gap:5px;background:var(--card-bg);border:1px solid var(--border);border-radius:30px;padding:0.35rem 0.9rem;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.75rem;font-weight:500;color:var(--mid);transition:all var(--transition);white-space:nowrap;}
+    #theme-toggle:hover{border-color:var(--accent);color:var(--fg);}
+    .toggle-icon{font-size:0.9rem;line-height:1;}
 
-    .content { max-width:1060px; margin:0 auto; padding:4rem 2.5rem; }
-    .block-title { font-family:'DM Serif Display',serif; font-size:1.65rem; color:var(--white); margin-bottom:0.3rem; margin-top:4rem; font-weight:400; }
-    .block-title:first-child { margin-top:0; }
-    .block-sub { font-size:0.66rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--pink); margin-bottom:1.8rem; display:flex; align-items:center; gap:10px; }
-    .block-sub::before { content:''; width:24px; height:2px; background:var(--pink); border-radius:2px; }
-    .body-text { font-size:0.9rem; line-height:1.88; color:var(--mid); margin-bottom:2rem; max-width:700px; font-weight:300; }
+    .hero{padding:5rem 2.5rem 4rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;align-items:end;gap:2rem;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.07),transparent 70%);pointer-events:none;}
+    [data-theme="light"] .hero::before{background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(217,119,6,0.08),transparent 70%);}
+    .breadcrumb{font-family:'Syne',sans-serif;font-size:0.65rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:0.1em;text-transform:uppercase;position:relative;}
+    .breadcrumb a{color:inherit;text-decoration:none;}
+    .breadcrumb a:hover{color:var(--accent);}
+    .hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--fg);margin-bottom:0.6rem;line-height:1.05;font-weight:800;position:relative;}
+    .hero h1 em{font-style:italic;color:var(--accent);font-weight:400;}
+    .hero p{max-width:600px;color:var(--mid);font-size:0.9rem;line-height:1.88;font-weight:300;position:relative;}
+    .hero-stat{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.5rem;text-align:center;white-space:nowrap;position:relative;backdrop-filter:blur(8px);}
+    .hero-stat-num{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;color:var(--accent);line-height:1;}
+    .hero-stat-label{font-family:'Syne',sans-serif;font-size:0.65rem;color:var(--mid);letter-spacing:0.12em;text-transform:uppercase;margin-top:4px;}
 
-    .video-wrap { border-radius:14px; overflow:hidden; aspect-ratio:16/9; margin-bottom:0.8rem; border:1px solid var(--border); box-shadow:0 8px 40px rgba(244,114,182,0.1); }
-    .video-wrap iframe { width:100%; height:100%; border:none; display:block; }
-    .video-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:var(--card); color:var(--mid); font-size:0.85rem; }
-    .play-ring { width:60px; height:60px; border:1.5px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; }
-    .video-label { font-size:0.75rem; color:var(--muted); margin-bottom:2.5rem; font-style:italic; }
+    .content{max-width:1060px;margin:0 auto;padding:4rem 2.5rem;}
+    .block-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--fg);margin-bottom:0.3rem;margin-top:4rem;}
+    .block-title:first-child{margin-top:0;}
+    .block-sub{font-family:'Syne',sans-serif;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;display:flex;align-items:center;gap:10px;}
+    .block-sub::before{content:'';width:22px;height:2px;background:var(--accent);border-radius:2px;}
+    .body-text{font-size:0.9rem;line-height:1.88;color:var(--mid);margin-bottom:2rem;max-width:700px;font-weight:300;}
 
-    .steps-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.2rem; }
-    .step-card { background:rgba(22,11,28,0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color 0.2s,box-shadow 0.2s; backdrop-filter:blur(6px); }
-    .step-card:hover { border-color:var(--pink); box-shadow:0 8px 30px rgba(244,114,182,0.1); }
-    .step-photo { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
-    video.step-photo { width:100%; aspect-ratio:16/9; display:block; background:#000; }
-    .step-body { padding:1.1rem 1.2rem 1.3rem; }
-    .step-number { display:inline-block; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--white); background:var(--pink3); padding:3px 10px; border-radius:20px; margin-bottom:0.6rem; font-weight:600; }
-    .step-body h4 { font-family:'DM Serif Display',serif; font-size:1rem; color:var(--white); margin-bottom:0.4rem; }
-    .step-body p { font-size:0.82rem; color:var(--mid); line-height:1.72; font-weight:300; }
+    .video-wrap{border-radius:14px;overflow:hidden;aspect-ratio:16/9;margin-bottom:0.8rem;border:1px solid var(--border);box-shadow:0 8px 36px rgba(244,114,182,0.08);}
+    .video-wrap iframe{width:100%;height:100%;border:none;display:block;}
+    .video-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--card);color:var(--mid);font-size:0.85rem;}
+    .play-ring{width:56px;height:56px;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+    .video-label{font-size:0.73rem;color:var(--muted);margin-bottom:2.5rem;font-style:italic;}
 
-    .weeks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; }
-    .week-card { background:rgba(22,11,28,0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color 0.2s,box-shadow 0.2s; backdrop-filter:blur(6px); }
-    .week-card:hover { border-color:var(--pink); box-shadow:0 8px 30px rgba(244,114,182,0.1); }
-    .week-video { aspect-ratio:16/9; overflow:hidden; }
-    .week-video iframe { width:100%; height:100%; border:none; display:block; }
-    .week-photo-placeholder { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,rgba(45,16,64,0.5),rgba(22,11,28,0.9)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted); }
-    .week-photo-placeholder span { font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.6; }
-    .week-body { padding:1rem 1.2rem 1.2rem; }
-    .week-badge { display:inline-block; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--pink); border:1px solid var(--border); padding:2px 9px; border-radius:20px; margin-bottom:0.5rem; }
-    .week-body h4 { font-family:'DM Serif Display',serif; font-size:1rem; color:var(--white); margin-bottom:0.3rem; }
-    .week-body p { font-size:0.8rem; color:var(--mid); line-height:1.65; font-weight:300; }
+    .steps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem;}
+    .step-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color var(--transition),box-shadow var(--transition);backdrop-filter:blur(6px);}
+    .step-card:hover{border-color:var(--accent);box-shadow:0 8px 28px rgba(244,114,182,0.1);}
+    [data-theme="light"] .step-card:hover{box-shadow:0 8px 28px rgba(217,119,6,0.1);}
+    .step-photo{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+    video.step-photo{width:100%;aspect-ratio:16/9;display:block;background:#000;}
+    .step-body{padding:1.1rem 1.2rem 1.3rem;}
+    .step-number{display:inline-block;font-family:'Syne',sans-serif;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:#fff;background:var(--accent3);padding:3px 10px;border-radius:20px;margin-bottom:0.6rem;font-weight:700;}
+    .step-body h4{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--fg);margin-bottom:0.4rem;}
+    .step-body p{font-size:0.82rem;color:var(--mid);line-height:1.72;font-weight:300;}
 
-    footer { background:rgba(6,3,10,0.8); border-top:1px solid var(--border); text-align:center; padding:2.5rem 1.5rem; font-size:0.82rem; letter-spacing:0.04em; color:var(--muted); line-height:2.2; margin-top:3rem; }
-    footer span { color:var(--mid); }
-    @media(max-width:768px){ .hero{ grid-template-columns:1fr; padding:3.5rem 1.2rem 3rem; } .hero-stat{ display:none; } .content{ padding:3rem 1.2rem; } nav{ padding:0 1.2rem; } }
+    .weeks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
+    .week-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color var(--transition),box-shadow var(--transition);backdrop-filter:blur(6px);}
+    .week-card:hover{border-color:var(--accent);box-shadow:0 8px 28px rgba(244,114,182,0.1);}
+    [data-theme="light"] .week-card:hover{box-shadow:0 8px 28px rgba(217,119,6,0.1);}
+    .week-video{aspect-ratio:16/9;overflow:hidden;}
+    .week-video iframe{width:100%;height:100%;border:none;display:block;}
+    .week-photo-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(45,16,64,0.5),rgba(22,11,28,0.9));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);}
+    [data-theme="light"] .week-photo-placeholder{background:linear-gradient(135deg,rgba(240,208,128,0.3),rgba(255,251,242,0.9));}
+    .week-photo-placeholder span{font-family:'Syne',sans-serif;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.6;}
+    .week-body{padding:1rem 1.2rem 1.2rem;}
+    .week-badge{display:inline-block;font-family:'Syne',sans-serif;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border);padding:2px 9px;border-radius:20px;margin-bottom:0.5rem;}
+    .week-body h4{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--fg);margin-bottom:0.3rem;}
+    .week-body p{font-size:0.8rem;color:var(--mid);line-height:1.65;font-weight:300;}
+
+    footer{background:rgba(6,3,10,0.82);border-top:1px solid var(--border);text-align:center;padding:2.5rem 1.5rem;font-size:0.8rem;letter-spacing:0.04em;color:var(--muted);line-height:2.2;margin-top:3rem;transition:background var(--transition);}
+    [data-theme="light"] footer{background:rgba(254,249,238,0.9);}
+    footer span{color:var(--mid);}
+    @media(max-width:768px){
+      .hero{grid-template-columns:1fr;padding:3.5rem 1.2rem 3rem;}
+      .hero-stat{display:none;}
+      .content{padding:3rem 1.2rem;}
+      nav{padding:0 1.2rem;}
+      #theme-toggle .toggle-label{display:none;}
+    }
   </style>
 </head>
 <body>
+  <script src="theme.js"></script>
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
-    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a></div>
+    <div class="nav-right">
+      <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a></div>
+      <button id="theme-toggle" onclick="toggleTheme()" aria-label="Switch theme">
+        <span class="toggle-icon">☀</span>
+        <span class="toggle-label">Light</span>
+      </button>
+    </div>
   </nav>
 
   <div class="hero">
@@ -110,54 +147,28 @@
 
     <div class="steps-grid">
       <div class="step-card">
-        <video controls class="step-photo">
-          <source src="images/lv_0_20260423203322.mp4" type="video/mp4"/>
-        </video>
-        <div class="step-body">
-          <span class="step-number">Source Video</span>
-          <h4>Reference</h4>
-          <p>Pick a reference for rotoscoping. Source: <a href="https://www.tiktok.com/@__littlemy/video/7538115192845028614" style="color:var(--pink);">TikTok @__littlemy</a></p>
-        </div>
+        <video controls class="step-photo"><source src="images/lv_0_20260423203322.mp4" type="video/mp4"/></video>
+        <div class="step-body"><span class="step-number">Source Video</span><h4>Reference</h4><p>Pick a reference for rotoscoping. Source: <a href="https://www.tiktok.com/@__littlemy/video/7538115192845028614" style="color:var(--accent);">TikTok @__littlemy</a></p></div>
       </div>
       <div class="step-card">
-        <img src="images/step1.jpeg" alt="Step 1 - Prepare Applications" class="step-photo"/>
-        <div class="step-body">
-          <span class="step-number">Step 1</span>
-          <h4>Prepare the Applications</h4>
-          <p>Set up Adobe After Effects and Photoshop. Organize your project files and folders on your desktop before starting.</p>
-        </div>
+        <img src="images/step1.jpeg" alt="Step 1" class="step-photo"/>
+        <div class="step-body"><span class="step-number">Step 1</span><h4>Prepare the Applications</h4><p>Set up Adobe After Effects and Photoshop. Organize your project files and folders on your desktop before starting.</p></div>
       </div>
       <div class="step-card">
-        <img src="images/step2.png" alt="Step 2 - Splitting" class="step-photo"/>
-        <div class="step-body">
-          <span class="step-number">Step 2</span>
-          <h4>Split the Video into 5-Second Clips</h4>
-          <p>Cut your reference footage into manageable 5-second segments so each week covers one clip.</p>
-        </div>
+        <img src="images/step2.png" alt="Step 2" class="step-photo"/>
+        <div class="step-body"><span class="step-number">Step 2</span><h4>Split the Video into 5-Second Clips</h4><p>Cut your reference footage into manageable 5-second segments so each week covers one clip.</p></div>
       </div>
       <div class="step-card">
-        <img src="images/step3.png" alt="Step 3 - Render Queue" class="step-photo"/>
-        <div class="step-body">
-          <span class="step-number">Step 3</span>
-          <h4>After Effects — Export via Render Queue</h4>
-          <p>Import clips into After Effects. Go to <em>Composition → Add to Render Queue</em>, set format to PNG Sequence, and render.</p>
-        </div>
+        <img src="images/step3.png" alt="Step 3" class="step-photo"/>
+        <div class="step-body"><span class="step-number">Step 3</span><h4>After Effects — Export via Render Queue</h4><p>Import clips into After Effects. Go to <em>Composition → Add to Render Queue</em>, set format to PNG Sequence, and render.</p></div>
       </div>
       <div class="step-card">
-        <img src="images/step4.png" alt="Step 4 - Import to Photoshop" class="step-photo"/>
-        <div class="step-body">
-          <span class="step-number">Step 4</span>
-          <h4>Import Rendered Frames into Photoshop</h4>
-          <p>Open Photoshop → <em>File → Open</em> → select first frame → check "Image Sequence" → set FPS → open.</p>
-        </div>
+        <img src="images/step4.png" alt="Step 4" class="step-photo"/>
+        <div class="step-body"><span class="step-number">Step 4</span><h4>Import Rendered Frames into Photoshop</h4><p>Open Photoshop → <em>File → Open</em> → select first frame → check "Image Sequence" → set FPS → open.</p></div>
       </div>
       <div class="step-card">
-        <img src="images/step5.png" alt="Step 5 - Editing" class="step-photo"/>
-        <div class="step-body">
-          <span class="step-number">Step 5</span>
-          <h4>Edit the Rendered Frames</h4>
-          <p>Trace and color each frame in Photoshop using brush tool, paint bucket, and layer masks.</p>
-        </div>
+        <img src="images/step5.png" alt="Step 5" class="step-photo"/>
+        <div class="step-body"><span class="step-number">Step 5</span><h4>Edit the Rendered Frames</h4><p>Trace and color each frame in Photoshop using brush tool, paint bucket, and layer masks.</p></div>
       </div>
     </div>
 
@@ -180,16 +191,16 @@
   <script src="stars.js"></script>
   <script>
     const clips = [
-      { n:8,  title:"Clip 8 — 0:35–0:40",  desc:"Eighth segment edited with improved coloring technique based on earlier clip feedback." },
-      { n:9,  title:"Clip 9 — 0:40–0:45",  desc:"Ninth clip — detailed frame edits and cleanup of complex motion sequences." },
-      { n:10, title:"Clip 10 — 0:45–0:50", desc:"Tenth clip — focus on smooth animation curves and clean outlines." },
-      { n:11, title:"Clip 11 — 0:50–0:55", desc:"Eleventh segment — near-final clip with refined shading and finishing detail work." },
-      { n:12, title:"Clip 12 — 0:55–1:00", desc:"Final 5-second clip completed. All segments combined for the finished output." },
+      {n:8,title:"Clip 8 — 0:35–0:40",desc:"Eighth segment edited with improved coloring technique based on earlier clip feedback."},
+      {n:9,title:"Clip 9 — 0:40–0:45",desc:"Ninth clip — detailed frame edits and cleanup of complex motion sequences."},
+      {n:10,title:"Clip 10 — 0:45–0:50",desc:"Tenth clip — focus on smooth animation curves and clean outlines."},
+      {n:11,title:"Clip 11 — 0:50–0:55",desc:"Eleventh segment — near-final clip with refined shading and finishing detail work."},
+      {n:12,title:"Clip 12 — 0:55–1:00",desc:"Final 5-second clip completed. All segments combined for the finished output."},
     ];
-    document.getElementById('weeks-grid').innerHTML += clips.map(c => `
+    document.getElementById('weeks-grid').innerHTML += clips.map(c=>`
       <div class="week-card">
         <div class="week-photo-placeholder">
-          <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 22l7-7 5 5 4-5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 22l7-7 5 5 4-5 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span>Add photo</span>
         </div>
         <div class="week-body"><span class="week-badge">Week ${c.n}</span><h4>${c.title}</h4><p>${c.desc}</p></div>
