@@ -23,7 +23,8 @@
   function getStarColor(){
     const el = document.documentElement;
     const mode = el.getAttribute('data-theme');
-    return mode === 'light' ? 'rgba(15,23,60,' : 'rgba(242,228,248,';
+    // Light mode: vivid orange stars; Dark mode: soft lavender-white
+    return mode === 'light' ? 'rgba(217,100,0,' : 'rgba(242,228,248,';
   }
   function draw(){
     ctx.clearRect(0,0,W,H);
