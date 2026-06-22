@@ -26,8 +26,8 @@
       --card-bg:rgba(255,251,242,0.85);
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;transition:background var(--transition),color var(--transition);}
+    html{scroll-behavior:smooth;background:var(--bg);transition:background var(--transition),color var(--transition);}
+    body{font-family:'DM Sans',sans-serif;color:var(--fg);min-height:100vh;}
 
     nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;backdrop-filter:blur(18px);}
     .nav-brand{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:var(--fg);letter-spacing:0.04em;text-decoration:none;}
@@ -133,9 +133,33 @@
       .detail-body{padding:1.2rem;}
       #theme-toggle .toggle-label{display:none;}
     }
+
+    /* ── CODE SECTION ── */
+    .code-section{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:2rem;background:var(--card);position:relative;}
+    .code-header{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.2rem;background:rgba(45,16,64,0.6);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);}
+    [data-theme="light"] .code-header{background:rgba(240,208,128,0.25);}
+    .code-lang-badge{font-family:'Fraunces',serif;font-size:0.72rem;letter-spacing:0.1em;color:var(--mid);display:flex;align-items:center;gap:4px;}
+    .code-actions{display:flex;gap:0.5rem;}
+    .code-btn{display:inline-flex;align-items:center;gap:6px;padding:0.38rem 0.85rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);color:var(--mid);font-family:'DM Sans',sans-serif;font-size:0.73rem;font-weight:500;cursor:pointer;transition:all var(--transition);}
+    .code-btn:hover{border-color:var(--accent);color:var(--fg);background:rgba(244,114,182,0.08);}
+    [data-theme="light"] .code-btn:hover{background:rgba(217,119,6,0.08);}
+    .code-btn.copied{border-color:#22c55e;color:#22c55e;}
+    .code-scroll{overflow-x:auto;max-height:520px;overflow-y:auto;}
+    .code-block{margin:0;padding:1.4rem 1.6rem;font-family:'Courier New',Courier,monospace;font-size:0.78rem;line-height:1.75;color:#d4b0e8;white-space:pre;tab-size:4;}
+    .code-block .k{color:#f472b6;font-weight:600;}
+    .code-block .c{color:#5a2d6e;font-style:italic;}
+    .code-block .s{color:#86efac;}
+    .code-block .n{color:#fbbf24;}
+    .code-block .f{color:#60a5fa;}
+    .code-scroll::-webkit-scrollbar{width:6px;height:6px;}
+    .code-scroll::-webkit-scrollbar-track{background:transparent;}
+    .code-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+    .code-scroll::-webkit-scrollbar-thumb:hover{background:var(--muted);}
+      #space-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;width:100%;height:100%;}
   </style>
 </head>
 <body>
+  <canvas id="space-canvas"></canvas>
   <script src="theme.js"></script>
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
@@ -194,6 +218,191 @@
       <div class="planet-detail" id="planet-detail"></div>
     </div>
   </div>
+
+    <!-- ══ PYTHON CODE SECTION ══ -->
+    <h2 class="block-title" style="margin-top:5rem;">Python Source Code</h2>
+    <div class="block-sub">Solar System Render — Script</div>
+    <p class="body-text">The Python script used to generate the 3D solar system rendering. Uses <code style="font-size:0.82rem;background:var(--card);color:var(--accent);padding:2px 7px;border-radius:5px;border:1px solid var(--border);">matplotlib</code> and <code style="font-size:0.82rem;background:var(--card);color:var(--accent);padding:2px 7px;border-radius:5px;border:1px solid var(--border);">numpy</code> — no extra installs needed beyond a standard Python environment.</p>
+
+    <div class="code-section">
+      <div class="code-header">
+        <div class="code-lang-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px;margin-right:5px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="var(--accent2)" opacity=".3"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="var(--accent)" font-weight="bold" font-family="monospace">py</text></svg>
+          solar_system.py
+        </div>
+        <div class="code-actions">
+          <button class="code-btn" id="copy-btn" onclick="copyCode()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.8"/></svg>
+            Copy
+          </button>
+          <button class="code-btn" onclick="downloadCode()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Download
+          </button>
+        </div>
+      </div>
+      <div class="code-scroll">
+        <pre class="code-block" id="solar-code"><code><span class="c"># ─────────────────────────────────────────────────────────────────
+# Solar System 3D Render
+# Author : Glaiza Marie D. Reblinca
+# Course : Multimedia &amp; Authoring — BSIT-NS-2A
+# Requires: Python 3.8+, numpy, matplotlib
+# Run     : python solar_system.py
+# ─────────────────────────────────────────────────────────────────</span>
+
+<span class="k">import</span> numpy <span class="k">as</span> np
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+<span class="k">import</span> matplotlib.animation <span class="k">as</span> animation
+<span class="k">from</span> mpl_toolkits.mplot3d <span class="k">import</span> Axes3D
+<span class="k">from</span> matplotlib.patches <span class="k">import</span> FancyArrowPatch
+<span class="k">import</span> matplotlib.colors <span class="k">as</span> mcolors
+
+<span class="c"># ── Planet data (name, radius, orbit_radius, period, color, tilt) ──</span>
+PLANETS = [
+    {<span class="s">'name'</span>: <span class="s">'Mercury'</span>, <span class="s">'r'</span>: <span class="n">0.38</span>, <span class="s">'orbit'</span>: <span class="n">5.0</span>,  <span class="s">'period'</span>: <span class="n">0.241</span>, <span class="s">'color'</span>: <span class="s">'#b5b5b5'</span>, <span class="s">'tilt'</span>: <span class="n">0.03</span>},
+    {<span class="s">'name'</span>: <span class="s">'Venus'</span>,   <span class="s">'r'</span>: <span class="n">0.95</span>, <span class="s">'orbit'</span>: <span class="n">7.5</span>,  <span class="s">'period'</span>: <span class="n">0.615</span>, <span class="s">'color'</span>: <span class="s">'#e8cda0'</span>, <span class="s">'tilt'</span>: <span class="n">0.05</span>},
+    {<span class="s">'name'</span>: <span class="s">'Earth'</span>,   <span class="s">'r'</span>: <span class="n">1.00</span>, <span class="s">'orbit'</span>: <span class="n">10.0</span>, <span class="s">'period'</span>: <span class="n">1.000</span>, <span class="s">'color'</span>: <span class="s">'#3a7bd5'</span>, <span class="s">'tilt'</span>: <span class="n">0.08</span>},
+    {<span class="s">'name'</span>: <span class="s">'Mars'</span>,    <span class="s">'r'</span>: <span class="n">0.53</span>, <span class="s">'orbit'</span>: <span class="n">13.0</span>, <span class="s">'period'</span>: <span class="n">1.881</span>, <span class="s">'color'</span>: <span class="s">'#c1440e'</span>, <span class="s">'tilt'</span>: <span class="n">0.04</span>},
+    {<span class="s">'name'</span>: <span class="s">'Jupiter'</span>, <span class="s">'r'</span>: <span class="n">2.80</span>, <span class="s">'orbit'</span>: <span class="n">19.0</span>, <span class="s">'period'</span>: <span class="n">11.86</span>, <span class="s">'color'</span>: <span class="s">'#c88b3a'</span>, <span class="s">'tilt'</span>: <span class="n">0.02</span>},
+    {<span class="s">'name'</span>: <span class="s">'Saturn'</span>,  <span class="s">'r'</span>: <span class="n">2.30</span>, <span class="s">'orbit'</span>: <span class="n">25.0</span>, <span class="s">'period'</span>: <span class="n">29.46</span>, <span class="s">'color'</span>: <span class="s">'#e4d191'</span>, <span class="s">'tilt'</span>: <span class="n">0.47</span>},
+    {<span class="s">'name'</span>: <span class="s">'Uranus'</span>,  <span class="s">'r'</span>: <span class="n">1.60</span>, <span class="s">'orbit'</span>: <span class="n">31.0</span>, <span class="s">'period'</span>: <span class="n">84.01</span>, <span class="s">'color'</span>: <span class="s">'#7de8e8'</span>, <span class="s">'tilt'</span>: <span class="n">0.12</span>},
+    {<span class="s">'name'</span>: <span class="s">'Neptune'</span>, <span class="s">'r'</span>: <span class="n">1.55</span>, <span class="s">'orbit'</span>: <span class="n">37.0</span>, <span class="s">'period'</span>: <span class="n">164.8</span>, <span class="s">'color'</span>: <span class="s">'#3f54ba'</span>, <span class="s">'tilt'</span>: <span class="n">0.09</span>},
+]
+
+FRAMES    = <span class="n">240</span>   <span class="c"># total animation frames</span>
+FPS       = <span class="n">30</span>    <span class="c"># frames per second</span>
+SUN_R     = <span class="n">3.0</span>   <span class="c"># sun sphere radius</span>
+STAR_COUNT= <span class="n">500</span>   <span class="c"># background stars</span>
+
+
+<span class="k">def</span> <span class="f">sphere</span>(cx=<span class="n">0</span>, cy=<span class="n">0</span>, cz=<span class="n">0</span>, r=<span class="n">1</span>, res=<span class="n">20</span>):
+    <span class="s">"""Return x,y,z arrays for a sphere surface."""</span>
+    u = np.linspace(<span class="n">0</span>, <span class="n">2</span>*np.pi, res)
+    v = np.linspace(<span class="n">0</span>, np.pi, res)
+    x = cx + r * np.outer(np.cos(u), np.sin(v))
+    y = cy + r * np.outer(np.sin(u), np.sin(v))
+    z = cz + r * np.outer(np.ones_like(u), np.cos(v))
+    <span class="k">return</span> x, y, z
+
+
+<span class="k">def</span> <span class="f">orbit_ring</span>(radius, tilt=<span class="n">0</span>, pts=<span class="n">120</span>):
+    <span class="s">"""Return x,y,z for a tilted circular orbit path."""</span>
+    theta = np.linspace(<span class="n">0</span>, <span class="n">2</span>*np.pi, pts)
+    x = radius * np.cos(theta)
+    y = radius * np.sin(theta)
+    z = tilt   * np.sin(theta) * radius * <span class="n">0.3</span>
+    <span class="k">return</span> x, y, z
+
+
+<span class="k">def</span> <span class="f">planet_pos</span>(planet, frame):
+    <span class="s">"""Compute (x, y, z) position of a planet at a given frame."""</span>
+    angle  = (<span class="n">2</span> * np.pi * frame) / (FRAMES * planet[<span class="s">'period'</span>])
+    r      = planet[<span class="s">'orbit'</span>]
+    x = r * np.cos(angle)
+    y = r * np.sin(angle)
+    z = planet[<span class="s">'tilt'</span>] * np.sin(angle) * r * <span class="n">0.3</span>
+    <span class="k">return</span> x, y, z
+
+
+<span class="k">def</span> <span class="f">build_stars</span>(n=STAR_COUNT):
+    <span class="s">"""Scatter random stars across a hemisphere."""</span>
+    rng   = np.random.default_rng(<span class="n">42</span>)
+    theta = rng.uniform(<span class="n">0</span>, <span class="n">2</span>*np.pi, n)
+    phi   = rng.uniform(<span class="n">0</span>, np.pi, n)
+    R     = <span class="n">80</span>
+    sx = R * np.sin(phi) * np.cos(theta)
+    sy = R * np.sin(phi) * np.sin(theta)
+    sz = R * np.cos(phi)
+    <span class="k">return</span> sx, sy, sz
+
+
+<span class="c"># ── Scene setup ──────────────────────────────────────────────────</span>
+fig = plt.figure(figsize=(<span class="n">12</span>, <span class="n">8</span>), facecolor=<span class="s">'black'</span>)
+ax  = fig.add_subplot(<span class="n">111</span>, projection=<span class="s">'3d'</span>, facecolor=<span class="s">'black'</span>)
+ax.set_axis_off()
+ax.set_xlim(<span class="n">-42</span>, <span class="n">42</span>)
+ax.set_ylim(<span class="n">-42</span>, <span class="n">42</span>)
+ax.set_zlim(<span class="n">-12</span>, <span class="n">12</span>)
+ax.view_init(elev=<span class="n">22</span>, azim=<span class="n">-60</span>)
+
+<span class="c"># Background stars</span>
+sx, sy, sz = build_stars()
+ax.scatter(sx, sy, sz, s=<span class="n">0.6</span>, c=<span class="s">'white'</span>, alpha=<span class="n">0.55</span>, depthshade=<span class="k">False</span>)
+
+<span class="c"># Sun glow (multiple semi-transparent spheres)</span>
+<span class="k">for</span> scale, alpha <span class="k">in</span> [(<span class="n">1.0</span>, <span class="n">0.9</span>), (<span class="n">1.35</span>, <span class="n">0.18</span>), (<span class="n">1.75</span>, <span class="n">0.07</span>)]:
+    xs, ys, zs = sphere(r=SUN_R*scale)
+    ax.plot_surface(xs, ys, zs, color=<span class="s">'#ffcc44'</span>, alpha=alpha,
+                    linewidth=<span class="n">0</span>, antialiased=<span class="k">True</span>)
+
+<span class="c"># Orbit rings</span>
+<span class="k">for</span> p <span class="k">in</span> PLANETS:
+    ox, oy, oz = orbit_ring(p[<span class="s">'orbit'</span>], p[<span class="s">'tilt'</span>])
+    ax.plot(ox, oy, oz, color=<span class="s">'white'</span>, alpha=<span class="n">0.08</span>, linewidth=<span class="n">0.6</span>)
+
+<span class="c"># Saturn rings (flat torus approximation)</span>
+saturn = next(p <span class="k">for</span> p <span class="k">in</span> PLANETS <span class="k">if</span> p[<span class="s">'name'</span>] == <span class="s">'Saturn'</span>)
+ring_theta = np.linspace(<span class="n">0</span>, <span class="n">2</span>*np.pi, <span class="n">60</span>)
+ring_artists = []
+<span class="k">for</span> ring_r <span class="k">in</span> np.linspace(saturn[<span class="s">'r'</span>]*<span class="n">1.3</span>, saturn[<span class="s">'r'</span>]*<span class="n">2.1</span>, <span class="n">6</span>):
+    ring_artists.append(ax.plot([], [], [], color=<span class="s">'#d4b483'</span>, alpha=<span class="n">0.4</span>, lw=<span class="n">1.2</span>)[<span class="n">0</span>])
+
+<span class="c"># Planet sphere objects (will be updated each frame)</span>
+planet_surfs = [<span class="k">None</span>] * len(PLANETS)
+labels = []
+<span class="k">for</span> i, p <span class="k">in</span> enumerate(PLANETS):
+    labels.append(ax.text(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>, p[<span class="s">'name'</span>], fontsize=<span class="n">5.5</span>,
+                           color=<span class="s">'white'</span>, alpha=<span class="n">0.7</span>, ha=<span class="s">'center'</span>))
+
+title_txt = ax.text2D(<span class="n">0.5</span>, <span class="n">0.97</span>, <span class="s">'Solar System — 3D Render'</span>,
+                       transform=ax.transAxes, ha=<span class="s">'center'</span>,
+                       fontsize=<span class="n">13</span>, color=<span class="s">'white'</span>, alpha=<span class="n">0.8'</span>,
+                       fontfamily=<span class="s">'monospace'</span>)
+
+
+<span class="k">def</span> <span class="f">update</span>(frame):
+    <span class="c"># Remove old planet surfaces</span>
+    <span class="k">global</span> planet_surfs
+    <span class="k">for</span> surf <span class="k">in</span> planet_surfs:
+        <span class="k">if</span> surf <span class="k">is not None</span>:
+            surf.remove()
+
+    <span class="k">for</span> i, p <span class="k">in</span> enumerate(PLANETS):
+        px, py, pz = planet_pos(p, frame)
+        xs, ys, zs = sphere(px, py, pz, r=p[<span class="s">'r'</span>])
+        planet_surfs[i] = ax.plot_surface(xs, ys, zs,
+                            color=p[<span class="s">'color'</span>], alpha=<span class="n">0.95</span>,
+                            linewidth=<span class="n">0</span>, antialiased=<span class="k">True</span>)
+        labels[i].set_position_3d((px, py, pz + p[<span class="s">'r'</span>] + <span class="n">0.8</span>))
+
+        <span class="c"># Saturn rings — rotate with planet</span>
+        <span class="k">if</span> p[<span class="s">'name'</span>] == <span class="s">'Saturn'</span>:
+            <span class="k">for</span> j, ring_r <span class="k">in</span> enumerate(np.linspace(p[<span class="s">'r'</span>]*<span class="n">1.3</span>, p[<span class="s">'r'</span>]*<span class="n">2.1</span>, <span class="n">6</span>)):
+                rx = px + ring_r * np.cos(ring_theta)
+                ry = py + ring_r * np.sin(ring_theta)
+                rz = np.full_like(ring_theta, pz + <span class="n">0.2</span>*np.sin(ring_theta))
+                ring_artists[j].set_data_3d(rx, ry, rz)
+
+    <span class="c"># Slowly rotate the camera</span>
+    ax.view_init(elev=<span class="n">22</span>, azim=<span class="n">-60</span> + frame * <span class="n">0.25</span>)
+    <span class="k">return</span> planet_surfs + ring_artists + labels
+
+
+<span class="c"># ── Animate &amp; save ───────────────────────────────────────────────</span>
+ani = animation.FuncAnimation(fig, update, frames=FRAMES,
+                               interval=<span class="n">1000</span>/FPS, blit=<span class="k">False</span>)
+
+<span class="c"># Save as MP4 (requires ffmpeg) or comment out to just display</span>
+writer = animation.FFMpegWriter(fps=FPS, bitrate=<span class="n">2000</span>,
+                                 metadata={<span class="s">'title'</span>: <span class="s">'Solar System'</span>})
+ani.save(<span class="s">'solar_system_render.mp4'</span>, writer=writer, dpi=<span class="n">150</span>)
+print(<span class="s">'Saved solar_system_render.mp4'</span>)
+
+<span class="c"># Uncomment below to display interactively instead:</span>
+<span class="c"># plt.show()</span></code></pre>
+      </div>
+    </div>
+  </div><!-- end .content -->
 
   <footer>© 2026 Glaiza Marie D. Reblinca &nbsp;|&nbsp; BSIT-NS-2A<br/><span>All rights reserved. &nbsp;|&nbsp; For educational purposes only.</span></footer>
 
@@ -288,6 +497,35 @@
     // Show planets on load with default age
     buildSelectors();
     selectPlanet(0);
+
+    // ── Code section: copy & download ──
+    function getRawCode(){
+      // Get the text content of the code block, strip HTML tags
+      const pre = document.getElementById('solar-code');
+      return pre.innerText || pre.textContent;
+    }
+
+    function copyCode(){
+      const btn = document.getElementById('copy-btn');
+      navigator.clipboard.writeText(getRawCode()).then(()=>{
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!`;
+        setTimeout(()=>{
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.8"/></svg> Copy`;
+        }, 2200);
+      });
+    }
+
+    function downloadCode(){
+      const blob = new Blob([getRawCode()], {type:'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'solar_system.py';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
   </script>
+  <script src="space-bg.js"></script>
 </body>
 </html>
