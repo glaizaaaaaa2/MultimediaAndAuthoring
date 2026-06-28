@@ -1,9 +1,5 @@
-
-/* space-bg.js — floating rockets, comets & meteors background
-   Drop <canvas id="space-canvas"></canvas> anywhere in <body>
-   and include this script. Works on all pages. */
+/* space-bg.js — floating comets & meteors background (no rockets) */
 (function () {
-  /* ── canvas setup ── */
   let canvas = document.getElementById('space-canvas');
   if (!canvas) {
     canvas = document.createElement('canvas');
@@ -26,11 +22,10 @@
   resize();
   window.addEventListener('resize', resize);
 
-  /* ── helpers ── */
   const rand    = (a, b) => a + Math.random() * (b - a);
   const randInt = (a, b) => Math.floor(rand(a, b + 1));
 
-  /* ── STARS (static twinkle) ── */
+  /* ── STARS ── */
   const stars = Array.from({ length: 180 }, () => ({
     x: rand(0, 1), y: rand(0, 1),
     r: rand(0.5, 1.8),
@@ -113,66 +108,12 @@
     }
   }
 
-  /* ── ROCKETS ── */
-  class Rocket {
-    constructor() { this.reset(); }
-    reset() {
-      this.x        = rand(50, W - 50);
-      this.y        = H + rand(20, 60);
-      this.vx       = rand(-0.8, 0.8);
-      this.vy       = -rand(1.4, 3.2);
-      this.size     = rand(14, 22);
-      this.rotation = Math.atan2(this.vy, this.vx) - Math.PI / 2;
-      this.particles= [];
-      this.tick     = 0;
-      this.color    = ['#f472b6', '#a78bfa', '#60a5fa', '#fb923c'][randInt(0, 3)];
-    }
-    update() {
-      this.x += this.vx; this.y += this.vy; this.tick++;
-      if (this.tick % 3 === 0) {
-        this.particles.push({
-          x: this.x, y: this.y + this.size * 0.6,
-          vx: rand(-0.6, 0.6), vy: rand(0.5, 2),
-          life: 0, maxLife: rand(18, 32), r: rand(2, 5)
-        });
-      }
-      this.particles = this.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.life++; return p.life < p.maxLife; });
-      if (this.y < -120) this.reset();
-    }
-    draw() {
-      this.particles.forEach(p => {
-        const pct = 1 - p.life / p.maxLife;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * pct, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,160,60,${0.6 * pct})`; ctx.fill();
-      });
-      ctx.save();
-      ctx.translate(this.x, this.y); ctx.rotate(this.rotation);
-      const s = this.size;
-      ctx.beginPath();
-      ctx.moveTo(0, -s);
-      ctx.quadraticCurveTo(s * 0.55, -s * 0.2, s * 0.45, s * 0.45);
-      ctx.lineTo(-s * 0.45, s * 0.45);
-      ctx.quadraticCurveTo(-s * 0.55, -s * 0.2, 0, -s);
-      ctx.fillStyle = this.color; ctx.fill();
-      ctx.beginPath(); ctx.arc(0, -s * 0.2, s * 0.18, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill();
-      ctx.globalAlpha = 0.75;
-      ctx.beginPath(); ctx.moveTo(-s*0.45,s*0.3); ctx.lineTo(-s*0.85,s*0.7); ctx.lineTo(-s*0.45,s*0.55);
-      ctx.fillStyle = this.color; ctx.fill();
-      ctx.beginPath(); ctx.moveTo(s*0.45,s*0.3); ctx.lineTo(s*0.85,s*0.7); ctx.lineTo(s*0.45,s*0.55);
-      ctx.fill();
-      ctx.globalAlpha = 1; ctx.restore();
-    }
-  }
-
   /* ── Instantiate ── */
   const comets  = Array.from({ length: 5 }, () => { const c = new Comet();  c.y = rand(0, H); return c; });
   const meteors = Array.from({ length: 6 }, () => { const m = new Meteor(); m.y = rand(0, H * 0.5); m.life = randInt(0, m.maxLife); return m; });
-  const rockets = Array.from({ length: 4 }, () => { const r = new Rocket(); r.y = rand(-H, 0); return r; });
 
-  setInterval(() => { if (comets.length  < 7) comets.push(new Comet());   }, 4000);
-  setInterval(() => { if (meteors.length < 9) meteors.push(new Meteor());  }, 2500);
-  setInterval(() => { if (rockets.length < 6) rockets.push(new Rocket());  }, 6000);
+  setInterval(() => { if (comets.length  < 7) comets.push(new Comet());  }, 4000);
+  setInterval(() => { if (meteors.length < 9) meteors.push(new Meteor()); }, 2500);
 
   /* ── Render loop ── */
   let raf;
@@ -180,9 +121,8 @@
     t /= 1000;
     ctx.clearRect(0, 0, W, H);
     drawStars(t);
-    comets.forEach(c  => { c.update();  c.draw(); });
+    comets.forEach(c  => { c.update(); c.draw(); });
     meteors.forEach(m => { m.update(); m.draw(); });
-    rockets.forEach(r => { r.update();  r.draw(); });
     raf = requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
