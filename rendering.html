@@ -134,6 +134,27 @@
       #theme-toggle .toggle-label{display:none;}
     }
 
+    /* ── COMPARISON SECTION ── */
+    .compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;align-items:center;}
+    @media(max-width:700px){.compare-wrap{grid-template-columns:1fr;}}
+    .compare-col{display:flex;flex-direction:column;gap:0.6rem;}
+    .compare-label{display:flex;align-items:center;gap:0.6rem;}
+    .compare-badge{font-family:'Fraunces',serif;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+    .compare-badge.ref{background:rgba(168,120,255,0.18);color:#a878ff;border:1px solid rgba(168,120,255,0.3);}
+    .compare-badge.out{background:rgba(244,114,182,0.18);color:var(--accent);border:1px solid rgba(244,114,182,0.3);}
+    .compare-title{font-size:0.8rem;color:var(--mid);font-weight:400;}
+    .compare-player{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#000;position:relative;}
+    .compare-player iframe{position:absolute;inset:0;border:none;width:100%;height:100%;}
+    .compare-player-ref{aspect-ratio:9/16;max-width:320px;margin:0 auto;}
+    .compare-player-out{aspect-ratio:16/9;width:100%;}
+    .sync-bar{display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;margin-bottom:3rem;padding:1.1rem 1.4rem;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(8px);}
+    .sync-btn{display:inline-flex;align-items:center;gap:7px;padding:0.55rem 1.2rem;border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all var(--transition);}
+    .sync-btn:not(.secondary){background:var(--accent);color:#fff;}
+    .sync-btn:not(.secondary):hover{background:var(--accent2);transform:translateY(-1px);}
+    .sync-btn.secondary{background:var(--card);border:1px solid var(--border);color:var(--mid);}
+    .sync-btn.secondary:hover{border-color:var(--accent);color:var(--fg);}
+    .sync-status{font-size:0.75rem;color:var(--muted);font-style:italic;margin-left:auto;}
+
     /* ── CODE SECTION ── */
     .code-section{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:2rem;background:var(--card);position:relative;}
     .code-header{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.2rem;background:rgba(45,16,64,0.6);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);}
@@ -160,6 +181,7 @@
 </head>
 <body>
   <canvas id="space-canvas"></canvas>
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="theme.js"></script>
   <nav>
     <a href="index.html" class="nav-brand">Multimedia &amp; Authoring</a>
@@ -186,6 +208,48 @@
       <iframe src="https://www.youtube.com/embed/JLciNG9H2_g" allowfullscreen></iframe>
     </div>
     <p class="video-label">Solar System 3D Render — Final Output</p>
+
+    <!-- ══ COMPARISON SECTION ══ -->
+    <h2 class="block-title">Reference vs. Final Output</h2>
+    <div class="block-sub">Side-by-Side Comparison</div>
+    <p class="body-text" style="font-size:0.88rem;color:var(--mid);line-height:1.8;margin-bottom:1.6rem;">See how the reference footage was transformed into the final 3D solar system render. Hit <strong style="color:var(--accent);">Sync &amp; Play Both</strong> to start them at the same time.</p>
+
+    <div class="compare-wrap">
+      <div class="compare-col">
+        <div class="compare-label">
+          <span class="compare-badge ref">Reference</span>
+          <span class="compare-title">Original Footage</span>
+        </div>
+        <div class="compare-player compare-player-ref" id="player-ref-wrap">
+          <video id="player-ref-vid" src="images/reference (2).mp4" playsinline controls style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;"></video>
+        </div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-label">
+          <span class="compare-badge out">Final Output</span>
+          <span class="compare-title">3D Solar System Render</span>
+        </div>
+        <div class="compare-player compare-player-out" id="player-out-wrap">
+          <div id="player-out"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sync-bar">
+      <button class="sync-btn" id="sync-btn" onclick="syncPlay()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+        Sync &amp; Play Both
+      </button>
+      <button class="sync-btn secondary" onclick="syncPause()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="4" height="18" rx="1" fill="currentColor"/><rect x="15" y="3" width="4" height="18" rx="1" fill="currentColor"/></svg>
+        Pause Both
+      </button>
+      <button class="sync-btn secondary" onclick="syncRestart()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 018-8V2L8 5l4 3V6a6 6 0 11-1.8 11.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Restart Both
+      </button>
+      <span class="sync-status" id="sync-status"></span>
+    </div>
 
     <h2 class="block-title">Tools &amp; Technologies</h2>
     <div class="block-sub">Production Stack</div>
@@ -409,15 +473,17 @@ print(<span class="s">'Saved solar_system_render.mp4'</span>)
   <script src="stars.js"></script>
   <script>
     const planets = [
-      { name:'Sun',     index:1, type:'Star',               orbitalPeriodDays:365.25,   distance:'0 AU — center',        video:'videos/sun.mp4' },
-      { name:'Mercury', index:2, type:'Terrestrial Planet', orbitalPeriodDays:87.97,    distance:'0.387 AU (57.9M km)',   video:'videos/mercury.mp4' },
-      { name:'Venus',   index:3, type:'Terrestrial Planet', orbitalPeriodDays:224.70,   distance:'0.723 AU (108.2M km)', video:'videos/venus.mp4' },
-      { name:'Earth',   index:4, type:'Terrestrial Planet', orbitalPeriodDays:365.25,   distance:'1.000 AU (149.6M km)', video:'videos/earth.mp4' },
-      { name:'Mars',    index:5, type:'Terrestrial Planet', orbitalPeriodDays:686.97,   distance:'1.524 AU (227.9M km)', video:'videos/mars.mp4' },
-      { name:'Jupiter', index:6, type:'Gas Giant',          orbitalPeriodDays:4332.59,  distance:'5.203 AU (778.6M km)', video:'videos/jupiter.mp4' },
-      { name:'Saturn',  index:7, type:'Gas Giant',          orbitalPeriodDays:10759.22, distance:'9.537 AU (1.43B km)',  video:'videos/saturn.mp4' },
-      { name:'Uranus',  index:8, type:'Ice Giant',          orbitalPeriodDays:30688.50, distance:'19.19 AU (2.87B km)',  video:'videos/uranus.mp4' },
-      { name:'Neptune', index:9, type:'Ice Giant',          orbitalPeriodDays:60195.00, distance:'30.07 AU (4.50B km)', video:'videos/neptune.mp4' },
+      { name:'Sun',     index:1,  type:'Star',               orbitalPeriodDays:365.25,    distance:'0 AU — center',         video:'videos/sun.mp4' },
+      { name:'Mercury', index:2,  type:'Terrestrial Planet', orbitalPeriodDays:87.97,     distance:'0.387 AU (57.9M km)',   video:'videos/mercury.mp4' },
+      { name:'Venus',   index:3,  type:'Terrestrial Planet', orbitalPeriodDays:224.70,    distance:'0.723 AU (108.2M km)', video:'videos/venus.mp4' },
+      { name:'Earth',   index:4,  type:'Terrestrial Planet', orbitalPeriodDays:365.25,    distance:'1.000 AU (149.6M km)', video:'videos/earth.mp4' },
+      { name:'Moon',    index:5,  type:'Natural Satellite',  orbitalPeriodDays:27.32,     distance:'0.00257 AU (384,400 km from Earth)', video:'moon.mp4' },
+      { name:'Mars',    index:6,  type:'Terrestrial Planet', orbitalPeriodDays:686.97,    distance:'1.524 AU (227.9M km)', video:'videos/mars.mp4' },
+      { name:'Jupiter', index:7,  type:'Gas Giant',          orbitalPeriodDays:4332.59,   distance:'5.203 AU (778.6M km)', video:'videos/jupiter.mp4' },
+      { name:'Saturn',  index:8,  type:'Gas Giant',          orbitalPeriodDays:10759.22,  distance:'9.537 AU (1.43B km)',  video:'videos/saturn.mp4' },
+      { name:'Uranus',  index:9,  type:'Ice Giant',          orbitalPeriodDays:30688.50,  distance:'19.19 AU (2.87B km)',  video:'videos/uranus.mp4' },
+      { name:'Neptune', index:10, type:'Ice Giant',          orbitalPeriodDays:60195.00,  distance:'30.07 AU (4.50B km)', video:'videos/neptune.mp4' },
+      { name:'Pluto',   index:11, type:'Dwarf Planet',       orbitalPeriodDays:90560.00,  distance:'39.48 AU (5.91B km)', video:'pluto.mp4' },
     ];
 
     let currentAge = 20; // default age shown before user inputs anything
@@ -470,7 +536,7 @@ print(<span class="s">'Saved solar_system_render.mp4'</span>)
           <div class="detail-stats">
             <div class="detail-stat"><div class="ds-label">Orbital Period</div><div class="ds-val">${periodFmt}</div></div>
             <div class="detail-stat"><div class="ds-label">Revolutions / yr</div><div class="ds-val">${revsFmt}</div></div>
-            <div class="detail-stat"><div class="ds-label">Distance from Sun</div><div class="ds-val">${p.distance}</div></div>
+            <div class="detail-stat"><div class="ds-label">${p.name === 'Moon' ? 'Distance from Earth' : 'Distance from Sun'}</div><div class="ds-val">${p.distance}</div></div>
             <div class="detail-stat"><div class="ds-label">Orbits Completed</div><div class="ds-val">${planetAge.toFixed(2)} orbits</div></div>
           </div>
           <div class="detail-age-banner">
@@ -493,10 +559,54 @@ print(<span class="s">'Saved solar_system_render.mp4'</span>)
     }
 
     document.getElementById('age-input').addEventListener('keydown', e => { if(e.key==='Enter') calculateAges(); });
-
-    // Show planets on load with default age
     buildSelectors();
     selectPlanet(0);
+
+    // ── YouTube IFrame API (final output only) ──
+    var playerOut, ytReady = false;
+
+    window.onYouTubeIframeAPIReady = function () {
+      ytReady = true;
+      playerOut = new YT.Player('player-out', {
+        videoId: 'JLciNG9H2_g',
+        playerVars: { rel: 0, modestbranding: 1, controls: 1 },
+        events: { onReady: function(){ setStatus('Players ready — click Sync & Play Both!'); } }
+      });
+    };
+
+    function setStatus(msg, dur) {
+      const el = document.getElementById('sync-status');
+      el.textContent = msg;
+      if (dur) setTimeout(() => { el.textContent = ''; }, dur);
+    }
+
+    function getRefVid(){ return document.getElementById('player-ref-vid'); }
+
+    function syncPlay() {
+      const vid = getRefVid();
+      if (!ytReady || !playerOut || !vid) { setStatus('Players still loading…'); return; }
+      try {
+        vid.currentTime = 0; vid.play();
+        playerOut.seekTo(0); playerOut.playVideo();
+        setStatus('▶ Both playing in sync!', 3000);
+      } catch(e) { setStatus('Error — try again in a moment'); }
+    }
+
+    function syncPause() {
+      const vid = getRefVid();
+      if (!vid || !playerOut) return;
+      try { vid.pause(); playerOut.pauseVideo(); setStatus('⏸ Paused', 2000); } catch(e) {}
+    }
+
+    function syncRestart() {
+      const vid = getRefVid();
+      if (!vid || !playerOut) return;
+      try {
+        vid.currentTime = 0; vid.play();
+        playerOut.seekTo(0); playerOut.playVideo();
+        setStatus('↺ Restarted!', 2500);
+      } catch(e) {}
+    }
 
     // ── Code section: copy & download ──
     function getRawCode(){
