@@ -40,7 +40,7 @@
     #theme-toggle:hover{border-color:var(--accent);color:var(--fg);}
     .toggle-icon{font-size:0.9rem;line-height:1;}
 
-    .hero{padding:5rem 2.5rem 4rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero{padding:5rem 2.5rem 4rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;z-index:1;}
     .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(244,114,182,0.07),transparent 70%);pointer-events:none;}
     [data-theme="light"] .hero::before{background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(217,119,6,0.08),transparent 70%);}
     .breadcrumb{font-family:'Caveat',cursive;font-size:0.65rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:0.1em;text-transform:uppercase;position:relative;}
@@ -93,11 +93,13 @@
 
     /* PLANET DETAIL PANEL */
     .planet-detail{background:var(--card-bg);border:1px solid var(--border);border-radius:18px;overflow:hidden;backdrop-filter:blur(8px);display:none;animation:fadeUp 0.32s ease;}
-    .planet-detail.visible{display:block;}
+    .planet-detail.visible{display:grid;grid-template-columns:340px 1fr;min-height:320px;}
+    @media(max-width:820px){.planet-detail.visible{display:flex;flex-direction:column;}}
     @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-    .detail-video-wrap{width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;position:relative;}
-    .detail-video-wrap video{width:100%;height:100%;object-fit:cover;display:block;}
+    .detail-video-wrap{position:relative;background:#000;overflow:hidden;}
+    .detail-video-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+    @media(max-width:820px){.detail-video-wrap{aspect-ratio:16/9;}}
 
     /* NAV arrows overlay on video */
     .detail-nav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;pointer-events:none;z-index:10;}
@@ -105,12 +107,12 @@
     .dnav-btn:hover{background:var(--accent2);transform:scale(1.1);}
     .dnav-btn svg{display:block;}
 
-    .detail-body{padding:1.6rem 1.8rem 2rem;}
+    .detail-body{padding:1.6rem 1.8rem 2rem;display:flex;flex-direction:column;justify-content:space-between;}
     .detail-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.3rem;}
     .detail-name{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:800;color:var(--fg);line-height:1;}
     .detail-type{font-family:'Fraunces',serif;font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-top:6px;}
     .detail-num{font-family:'Fraunces',serif;font-size:3.2rem;font-weight:800;color:var(--border);line-height:1;}
-    .detail-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem 1.4rem;margin-bottom:1.3rem;}
+    .detail-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.4rem;margin-bottom:1.3rem;}
     .detail-stat{border-bottom:1px solid var(--border);padding-bottom:0.75rem;}
     .ds-label{font-family:'Fraunces',serif;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
     .ds-val{font-size:0.86rem;color:var(--subtle);font-weight:500;}
@@ -183,7 +185,7 @@
     <div class="block-sub">Final Render</div>
     <p class="body-text">The 3D rendered solar system animation — featuring all eight planets in orbit around the Sun, with accurate relative sizing, texturing, and lighting simulation.</p>
     <div class="video-wrap">
-      <iframe src="https://www.youtube.com/embed/MtpNnZoYOGM" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/JLciNG9H2_g" allowfullscreen></iframe>
     </div>
     <p class="video-label">Solar System 3D Render — Final Output</p>
 
@@ -228,7 +230,7 @@
       <div class="code-header">
         <div class="code-lang-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px;margin-right:5px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="var(--accent2)" opacity=".3"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="var(--accent)" font-weight="bold" font-family="monospace">py</text></svg>
-          solar_system.py
+          master_render_solar_system.py
         </div>
         <div class="code-actions">
           <button class="code-btn" id="copy-btn" onclick="copyCode()">
@@ -239,167 +241,456 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             Download
           </button>
+          <a href="https://drive.google.com/drive/folders/1T0GodlqpC1ZOJml9ssb1IZu8ClpEimEB?usp=sharing" target="_blank" class="code-btn" style="text-decoration:none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            Files
+          </a>
         </div>
       </div>
       <div class="code-scroll">
-        <pre class="code-block" id="solar-code"><code><span class="c"># ─────────────────────────────────────────────────────────────────
-# Solar System 3D Render
-# Author : Glaiza Marie D. Reblinca
-# Course : Multimedia &amp; Authoring — BSIT-NS-2A
-# Requires: Python 3.8+, numpy, matplotlib
-# Run     : python solar_system.py
-# ─────────────────────────────────────────────────────────────────</span>
+        <pre class="code-block" id="solar-code"><code><span class="k">import </span>bpy
+<span class="k">import </span>math
+<span class="k">import </span>random
 
-<span class="k">import</span> numpy <span class="k">as</span> np
-<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
-<span class="k">import</span> matplotlib.animation <span class="k">as</span> animation
-<span class="k">from</span> mpl_toolkits.mplot3d <span class="k">import</span> Axes3D
-<span class="k">from</span> matplotlib.patches <span class="k">import</span> FancyArrowPatch
-<span class="k">import</span> matplotlib.colors <span class="k">as</span> mcolors
+<span class="c"># ====================================================================</span>
+<span class="c"># 1. DATABASE CONFIGURATION &amp; FILESYSTEM PATHS</span>
+<span class="c"># ====================================================================</span>
+FRAME_START = <span class="n">1</span>
+FRAME_END = <span class="n">1200</span>
+bpy.context.scene.frame_start = FRAME_START
+bpy.context.scene.frame_end = FRAME_END
 
-<span class="c"># ── Planet data (name, radius, orbit_radius, period, color, tilt) ──</span>
-PLANETS = [
-    {<span class="s">'name'</span>: <span class="s">'Mercury'</span>, <span class="s">'r'</span>: <span class="n">0.38</span>, <span class="s">'orbit'</span>: <span class="n">5.0</span>,  <span class="s">'period'</span>: <span class="n">0.241</span>, <span class="s">'color'</span>: <span class="s">'#b5b5b5'</span>, <span class="s">'tilt'</span>: <span class="n">0.03</span>},
-    {<span class="s">'name'</span>: <span class="s">'Venus'</span>,   <span class="s">'r'</span>: <span class="n">0.95</span>, <span class="s">'orbit'</span>: <span class="n">7.5</span>,  <span class="s">'period'</span>: <span class="n">0.615</span>, <span class="s">'color'</span>: <span class="s">'#e8cda0'</span>, <span class="s">'tilt'</span>: <span class="n">0.05</span>},
-    {<span class="s">'name'</span>: <span class="s">'Earth'</span>,   <span class="s">'r'</span>: <span class="n">1.00</span>, <span class="s">'orbit'</span>: <span class="n">10.0</span>, <span class="s">'period'</span>: <span class="n">1.000</span>, <span class="s">'color'</span>: <span class="s">'#3a7bd5'</span>, <span class="s">'tilt'</span>: <span class="n">0.08</span>},
-    {<span class="s">'name'</span>: <span class="s">'Mars'</span>,    <span class="s">'r'</span>: <span class="n">0.53</span>, <span class="s">'orbit'</span>: <span class="n">13.0</span>, <span class="s">'period'</span>: <span class="n">1.881</span>, <span class="s">'color'</span>: <span class="s">'#c1440e'</span>, <span class="s">'tilt'</span>: <span class="n">0.04</span>},
-    {<span class="s">'name'</span>: <span class="s">'Jupiter'</span>, <span class="s">'r'</span>: <span class="n">2.80</span>, <span class="s">'orbit'</span>: <span class="n">19.0</span>, <span class="s">'period'</span>: <span class="n">11.86</span>, <span class="s">'color'</span>: <span class="s">'#c88b3a'</span>, <span class="s">'tilt'</span>: <span class="n">0.02</span>},
-    {<span class="s">'name'</span>: <span class="s">'Saturn'</span>,  <span class="s">'r'</span>: <span class="n">2.30</span>, <span class="s">'orbit'</span>: <span class="n">25.0</span>, <span class="s">'period'</span>: <span class="n">29.46</span>, <span class="s">'color'</span>: <span class="s">'#e4d191'</span>, <span class="s">'tilt'</span>: <span class="n">0.47</span>},
-    {<span class="s">'name'</span>: <span class="s">'Uranus'</span>,  <span class="s">'r'</span>: <span class="n">1.60</span>, <span class="s">'orbit'</span>: <span class="n">31.0</span>, <span class="s">'period'</span>: <span class="n">84.01</span>, <span class="s">'color'</span>: <span class="s">'#7de8e8'</span>, <span class="s">'tilt'</span>: <span class="n">0.12</span>},
-    {<span class="s">'name'</span>: <span class="s">'Neptune'</span>, <span class="s">'r'</span>: <span class="n">1.55</span>, <span class="s">'orbit'</span>: <span class="n">37.0</span>, <span class="s">'period'</span>: <span class="n">164.8</span>, <span class="s">'color'</span>: <span class="s">'#3f54ba'</span>, <span class="s">'tilt'</span>: <span class="n">0.09</span>},
-]
+PLANET_DATA = {
+    <span class="s">"Sun"</span>:     {<span class="s">"radius"</span>: <span class="n">4.0</span>, <span class="s">"distance"</span>: <span class="n">0.0</span>,  <span class="s">"tilt"</span>: <span class="n">7.25</span>,  <span class="s">"rot_speed"</span>: <span class="n">100</span>,  <span class="s">"orbit_speed"</span>: <span class="n">0.0</span>,   <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\sun.png"</span>,     <span class="s">"is_sun"</span>: <span class="k">True</span>},
+    <span class="s">"Mercury"</span>: {<span class="s">"radius"</span>: <span class="n">0.6</span>, <span class="s">"distance"</span>: <span class="n">8.0</span>,  <span class="s">"tilt"</span>: <span class="n">0.03</span>,  <span class="s">"rot_speed"</span>: <span class="n">180</span>,  <span class="s">"orbit_speed"</span>: <span class="n">8.30</span>,  <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\mercury.png"</span>, <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Venus"</span>:   {<span class="s">"radius"</span>: <span class="n">1.2</span>, <span class="s">"distance"</span>: <span class="n">12.0</span>, <span class="s">"tilt"</span>: <span class="n">177.3</span>, <span class="s">"rot_speed"</span>: -<span class="n">120</span>, <span class="s">"orbit_speed"</span>: <span class="n">3.24</span>,  <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\venus.png"</span>,   <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Earth"</span>:   {<span class="s">"radius"</span>: <span class="n">1.3</span>, <span class="s">"distance"</span>: <span class="n">17.0</span>, <span class="s">"tilt"</span>: <span class="n">23.44</span>, <span class="s">"rot_speed"</span>: <span class="n">720</span>,  <span class="s">"orbit_speed"</span>: <span class="n">2.00</span>,  <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\earth.png"</span>,   <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Mars"</span>:    {<span class="s">"radius"</span>: <span class="n">0.8</span>, <span class="s">"distance"</span>: <span class="n">22.0</span>, <span class="s">"tilt"</span>: <span class="n">25.19</span>, <span class="s">"rot_speed"</span>: <span class="n">700</span>,  <span class="s">"orbit_speed"</span>: <span class="n">1.06</span>,  <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\mars.png"</span>,    <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Jupiter"</span>: {<span class="s">"radius"</span>: <span class="n">2.8</span>, <span class="s">"distance"</span>: <span class="n">32.0</span>, <span class="s">"tilt"</span>: <span class="n">3.13</span>,  <span class="s">"rot_speed"</span>: <span class="n">1440</span>, <span class="s">"orbit_speed"</span>: <span class="n">0.32</span>,  <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\jupiter.png"</span>, <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Saturn"</span>:  {<span class="s">"radius"</span>: <span class="n">2.3</span>, <span class="s">"distance"</span>: <span class="n">44.0</span>, <span class="s">"tilt"</span>: <span class="n">26.73</span>, <span class="s">"rot_speed"</span>: <span class="n">1280</span>, <span class="s">"orbit_speed"</span>: <span class="n">0.12</span>,  <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\saturn.png"</span>,  <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Uranus"</span>:  {<span class="s">"radius"</span>: <span class="n">1.8</span>, <span class="s">"distance"</span>: <span class="n">54.0</span>, <span class="s">"tilt"</span>: <span class="n">97.77</span>, <span class="s">"rot_speed"</span>: -<span class="n">500</span>, <span class="s">"orbit_speed"</span>: <span class="n">0.044</span>, <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\uranus.png"</span>,  <span class="s">"is_sun"</span>: <span class="k">False</span>},
+    <span class="s">"Neptune"</span>: {<span class="s">"radius"</span>: <span class="n">1.7</span>, <span class="s">"distance"</span>: <span class="n">64.0</span>, <span class="s">"tilt"</span>: <span class="n">28.32</span>, <span class="s">"rot_speed"</span>: <span class="n">500</span>,  <span class="s">"orbit_speed"</span>: <span class="n">0.024</span>, <span class="s">"tex"</span>: r<span class="s">"C:\solar_system\neptune.png"</span>, <span class="s">"is_sun"</span>: <span class="k">False</span>}
+}
 
-FRAMES    = <span class="n">240</span>   <span class="c"># total animation frames</span>
-FPS       = <span class="n">30</span>    <span class="c"># frames per second</span>
-SUN_R     = <span class="n">3.0</span>   <span class="c"># sun sphere radius</span>
-STAR_COUNT= <span class="n">500</span>   <span class="c"># background stars</span>
+<span class="c"># Clean old scene objects safely</span>
+<span class="k">f<span class="k">or </span></span>obj <span class="k">in </span>list(bpy.data.objects):
+    bpy.data.objects.remove(obj, do_unlink=<span class="k">True</span>)
 
+<span class="k">f<span class="k">or </span></span>col <span class="k">in </span>list(bpy.data.collections):
+    bpy.data.collections.remove(col)
 
-<span class="k">def</span> <span class="f">sphere</span>(cx=<span class="n">0</span>, cy=<span class="n">0</span>, cz=<span class="n">0</span>, r=<span class="n">1</span>, res=<span class="n">20</span>):
-    <span class="s">"""Return x,y,z arrays for a sphere surface."""</span>
-    u = np.linspace(<span class="n">0</span>, <span class="n">2</span>*np.pi, res)
-    v = np.linspace(<span class="n">0</span>, np.pi, res)
-    x = cx + r * np.outer(np.cos(u), np.sin(v))
-    y = cy + r * np.outer(np.sin(u), np.sin(v))
-    z = cz + r * np.outer(np.ones_like(u), np.cos(v))
-    <span class="k">return</span> x, y, z
+<span class="c"># Clear any old persistent background update scripts</span>
+bpy.app.handlers.frame_change_pre.clear()
 
+planet_collection = bpy.data.collections.new(<span class="s">"Solar_System"</span>)
+bpy.context.scene.collection.children.link(planet_collection)
 
-<span class="k">def</span> <span class="f">orbit_ring</span>(radius, tilt=<span class="n">0</span>, pts=<span class="n">120</span>):
-    <span class="s">"""Return x,y,z for a tilted circular orbit path."""</span>
-    theta = np.linspace(<span class="n">0</span>, <span class="n">2</span>*np.pi, pts)
-    x = radius * np.cos(theta)
-    y = radius * np.sin(theta)
-    z = tilt   * np.sin(theta) * radius * <span class="n">0.3</span>
-    <span class="k">return</span> x, y, z
+<span class="c"># ====================================================================</span>
+<span class="c"># 2. GENERATE DYNAMIC CAMERA RIG &amp; TARGET SKELETON</span>
+<span class="c"># ====================================================================</span>
+bpy.ops.object.empty_add(type=<span class="s">'PLAIN_AXES'</span>, radius=<span class="n">0.1</span>, location=(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>))
+target_anch<span class="k">or </span>= bpy.context.active_object
+target_anchor.name = <span class="s">"Camera_Target_Anchor"</span>
+planet_collection.objects.link(target_anchor)
+bpy.context.scene.collection.objects.unlink(target_anchor)
 
+bpy.ops.object.camera_add()
+camera = bpy.context.active_object
+camera.name = <span class="s">"Master_Cinematic_Camera"</span>
+camera.data.lens = <span class="n">32</span>
+planet_collection.objects.link(camera)
+bpy.context.scene.collection.objects.unlink(camera)
+bpy.context.scene.camera = camera
 
-<span class="k">def</span> <span class="f">planet_pos</span>(planet, frame):
-    <span class="s">"""Compute (x, y, z) position of a planet at a given frame."""</span>
-    angle  = (<span class="n">2</span> * np.pi * frame) / (FRAMES * planet[<span class="s">'period'</span>])
-    r      = planet[<span class="s">'orbit'</span>]
-    x = r * np.cos(angle)
-    y = r * np.sin(angle)
-    z = planet[<span class="s">'tilt'</span>] * np.sin(angle) * r * <span class="n">0.3</span>
-    <span class="k">return</span> x, y, z
+track_con = camera.constraints.new(type=<span class="s">'TRACK_TO'</span>)
+track_con.track_axis = <span class="s">'TRACK_NEGATIVE_Z'</span>
+track_con.up_axis = <span class="s">'UP_Y'</span>
+track_con.target = target_anchor
 
+<span class="c"># ====================================================================</span>
+<span class="c"># 3. FIXED: SINGLE CAMERA-LOCKED HUD TEXT OBJECT</span>
+<span class="c"># ====================================================================</span>
+ui_mat = bpy.data.materials.new(name=<span class="s">"HUD_Text_Mat"</span>)
+ui_mat.use_nodes = <span class="k">True</span>
+ui_mat.node_tree.nodes.clear()
+u_out = ui_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeOutputMaterial'</span>)
+u_emit = ui_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeEmission'</span>)
+u_emit.inputs[<span class="s">'Color'</span>].default_value = (<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>)
+u_emit.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">15.0</span>
+ui_mat.node_tree.links.new(u_emit.outputs[<span class="s">'Emission'</span>], u_out.inputs[<span class="s">'Surface'</span>])
 
-<span class="k">def</span> <span class="f">build_stars</span>(n=STAR_COUNT):
-    <span class="s">"""Scatter random stars across a hemisphere."""</span>
-    rng   = np.random.default_rng(<span class="n">42</span>)
-    theta = rng.uniform(<span class="n">0</span>, <span class="n">2</span>*np.pi, n)
-    phi   = rng.uniform(<span class="n">0</span>, np.pi, n)
-    R     = <span class="n">80</span>
-    sx = R * np.sin(phi) * np.cos(theta)
-    sy = R * np.sin(phi) * np.sin(theta)
-    sz = R * np.cos(phi)
-    <span class="k">return</span> sx, sy, sz
+bpy.ops.object.text_add()
+hud_text_obj = bpy.context.active_object
+hud_text_obj.name = <span class="s">"HUD_Master_Text"</span>
+hud_text_obj.data.body = <span class="s">"SUN"</span>
+hud_text_obj.data.size = <span class="n">0.15</span>
+hud_text_obj.data.extrude = <span class="n">0.01</span>
+hud_text_obj.data.align_x = <span class="s">'CENTER'</span>
+hud_text_obj.data.align_y = <span class="s">'CENTER'</span>
+hud_text_obj.data.materials.append(ui_mat)
 
+planet_collection.objects.link(hud_text_obj)
+bpy.context.scene.collection.objects.unlink(hud_text_obj)
 
-<span class="c"># ── Scene setup ──────────────────────────────────────────────────</span>
-fig = plt.figure(figsize=(<span class="n">12</span>, <span class="n">8</span>), facecolor=<span class="s">'black'</span>)
-ax  = fig.add_subplot(<span class="n">111</span>, projection=<span class="s">'3d'</span>, facecolor=<span class="s">'black'</span>)
-ax.set_axis_off()
-ax.set_xlim(<span class="n">-42</span>, <span class="n">42</span>)
-ax.set_ylim(<span class="n">-42</span>, <span class="n">42</span>)
-ax.set_zlim(<span class="n">-12</span>, <span class="n">12</span>)
-ax.view_init(elev=<span class="n">22</span>, azim=<span class="n">-60</span>)
+<span class="c"># Parent the text directly to the camera frame so it stays dead center</span>
+hud_text_obj.parent = camera
+hud_text_obj.location = (<span class="n">0.0</span>, -<span class="n">2.0</span>, -<span class="n">0.6</span>)  
+hud_text_obj.rotation_mode = <span class="s">'XYZ'</span>
+hud_text_obj.rotation_euler = (math.radians(<span class="n">90</span>), <span class="n">0.0</span>, <span class="n">0.0</span>)
 
-<span class="c"># Background stars</span>
-sx, sy, sz = build_stars()
-ax.scatter(sx, sy, sz, s=<span class="n">0.6</span>, c=<span class="s">'white'</span>, alpha=<span class="n">0.55</span>, depthshade=<span class="k">False</span>)
+<span class="c"># ====================================================================</span>
+<span class="c"># 4. GENERATE ORBITAL TRAJECTORY LINES PROCEDURALLY</span>
+<span class="c"># ====================================================================</span>
+path_mat = bpy.data.materials.new(name=<span class="s">"Orbit_Path_Material"</span>)
+path_mat.use_nodes = <span class="k">True</span>
+path_mat.node_tree.nodes.clear()
+p_out = path_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeOutputMaterial'</span>)
+p_emit = path_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeEmission'</span>)
+p_emit.inputs[<span class="s">'Color'</span>].default_value = (<span class="n">0.2</span>, <span class="n">0.5</span>, <span class="n">1.0</span>, <span class="n">1.0</span>)
+p_emit.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">1.8</span>
+path_mat.node_tree.links.new(p_emit.outputs[<span class="s">'Emission'</span>], p_out.inputs[<span class="s">'Surface'</span>])
 
-<span class="c"># Sun glow (multiple semi-transparent spheres)</span>
-<span class="k">for</span> scale, alpha <span class="k">in</span> [(<span class="n">1.0</span>, <span class="n">0.9</span>), (<span class="n">1.35</span>, <span class="n">0.18</span>), (<span class="n">1.75</span>, <span class="n">0.07</span>)]:
-    xs, ys, zs = sphere(r=SUN_R*scale)
-    ax.plot_surface(xs, ys, zs, color=<span class="s">'#ffcc44'</span>, alpha=alpha,
-                    linewidth=<span class="n">0</span>, antialiased=<span class="k">True</span>)
+<span class="k">f<span class="k">or </span></span>name, data <span class="k">in </span>PLANET_DATA.items():
+    <span class="k">if </span>data[<span class="s">"distance"</span>] == <span class="n">0.0</span>: <span class="k">continue</span>
+    bpy.ops.curve.primitive_bezier_circle_add(radius=data[<span class="s">"distance"</span>], location=(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>))
+    path_obj = bpy.context.active_object
+    path_obj.name = f<span class="s">"{name}_Trajectory"</span>
+    path_obj.data.dimensions = <span class="s">'3D'</span>
+    path_obj.data.fill_mode = <span class="s">'FULL'</span>
+    path_obj.data.bevel_depth = <span class="n">0.03</span>
+    path_obj.data.materials.append(path_mat)
+    planet_collection.objects.link(path_obj)
+    bpy.context.scene.collection.objects.unlink(path_obj)
 
-<span class="c"># Orbit rings</span>
-<span class="k">for</span> p <span class="k">in</span> PLANETS:
-    ox, oy, oz = orbit_ring(p[<span class="s">'orbit'</span>], p[<span class="s">'tilt'</span>])
-    ax.plot(ox, oy, oz, color=<span class="s">'white'</span>, alpha=<span class="n">0.08</span>, linewidth=<span class="n">0.6</span>)
+<span class="c"># ====================================================================</span>
+<span class="c"># 5. GENERATE CELESTIAL BODIES &amp; RINGS</span>
+<span class="c"># ====================================================================</span>
+created_objects = {}
+planet_names = list(PLANET_DATA.keys())
+showcase_duration = <span class="n">100</span>
 
-<span class="c"># Saturn rings (flat torus approximation)</span>
-saturn = next(p <span class="k">for</span> p <span class="k">in</span> PLANETS <span class="k">if</span> p[<span class="s">'name'</span>] == <span class="s">'Saturn'</span>)
-ring_theta = np.linspace(<span class="n">0</span>, <span class="n">2</span>*np.pi, <span class="n">60</span>)
-ring_artists = []
-<span class="k">for</span> ring_r <span class="k">in</span> np.linspace(saturn[<span class="s">'r'</span>]*<span class="n">1.3</span>, saturn[<span class="s">'r'</span>]*<span class="n">2.1</span>, <span class="n">6</span>):
-    ring_artists.append(ax.plot([], [], [], color=<span class="s">'#d4b483'</span>, alpha=<span class="n">0.4</span>, lw=<span class="n">1.2</span>)[<span class="n">0</span>])
+<span class="k">f<span class="k">or </span></span>idx, (name, data) <span class="k">in </span>enumerate(PLANET_DATA.items()):
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=<span class="n">64</span>, ring_count=<span class="n">32</span>, radius=data[<span class="s">"radius"</span>])
+    body = bpy.context.active_object
+    body.name = name
+    bpy.ops.object.shade_smooth()
+    planet_collection.objects.link(body)
+    bpy.context.scene.collection.objects.unlink(body)
+    
+    mat = bpy.data.materials.new(name=f<span class="s">"{name}_Mat"</span>)
+    mat.use_nodes = <span class="k">True</span>
+    nodes = mat.node_tree.nodes
+    links = mat.node_tree.links
+    nodes.clear()
+    out_node = nodes.new(type=<span class="s">'ShaderNodeOutputMaterial'</span>)
+    
+    <span class="k">if </span>data[<span class="s">"is_sun"</span>]:
+        emit_node = nodes.new(type=<span class="s">'ShaderNodeEmission'</span>)
+        emit_node.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">1.5</span>
+        tex_node = nodes.new(type=<span class="s">'ShaderNodeTexImage'</span>)
+        <span class="k">try:</span>
+            tex_node.image = bpy.data.images.load(data[<span class="s">"tex"</span>])
+            links.new(tex_node.outputs[<span class="s">'Color'</span>], emit_node.inputs[<span class="s">'Color'</span>])
+        <span class="k">except </span>Exception:
+            emit_node.inputs[<span class="s">'Color'</span>].default_value = (<span class="n">1.0</span>, <span class="n">0.4</span>, <span class="n">0.1</span>, <span class="n">1.0</span>)
+        links.new(emit_node.outputs[<span class="s">'Emission'</span>], out_node.inputs[<span class="s">'Surface'</span>])
+    <span class="k">else:</span>
+        bsdf_node = nodes.new(type=<span class="s">'ShaderNodeBsdfPrincipled'</span>)
+        emit_node = nodes.new(type=<span class="s">'ShaderNodeEmission'</span>)
+        mix_node = nodes.new(type=<span class="s">'ShaderNodeMixShader'</span>)
+        tex_node = nodes.new(type=<span class="s">'ShaderNodeTexImage'</span>)
+        
+        bsdf_node.inputs[<span class="s">'Roughness'</span>].default_value = <span class="n">0.6</span>
+        emit_node.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">0.85</span>
+        mix_node.inputs[<span class="s">'Fac'</span>].default_value = <span class="n">0.45</span>
+        
+        <span class="k">try:</span>
+            tex_node.image = bpy.data.images.load(data[<span class="s">"tex"</span>])
+            links.new(tex_node.outputs[<span class="s">'Color'</span>], bsdf_node.inputs[<span class="s">'Base Color'</span>])
+            links.new(tex_node.outputs[<span class="s">'Color'</span>], emit_node.inputs[<span class="s">'Color'</span>])
+        <span class="k">except </span>Exception:
+            fallback_colors = {<span class="s">"Mercury"</span>: (<span class="n">0.4</span>, <span class="n">0.4</span>, <span class="n">0.45</span>, <span class="n">1</span>), <span class="s">"Venus"</span>: (<span class="n">0.85</span>, <span class="n">0.65</span>, <span class="n">0.4</span>, <span class="n">1</span>), <span class="s">"Earth"</span>: (<span class="n">0.2</span>, <span class="n">0.4</span>, <span class="n">0.8</span>, <span class="n">1</span>), <span class="s">"Mars"</span>: (<span class="n">0.65</span>, <span class="n">0.28</span>, <span class="n">0.15</span>, <span class="n">1</span>), <span class="s">"Jupiter"</span>: (<span class="n">0.75</span>, <span class="n">0.55</span>, <span class="n">0.4</span>, <span class="n">1</span>), <span class="s">"Saturn"</span>: (<span class="n">0.8</span>, <span class="n">0.7</span>, <span class="n">0.5</span>, <span class="n">1</span>), <span class="s">"Uranus"</span>: (<span class="n">0.55</span>, <span class="n">0.75</span>, <span class="n">0.8</span>, <span class="n">1</span>), <span class="s">"Neptune"</span>: (<span class="n">0.12</span>, <span class="n">0.27</span>, <span class="n">0.66</span>, <span class="n">1</span>)}
+            col = fallback_colors.get(name, (<span class="n">0.5</span>, <span class="n">0.5</span>, <span class="n">0.5</span>, <span class="n">1.0</span>))
+            bsdf_node.inputs[<span class="s">'Base Color'</span>].default_value = col
+            emit_node.inputs[<span class="s">'Color'</span>].default_value = col
+            
+        links.new(bsdf_node.outputs[<span class="s">'BSDF'</span>], mix_node.inputs[<span class="n">1</span>])
+        links.new(emit_node.outputs[<span class="s">'Emission'</span>], mix_node.inputs[<span class="n">2</span>])
+        links.new(mix_node.outputs[<span class="s">'Shader'</span>], out_node.inputs[<span class="s">'Surface'</span>])
+        mat.blend_method = <span class="s">'BLEND'</span>
+        
+    body.data.materials.append(mat)
+    created_objects[name] = body
 
-<span class="c"># Planet sphere objects (will be updated each frame)</span>
-planet_surfs = [<span class="k">None</span>] * len(PLANETS)
-labels = []
-<span class="k">for</span> i, p <span class="k">in</span> enumerate(PLANETS):
-    labels.append(ax.text(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>, p[<span class="s">'name'</span>], fontsize=<span class="n">5.5</span>,
-                           color=<span class="s">'white'</span>, alpha=<span class="n">0.7</span>, ha=<span class="s">'center'</span>))
+<span class="c"># Generate Saturn Rings Mesh</span>
+saturn_obj = created_objects[<span class="s">"Saturn"</span>]
+bpy.ops.mesh.primitive_circle_add(radius=<span class="n">5.5</span>, fill_type=<span class="s">'NGON'</span>)
+saturn_rings = bpy.context.active_object
+saturn_rings.name = <span class="s">"Saturn_Rings"</span>
+bpy.ops.object.mode_set(mode=<span class="s">'EDIT'</span>)
+bpy.ops.mesh.inset(thickness=<span class="n">2.0</span>)
+bpy.ops.object.mode_set(mode=<span class="s">'OBJECT'</span>)
+bpy.ops.object.mode_set(mode=<span class="s">'EDIT'</span>)
+bpy.ops.mesh.select_all(action=<span class="s">'SELECT'</span>)
+bpy.ops.uv.unwrap(method=<span class="s">'ANGLE_BASED'</span>, margin=<span class="n">0.001</span>)
+bpy.ops.object.mode_set(mode=<span class="s">'OBJECT'</span>)
 
-title_txt = ax.text2D(<span class="n">0.5</span>, <span class="n">0.97</span>, <span class="s">'Solar System — 3D Render'</span>,
-                       transform=ax.transAxes, ha=<span class="s">'center'</span>,
-                       fontsize=<span class="n">13</span>, color=<span class="s">'white'</span>, alpha=<span class="n">0.8'</span>,
-                       fontfamily=<span class="s">'monospace'</span>)
+ring_mat = bpy.data.materials.new(name=<span class="s">"Saturn_Ring_Mat"</span>)
+ring_mat.use_nodes = <span class="k">True</span>
+ring_mat.node_tree.nodes.clear()
+r_out = ring_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeOutputMaterial'</span>)
+r_bsdf = ring_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeBsdfPrincipled'</span>)
+r_tex = ring_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeTexImage'</span>)
+r_coord = ring_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeTexCoord'</span>)
+<span class="k">try:</span>
+    r_tex.image = bpy.data.images.load(r<span class="s">"C:\solar_system\saturn_ring.png"</span>)
+    ring_mat.node_tree.links.new(r_coord.outputs[<span class="s">'UV'</span>], r_tex.inputs[<span class="s">'Vector'</span>])
+    ring_mat.node_tree.links.new(r_tex.outputs[<span class="s">'Color'</span>], r_bsdf.inputs[<span class="s">'Base Color'</span>])
+    ring_mat.node_tree.links.new(r_tex.outputs[<span class="s">'Alpha'</span>], r_bsdf.inputs[<span class="s">'Alpha'</span>])
+<span class="k">except </span>Exception:
+    r_bsdf.inputs[<span class="s">'Base Color'</span>].default_value = (<span class="n">0.7</span>, <span class="n">0.6</span>, <span class="n">0.5</span>, <span class="n">0.5</span>)
+ring_mat.node_tree.links.new(r_bsdf.outputs[<span class="s">'BSDF'</span>], r_out.inputs[<span class="s">'Surface'</span>])
+ring_mat.blend_method = <span class="s">'BLEND'</span>
+saturn_rings.data.materials.append(ring_mat)
+planet_collection.objects.link(saturn_rings)
+bpy.context.scene.collection.objects.unlink(saturn_rings)
+saturn_rings.parent = saturn_obj
 
+<span class="c"># ====================================================================</span>
+<span class="c"># 6. MULTI-SATELLITE ENGINE (USES MOON.PNG FOR ALL MOONS)</span>
+<span class="c"># ====================================================================</span>
+MOON_SYSTEM_DATA = {
+    <span class="s">"Earth"</span>:   [{<span class="s">"name"</span>: <span class="s">"Luna"</span>, <span class="s">"radius"</span>: <span class="n">0.25</span>, <span class="s">"distance"</span>: <span class="n">2.1</span>, <span class="s">"speed"</span>: <span class="n">24.0</span>}],
+    <span class="s">"Mars"</span>:    [{<span class="s">"name"</span>: <span class="s">"Phobos"</span>, <span class="s">"radius"</span>: <span class="n">0.12</span>, <span class="s">"distance"</span>: <span class="n">1.4</span>, <span class="s">"speed"</span>: <span class="n">35.0</span>},
+                {<span class="s">"name"</span>: <span class="s">"Deimos"</span>, <span class="s">"radius"</span>: <span class="n">0.09</span>, <span class="s">"distance"</span>: <span class="n">1.9</span>, <span class="s">"speed"</span>: <span class="n">18.0</span>}],
+    <span class="s">"Jupiter"</span>: [{<span class="s">"name"</span>: <span class="s">"Io"</span>, <span class="s">"radius"</span>: <span class="n">0.35</span>, <span class="s">"distance"</span>: <span class="n">3.8</span>, <span class="s">"speed"</span>: <span class="n">15.0</span>},
+                {<span class="s">"name"</span>: <span class="s">"Europa"</span>, <span class="s">"radius"</span>: <span class="n">0.32</span>, <span class="s">"distance"</span>: <span class="n">4.6</span>, <span class="s">"speed"</span>: <span class="n">10.0</span>},
+                {<span class="s">"name"</span>: <span class="s">"Ganymede"</span>, <span class="s">"radius"</span>: <span class="n">0.45</span>, <span class="s">"distance"</span>: <span class="n">5.5</span>, <span class="s">"speed"</span>: <span class="n">7.0</span>}],
+    <span class="s">"Saturn"</span>:  [{<span class="s">"name"</span>: <span class="s">"Mimas"</span>, <span class="s">"radius"</span>: <span class="n">0.15</span>, <span class="s">"distance"</span>: <span class="n">6.8</span>, <span class="s">"speed"</span>: <span class="n">14.0</span>},
+                {<span class="s">"name"</span>: <span class="s">"Titan"</span>, <span class="s">"radius"</span>: <span class="n">0.52</span>, <span class="s">"distance"</span>: <span class="n">8.2</span>, <span class="s">"speed"</span>: <span class="n">5.0</span>}],
+    <span class="s">"Uranus"</span>:  [{<span class="s">"name"</span>: <span class="s">"Titania"</span>, <span class="s">"radius"</span>: <span class="n">0.22</span>, <span class="s">"distance"</span>: <span class="n">2.8</span>, <span class="s">"speed"</span>: <span class="n">12.0</span>}],
+    <span class="s">"Neptune"</span>: [{<span class="s">"name"</span>: <span class="s">"Triton"</span>, <span class="s">"radius"</span>: <span class="n">0.30</span>, <span class="s">"distance"</span>: <span class="n">2.6</span>, <span class="s">"speed"</span>: -<span class="n">9.0</span>}]
+}
 
-<span class="k">def</span> <span class="f">update</span>(frame):
-    <span class="c"># Remove old planet surfaces</span>
-    <span class="k">global</span> planet_surfs
-    <span class="k">for</span> surf <span class="k">in</span> planet_surfs:
-        <span class="k">if</span> surf <span class="k">is not None</span>:
-            surf.remove()
+moon_mat = bpy.data.materials.new(name=<span class="s">"Universal_Moon_Material"</span>)
+moon_mat.use_nodes = <span class="k">True</span>
+moon_mat.node_tree.nodes.clear()
+m_out = moon_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeOutputMaterial'</span>)
+m_bsdf = moon_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeBsdfPrincipled'</span>)
+m_emit = moon_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeEmission'</span>)
+m_mix = moon_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeMixShader'</span>)
+m_tex = moon_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeTexImage'</span>)
 
-    <span class="k">for</span> i, p <span class="k">in</span> enumerate(PLANETS):
-        px, py, pz = planet_pos(p, frame)
-        xs, ys, zs = sphere(px, py, pz, r=p[<span class="s">'r'</span>])
-        planet_surfs[i] = ax.plot_surface(xs, ys, zs,
-                            color=p[<span class="s">'color'</span>], alpha=<span class="n">0.95</span>,
-                            linewidth=<span class="n">0</span>, antialiased=<span class="k">True</span>)
-        labels[i].set_position_3d((px, py, pz + p[<span class="s">'r'</span>] + <span class="n">0.8</span>))
+m_bsdf.inputs[<span class="s">'Roughness'</span>].default_value = <span class="n">0.9</span>
+m_emit.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">0.8</span>
+m_mix.inputs[<span class="s">'Fac'</span>].default_value = <span class="n">0.45</span>
 
-        <span class="c"># Saturn rings — rotate with planet</span>
-        <span class="k">if</span> p[<span class="s">'name'</span>] == <span class="s">'Saturn'</span>:
-            <span class="k">for</span> j, ring_r <span class="k">in</span> enumerate(np.linspace(p[<span class="s">'r'</span>]*<span class="n">1.3</span>, p[<span class="s">'r'</span>]*<span class="n">2.1</span>, <span class="n">6</span>)):
-                rx = px + ring_r * np.cos(ring_theta)
-                ry = py + ring_r * np.sin(ring_theta)
-                rz = np.full_like(ring_theta, pz + <span class="n">0.2</span>*np.sin(ring_theta))
-                ring_artists[j].set_data_3d(rx, ry, rz)
+<span class="k">try:</span>
+    m_tex.image = bpy.data.images.load(r<span class="s">"C:\solar_system\moon.png"</span>)
+    moon_mat.node_tree.links.new(m_tex.outputs[<span class="s">'Color'</span>], m_bsdf.inputs[<span class="s">'Base Color'</span>])
+    moon_mat.node_tree.links.new(m_tex.outputs[<span class="s">'Color'</span>], m_emit.inputs[<span class="s">'Color'</span>])
+<span class="k">except </span>Exception:
+    m_bsdf.inputs[<span class="s">'Base Color'</span>].default_value = (<span class="n">0.35</span>, <span class="n">0.35</span>, <span class="n">0.35</span>, <span class="n">1.0</span>)
+    m_emit.inputs[<span class="s">'Color'</span>].default_value = (<span class="n">0.35</span>, <span class="n">0.35</span>, <span class="n">0.35</span>, <span class="n">1.0</span>)
 
-    <span class="c"># Slowly rotate the camera</span>
-    ax.view_init(elev=<span class="n">22</span>, azim=<span class="n">-60</span> + frame * <span class="n">0.25</span>)
-    <span class="k">return</span> planet_surfs + ring_artists + labels
+moon_mat.node_tree.links.new(m_bsdf.outputs[<span class="s">'BSDF'</span>], m_mix.inputs[<span class="n">1</span>])
+moon_mat.node_tree.links.new(m_emit.outputs[<span class="s">'Emission'</span>], m_mix.inputs[<span class="n">2</span>])
+moon_mat.node_tree.links.new(m_mix.outputs[<span class="s">'Shader'</span>], m_out.inputs[<span class="s">'Surface'</span>])
 
+created_moons = []
 
-<span class="c"># ── Animate &amp; save ───────────────────────────────────────────────</span>
-ani = animation.FuncAnimation(fig, update, frames=FRAMES,
-                               interval=<span class="n">1000</span>/FPS, blit=<span class="k">False</span>)
+<span class="k">f<span class="k">or </span></span>planet_name, moons <span class="k">in </span>MOON_SYSTEM_DATA.items():
+    <span class="k">f<span class="k">or </span></span>m_info <span class="k">in </span>moons:
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=<span class="n">32</span>, ring_count=<span class="n">16</span>, radius=m_info[<span class="s">"radius"</span>])
+        m_obj = bpy.context.active_object
+        m_obj.name = f<span class="s">"{planet_name}_{m_info['name']}"</span>
+        m_obj.data.materials.append(moon_mat)
+        bpy.ops.object.shade_smooth()
+        
+        planet_collection.objects.link(m_obj)
+        bpy.context.scene.collection.objects.unlink(m_obj)
+        
+        created_moons.append({
+            <span class="s">"object"</span>: m_obj,
+            <span class="s">"parent_name"</span>: planet_name,
+            <span class="s">"distance"</span>: m_info[<span class="s">"distance"</span>],
+            <span class="s">"speed"</span>: m_info[<span class="s">"speed"</span>]
+        })
 
-<span class="c"># Save as MP4 (requires ffmpeg) or comment out to just display</span>
-writer = animation.FFMpegWriter(fps=FPS, bitrate=<span class="n">2000</span>,
-                                 metadata={<span class="s">'title'</span>: <span class="s">'Solar System'</span>})
-ani.save(<span class="s">'solar_system_render.mp4'</span>, writer=writer, dpi=<span class="n">150</span>)
-print(<span class="s">'Saved solar_system_render.mp4'</span>)
+<span class="c"># ====================================================================</span>
+<span class="c"># 7. GENERATE THE PROCEDURAL ASTEROID BELT</span>
+<span class="c"># ====================================================================</span>
+asteroid_mat = bpy.data.materials.new(name=<span class="s">"Asteroid_Material"</span>)
+asteroid_mat.use_nodes = <span class="k">True</span>
+asteroid_mat.node_tree.nodes.clear()
+as_out = asteroid_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeOutputMaterial'</span>)
+as_bsdf = asteroid_mat.node_tree.nodes.new(type=<span class="s">'ShaderNodeBsdfPrincipled'</span>)
+as_bsdf.inputs[<span class="s">'Base Color'</span>].default_value = (<span class="n">0.25</span>, <span class="n">0.22</span>, <span class="n">0.2</span>, <span class="n">1.0</span>)
+as_bsdf.inputs[<span class="s">'Roughness'</span>].default_value = <span class="n">0.95</span>
+asteroid_mat.node_tree.links.new(as_bsdf.outputs[<span class="s">'BSDF'</span>], as_out.inputs[<span class="s">'Surface'</span>])
 
-<span class="c"># Uncomment below to display interactively instead:</span>
-<span class="c"># plt.show()</span></code></pre>
+ASTEROID_COUNT = <span class="n">350</span>  
+BELT_INNER = <span class="n">25.0</span>
+BELT_OUTER = <span class="n">29.0</span>
+asteroid_list = []
+random.seed(<span class="n">42</span>)
+
+<span class="k">f<span class="k">or </span></span>i <span class="k">in </span>range(ASTEROID_COUNT):
+    angle = random.uniform(<span class="n">0</span>, <span class="n">2</span> * math.pi)
+    radius = random.uniform(BELT_INNER, BELT_OUTER)
+    z_scatter = random.uniform(-<span class="n">0.4</span>, <span class="n">0.4</span>)
+    rock_scale = random.uniform(<span class="n">0.08</span>, <span class="n">0.22</span>)
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=<span class="n">2</span>, radius=rock_scale)
+    rock = bpy.context.active_object
+    rock.name = f<span class="s">"Asteroid_{i}"</span>
+    rock.data.materials.append(asteroid_mat)
+    <span class="k">f<span class="k">or </span></span>vert <span class="k">in </span>rock.data.vertices:
+        vert.co += random.uniform(-<span class="n">0.03</span>, <span class="n">0.03</span>) * vert.co
+    planet_collection.objects.link(rock)
+    bpy.context.scene.collection.objects.unlink(rock)
+    asteroid_list.append({
+        <span class="s">"object"</span>: rock, <span class="s">"radius"</span>: radius, <span class="s">"angle_offset"</span>: angle, <span class="s">"z"</span>: z_scatter, <span class="s">"orbit_speed"</span>: random.uniform(<span class="n">0.15</span>, <span class="n">0.4</span>)
+    })
+
+<span class="c"># ====================================================================</span>
+<span class="c"># 8. RUNTIME MOTION &amp; CAMERA OVERVIEW KEYFRAMING</span>
+<span class="c"># ====================================================================</span>
+bpy.context.preferences.edit.keyframe_new_interpolation_type = <span class="s">'LINEAR'</span>
+
+<span class="k">f<span class="k">or </span></span>frame <span class="k">in </span>range(FRAME_START, FRAME_END + <span class="n">1</span>):
+    bpy.context.scene.frame_set(frame)
+    current_planet_positions = {}
+    
+    <span class="k">f<span class="k">or </span></span>name, data <span class="k">in </span>PLANET_DATA.items():
+        obj = created_objects[name]
+        rot_angle = math.radians((data[<span class="s">"rot_speed"</span>] / <span class="n">250.0</span>) * frame)
+        rev_angle = math.radians((data[<span class="s">"orbit_speed"</span>] * <span class="n">0.4</span>) * frame)
+        
+        x_pos = data[<span class="s">"distance"</span>] * math.cos(rev_angle)
+        y_pos = data[<span class="s">"distance"</span>] * math.sin(rev_angle)
+        
+        obj.location = (x_pos, y_pos, <span class="n">0.0</span>)
+        obj.keyframe_insert(data_path=<span class="s">"location"</span>, frame=frame)
+        obj.rotation_mode = <span class="s">'ZXY'</span>
+        obj.rotation_euler = (math.radians(data[<span class="s">"tilt"</span>]), <span class="n">0.0</span>, rot_angle)
+        obj.keyframe_insert(data_path=<span class="s">"rotation_euler"</span>, frame=frame)
+        
+        current_planet_positions[name] = (x_pos, y_pos)
+            
+    <span class="k">f<span class="k">or </span></span>moon_data <span class="k">in </span>created_moons:
+        m_obj = moon_data[<span class="s">"object"</span>]
+        p_name = moon_data[<span class="s">"parent_name"</span>]
+        parent_x, parent_y = current_planet_positions[p_name]
+        
+        m_angle = math.radians(moon_data[<span class="s">"speed"</span>] * frame)
+        m_dist = moon_data[<span class="s">"distance"</span>]
+        
+        m_obj.location = (
+            parent_x + (m_dist * math.cos(m_angle)),
+            parent_y + (m_dist * math.sin(m_angle)),
+            <span class="n">0.1</span>
+        )
+        m_obj.keyframe_insert(data_path=<span class="s">"location"</span>, frame=frame)
+        m_obj.rotation_euler = (<span class="n">0.0</span>, <span class="n">0.0</span>, math.radians(<span class="n">3.0</span> * frame))
+        m_obj.keyframe_insert(data_path=<span class="s">"rotation_euler"</span>, frame=frame)
+        
+    <span class="k">f<span class="k">or </span></span>ast <span class="k">in </span>asteroid_list:
+        rock_obj = ast[<span class="s">"object"</span>]
+        current_angle = ast[<span class="s">"angle_offset"</span>] + math.radians(ast[<span class="s">"orbit_speed"</span>] * <span class="n">0.4</span> * frame)
+        rock_obj.location = (ast[<span class="s">"radius"</span>] * math.cos(current_angle), ast[<span class="s">"radius"</span>] * math.sin(current_angle), ast[<span class="s">"z"</span>])
+        rock_obj.keyframe_insert(data_path=<span class="s">"location"</span>, frame=frame)
+
+    <span class="k">if </span>frame &lt;= <span class="n">900</span>:
+        current_showcase_idx = (frame - <span class="n">1</span>) // showcase_duration
+        active_name = planet_names[current_showcase_idx]
+        target_body = created_objects[active_name]
+        radius_scale = PLANET_DATA[active_name][<span class="s">"radius"</span>]
+        
+        target_anchor.location = target_body.location
+        target_anchor.keyframe_insert(data_path=<span class="s">"location"</span>, frame=frame)
+        camera.location = (target_body.location.x, target_body.location.y - (radius_scale * <span class="n">4.5</span>), radius_scale * <span class="n">1.5</span>)
+        camera.keyframe_insert(data_path=<span class="s">"location"</span>, frame=frame)
+
+<span class="c"># Wide Angle Grand Tour Overview Transitions</span>
+fade_in_frame = <span class="n">901</span>
+final_frame = <span class="n">1200</span>
+
+bpy.context.scene.frame_set(fade_in_frame)
+target_anchor.location = created_objects[<span class="s">"Sun"</span>].location
+target_anchor.keyframe_insert(data_path=<span class="s">"location"</span>, frame=fade_in_frame)
+camera.location = (<span class="n">0.0</span>, -<span class="n">115.0</span>, <span class="n">75.0</span>)
+camera.keyframe_insert(data_path=<span class="s">"location"</span>, frame=fade_in_frame)
+
+bpy.context.scene.frame_set(final_frame)
+camera.location = (<span class="n">0.0</span>, -<span class="n">135.0</span>, <span class="n">95.0</span>)
+camera.keyframe_insert(data_path=<span class="s">"location"</span>, frame=final_frame)
+
+<span class="c"># ====================================================================</span>
+<span class="c"># 9. DUAL-CHANNEL WORLD ENVIRONMENT MAP SHADER SETUP</span>
+<span class="c"># ====================================================================</span>
+scene_world = bpy.context.scene.world
+<span class="k">if </span>scene_world:
+    scene_world.use_nodes = <span class="k">True</span>
+    w_nodes = scene_world.node_tree.nodes
+    w_links = scene_world.node_tree.links
+    w_nodes.clear()
+    
+    node_world_out = w_nodes.new(type=<span class="s">'ShaderNodeOutputWorld'</span>)
+    node_mix = w_nodes.new(type=<span class="s">'ShaderNodeMixShader'</span>)
+    node_light_path = w_nodes.new(type=<span class="s">'ShaderNodeLightPath'</span>)
+    
+    node_ambient_bg = w_nodes.new(type=<span class="s">'ShaderNodeBackground'</span>)
+    node_ambient_bg.inputs[<span class="s">'Color'</span>].default_value = (<span class="n">0.04</span>, <span class="n">0.04</span>, <span class="n">0.06</span>, <span class="n">1.0</span>)
+    node_ambient_bg.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">0.5</span>
+    
+    node_camera_bg = w_nodes.new(type=<span class="s">'ShaderNodeBackground'</span>)
+    node_env_tex = w_nodes.new(type=<span class="s">'ShaderNodeTexEnvironment'</span>)
+    node_camera_bg.inputs[<span class="s">'Strength'</span>].default_value = <span class="n">1.0</span>
+    
+    <span class="k">try:</span>
+        node_env_tex.image = bpy.data.images.load(r<span class="s">"C:\solar_system\star.png"</span>)
+        w_links.new(node_env_tex.outputs[<span class="s">'Color'</span>], node_camera_bg.inputs[<span class="s">'Color'</span>])
+    <span class="k">except </span>Exception:
+        node_camera_bg.inputs[<span class="s">'Color'</span>].default_value = (<span class="n">0.002</span>, <span class="n">0.002</span>, <span class="n">0.004</span>, <span class="n">1.0</span>)
+        
+    w_links.new(node_light_path.outputs[<span class="s">'Is Camera Ray'</span>], node_mix.inputs[<span class="s">'Fac'</span>])
+    w_links.new(node_ambient_bg.outputs[<span class="s">'Background'</span>], node_mix.inputs[<span class="n">1</span>])
+    w_links.new(node_camera_bg.outputs[<span class="s">'Background'</span>], node_mix.inputs[<span class="n">2</span>])
+    w_links.new(node_mix.outputs[<span class="s">'Shader'</span>], node_world_out.inputs[<span class="s">'Surface'</span>])
+
+<span class="c"># ====================================================================</span>
+<span class="c"># 10. FIXED: CORE BACKGROUND FRAME HANDLER (INSTANT VIEWPORT UPDATE)</span>
+<span class="c"># ====================================================================</span>
+<span class="k">def </span>rigid_hud_text_updater(scene):
+    frame = scene.frame_current
+    t_obj = bpy.data.objects.get(<span class="s">"HUD_Master_Text"</span>)
+    
+    <span class="k">if </span>t_obj:
+        <span class="k">if </span>frame &lt;= <span class="n">900</span>:
+<span class="c">            # Force string value updates instantaneously on viewport redraw</span>
+            current_idx = (frame - <span class="n">1</span>) // <span class="n">100</span>
+            <span class="k">if </span>current_idx &lt; len(planet_names):
+                t_obj.data.body = planet_names[current_idx].upper()
+                t_obj.scale = (<span class="n">1.0</span>, <span class="n">1.0</span>, <span class="n">1.0</span>)
+        <span class="k">else:</span>
+<span class="c">            # Turn off characters layout space entirely during the tour finale</span>
+            t_obj.scale = (<span class="n">0.0</span>, <span class="n">0.0</span>, <span class="n">0.0</span>)
+
+<span class="c"># Attach script listener directly to Blender background loops queue</span>
+bpy.app.handlers.frame_change_pre.append(rigid_hud_text_updater)
+
+<span class="c"># Main central lamp core source</span>
+bpy.ops.object.light_add(type=<span class="s">'POINT'</span>, radius=<span class="n">5.0</span>, location=(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>))
+sun_lamp = bpy.context.active_object
+sun_lamp.name = <span class="s">"Stellar_Core_Light"</span>
+sun_lamp.data.energy = <span class="n">4500.0</span>  
+sun_lamp.data.col<span class="k">or </span>= (<span class="n">1.0</span>, <span class="n">0.98</span>, <span class="n">0.95</span>)
+planet_collection.objects.link(sun_lamp)
+bpy.context.scene.collection.objects.unlink(sun_lamp)
+
+<span class="c"># Force immediate frame step refresh to trigger the handler right away</span>
+bpy.context.scene.frame_set(<span class="n">1</span>)
+print(<span class="s">"Complete re-orchestrated system successfully built. Text updates are instant!"</span>)</code></pre>
       </div>
     </div>
   </div><!-- end .content -->
@@ -520,7 +811,7 @@ print(<span class="s">'Saved solar_system_render.mp4'</span>)
       const blob = new Blob([getRawCode()], {type:'text/plain'});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'solar_system.py';
+      a.download = 'master_render_solar_system.py';
       a.click();
       URL.revokeObjectURL(a.href);
     }
